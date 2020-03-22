@@ -30,7 +30,7 @@ layout: notebook
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>I have recently teamed up with a friend to participate in the <a href="https://www.kaggle.com/c/bengaliai-cv19/?utm_medium=email&amp;utm_source=intercom&amp;utm_campaign=bengaliai-email-launch">Bengali Image Classification Competition</a>. The competition is tough, we struggled along the way and couldn't figure out why we cannot get a score that matching with others in the Public leaderboard. In the end, the result is a big surprise to everyone as the leaderboard shook heavily.</p>
+<p>I have teamed up with a friend to participate in the <a href="https://www.kaggle.com/c/bengaliai-cv19/?utm_medium=email&amp;utm_source=intercom&amp;utm_campaign=bengaliai-email-launch">Bengali Image Classification Competition</a>. We struggled to get a high rank in the Public leaderboard throughout the competition.  In the end, the result is a big surprise to everyone as the leaderboard shook a lot.</p>
 
 </div>
 </div>
@@ -51,7 +51,7 @@ layout: notebook
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>It is interesting that the final score was much lower than the public leaderboard, it suggests that most of the participant are highly over-fitting the training data.</p>
+<p>The final private score was much lower than the public score. It suggests that most participants are over-fitting Public leaderboard.</p>
 
 </div>
 </div>
@@ -64,7 +64,7 @@ layout: notebook
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>The competition is about image classification of <strong>Bengali</strong> characters,  which you can think of a more difficult <strong>MNIST</strong> classification. It can be decomposed into 3 parts, <code>root</code>, <code>consonant</code> and <code>vowel</code>, and our task is to classify them correctly.</p>
+<p>This is an image classification competition. We need to predict 3 parts of <strong>Bengali</strong> characters <code>root</code>, <code>consonant</code> and <code>vowel</code>. It is a typical classification tasks like the <strong>MNIST</strong> dataset.</p>
 
 </div>
 </div>
@@ -113,6 +113,24 @@ layout: notebook
 </div>
 </p>
     </details>
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_text output_error">
+<pre>
+<span class="ansi-cyan-intense-fg ansi-bold">  File </span><span class="ansi-green-intense-fg ansi-bold">&#34;&lt;ipython-input-2-735c2b11ea24&gt;&#34;</span><span class="ansi-cyan-intense-fg ansi-bold">, line </span><span class="ansi-green-intense-fg ansi-bold">2</span>
+<span class="ansi-yellow-intense-fg ansi-bold">    ```</span>
+<span class="ansi-white-intense-fg ansi-bold">    ^</span>
+<span class="ansi-red-intense-fg ansi-bold">SyntaxError</span><span class="ansi-red-intense-fg ansi-bold">:</span> invalid syntax
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
 </div>
     {% endraw %}
 
