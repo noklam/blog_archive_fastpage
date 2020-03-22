@@ -9,3 +9,11 @@
 
 // If you want to turn off dark background for syntax highlighting, comment or delete the below line.
 @import "minima/fastpages-dracula-highlight"; 
+
+.input_area pre {
+    border-left: 5px solid lightcoral;
+}
+.output_area pre {
+    border-left: 5px solid grey;
+    margin-left: 1rem !important;
+}
