@@ -193,7 +193,7 @@ window.onload = wrap_img;
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>I have recently teamed up with a friend to participate in the <a href="https://www.kaggle.com/c/bengaliai-cv19/?utm_medium=email&amp;utm_source=intercom&amp;utm_campaign=bengaliai-email-launch">Bengali Image Classificaiton Competition</a>. The competition is tough, we struggled along the way and couldn't figure out why we cannot get a score that matching with others in the Public Leaderboard. In the end, the result is a big surprise to everyone as the leaderboard shook heavily.</p>
+<p>I have recently teamed up with a friend to participate in the <a href="https://www.kaggle.com/c/bengaliai-cv19/?utm_medium=email&amp;utm_source=intercom&amp;utm_campaign=bengaliai-email-launch">Bengali Image Classification Competition</a>. The competition is tough, we struggled along the way and couldn't figure out why we cannot get a score that matching with others in the Public leaderboard. In the end, the result is a big surprise to everyone as the leaderboard shook heavily.</p>
 
 </div>
 </div>
@@ -201,7 +201,7 @@ window.onload = wrap_img;
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><img src="https://github.com/noklam/mediumnok/blob/master/_notebooks/nb_img/bengali_0_public_lb.png?raw=true" alt="Public Leaderboard" title="Public Leaderboard has much higher score, &gt;0.99 recall!"></p>
+<p><img src="https://github.com/noklam/mediumnok/blob/master/_notebooks/nb_img/bengali_0_public_lb.png?raw=true" alt="Public Leaderboard" title="Public Leaderboard has a much higher score, &gt;0.99 recall!"></p>
 
 </div>
 </div>
@@ -209,7 +209,7 @@ window.onload = wrap_img;
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><img src="https://github.com/noklam/mediumnok/blob/master/_notebooks/nb_img/bengali_1_private_lb.png?raw=true" alt="Public Leaderboard" title="Note that the rank shaked for over 1000!"></p>
+<p><img src="https://github.com/noklam/mediumnok/blob/master/_notebooks/nb_img/bengali_1_private_lb.png?raw=true" alt="Public Leaderboard" title="Note that the rank shook for over 1000!"></p>
 
 </div>
 </div>
@@ -217,7 +217,7 @@ window.onload = wrap_img;
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>It is interesting that the final score was much lower than the public leaderboard, it suggestes that most of the participant are highly overfitting the training data.</p>
+<p>It is interesting that the final score was much lower than the public leaderboard, it suggests that most of the participant are highly over-fitting the training data.</p>
 
 </div>
 </div>
@@ -304,7 +304,7 @@ window.onload = wrap_img;
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>We start with <code>xresnet50</code>, which is a relatively small model. As we have the assumption that this classification task is a very standard task, therefore the difference of model will not be the most important one. Thus we pick xresnet50 as it have a good performance in terms of accuracy and train relatively fast.</p>
+<p>We start with <code>xresnet50</code>, which is a relatively small model. As we have the assumption that this classification task is a very standard task, therefore the difference of model will not be the most important one. Thus we pick xresnet50 as it has a good performance in terms of accuracy and train relatively fast.</p>
 <p>Near the end of the competition, we switch to a larger model <code>se-resnext101</code>. It requires triple training time plus we have to scale down the batch size as it does not fit into the GPU memory. Surprisingly (maybe not surprising to everyone), the bigger model did boost the performance more than I expected with ~0.3-0.5% recall. It is a big improvement as the recall is very high (~0.97), in other words, it reduces <strong>~10%</strong>  error solely by just using a better model, not bad!</p>
 
 </div>
@@ -367,7 +367,7 @@ We start with rotation + scale. We also find <strong>MixUp</strong> and <strong>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>I normally just log my experiment with a simple csv and some printing message. This start to get tedious when there are more than 1 people to work. It is important to communicate the experiments result. I explore <code>Hydra</code> and <code>wandb</code> in this competition and they are very useful.</p>
+<p>I normally just log my experiment with a simple CSV and some printing message. This start to get tedious when there are more than 1 people to work. It is important to communicate the results of experiments. I explore <code>Hydra</code> and <code>wandb</code> in this competition and they are very useful.</p>
 
 </div>
 </div>
@@ -380,8 +380,8 @@ We start with rotation + scale. We also find <strong>MixUp</strong> and <strong>
 </h2>
 <p><img src="https://github.com/noklam/mediumnok/blob/master/_notebooks/nb_img/bengali_4_hydra.png?raw=true" alt="Hydra for configuration composition"></p>
 <p>It is often a good idea to make your experiment configurable. We use <code>Hydra</code> for this purpose and it is useful to compose different configuration group.
-By making your hyper-paramters configurable, you can define an experiment by configuration files and run multiple experiments. By logging the configuration with the training statistics, it is easily to do cross model comparison and find out which configuration is useful for your model.</p>
-<p>I have written <a href="https://mediumnok.ml/coding/ml/2020/02/08/Config-Composition-with-Hydra-for-Machine-Learning-Experiments.html">an short exmaple</a> for how to use <strong>Hydra</strong>.</p>
+By making your hyper-paramters configurable, you can define an experiment by configuration files and run multiple experiments. By logging the configuration with the training statistics, it is easy to do cross-models comparison and find out which configuration is useful for your model.</p>
+<p>I have written <a href="https://mediumnok.ml/coding/ml/2020/02/08/Config-Composition-with-Hydra-for-Machine-Learning-Experiments.html">an short example</a> for how to use <strong>Hydra</strong>.</p>
 
 </div>
 </div>
@@ -398,7 +398,7 @@ By making your hyper-paramters configurable, you can define an experiment by con
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>wandb</strong> (Weight &amp; Biases) does a few things. It provides built-in function that automatcially log all your model statistics, while keeping it easy to log anything you want.</p>
+<p><strong>wandb</strong> (Weight &amp; Biases) does a few things. It provides built-in functions that automatically  log all your model statistics, you can also log your custom metrics with simple functions.</p>
 <ul>
 <li>Compare the configuration of different experiments to find out the model with the best performance.</li>
 <li>Built-in function for logging model weights and gradient for debugging purpose.</li>
@@ -423,7 +423,7 @@ By making your hyper-paramters configurable, you can define an experiment by con
 <h1 id="Stochastic-Weight-Averaging">
 <a class="anchor" href="#Stochastic-Weight-Averaging" aria-hidden="true"><span class="octicon octicon-link"></span></a><a href="https://pytorch.org/blog/stochastic-weight-averaging-in-pytorch/">Stochastic Weight Averaging</a><a class="anchor-link" href="#Stochastic-Weight-Averaging"> </a>
 </h1>
-<p>This is a simple yet effective technique which give about 0.3-0.4% boost to my model. In simple words, it takes <strong>snahpshots</strong> of the model weights during training and takes an average at the end. It provides a cheap way to do models ensemble while you are only training 1 model. This is important for this competition as it allows me to keep training time short enough to allow feedback within hours and reduce overfitting.)</p>
+<p>This is a simple yet effective technique which gives about 0.3-0.4% boost to my model. In simple words, it takes <strong>snapshots</strong> of the model weights during training and takes an average at the end. It provides a cheap way to do models ensemble while you are only training 1 model. This is important for this competition as it allows me to keep training time short enough to allow feedback within hours and reduce over-fitting.)</p>
 <h1>
 <a class="anchor" href="#" aria-hidden="true"><span class="octicon octicon-link"></span></a><img src="https://github.com/noklam/mediumnok/blob/master/_notebooks/nb_img/bengali_5_swa.png?raw=true" alt="image.png" title="Stochastic Weight Averaging">
 </h1>
@@ -448,7 +448,7 @@ By making your hyper-paramters configurable, you can define an experiment by con
 <h1 id="Debug-&amp;-Checkpoint">
 <a class="anchor" href="#Debug-&amp;-Checkpoint" aria-hidden="true"><span class="octicon octicon-link"></span></a>Debug &amp; Checkpoint<a class="anchor-link" href="#Debug-&amp;-Checkpoint"> </a>
 </h1>
-<p>There was a time we develop our model separately and we didn't sync our code for a while. We refactor our code during the time and it was a huge mistake. It turns out our pre-refactor code trains much better model and we introduce some unknown bug. It is almost impossible to find out as we change multiple of things. It is so hard to debug a neural network and testing it thoroughly  is important. Injecting a large amount of code may help you to run an experiment earlier, but you may pay much more time to debug it afterward.</p>
+<p>There was a time we develop our model separately and we didn't sync our code for a while. We refactor our code during the time and it was a huge mistake. It turns out our pre-refactor code trains much better model and we introduce some unknown bug. It is almost impossible to find out as we change multiple things. It is so hard to debug a neural network and testing it thoroughly  is important. Injecting a large amount of code may help you to run an experiment earlier, but you may pay much more time to debug it afterwards.</p>
 <p>I think this is applicable even if you are working alone.</p>
 <ul>
 <li>Keep your changes small.</li>
@@ -480,7 +480,7 @@ As mentioned earlier, this competition requires to predict the <code>root</code>
 <h1 id="Weight-loss">
 <a class="anchor" href="#Weight-loss" aria-hidden="true"><span class="octicon octicon-link"></span></a>Weight loss<a class="anchor-link" href="#Weight-loss"> </a>
 </h1>
-<p>The distribution of the training dataset is very imbalance, but to get a good result, we need to predict every single class accurately (macro recall). To deal with this issue, we choose to use class weights, where a higher weight would be applied to rare sample. We don't have an ablation study for this, but it seems to help closing the gap between accuracy &amp; recall and allows us to train the model slightly better.</p>
+<p>The distribution of the training dataset is very imbalance, but to get a good result, we need to predict every single class accurately (macro recall). To deal with this issue, we choose to use class weights, where a higher weight would be applied to rare samples. We don't have an ablation study for this, but it seems to help close the gap between accuracy &amp; recall and allows us to train the model slightly better.</p>
 
 </div>
 </div>
@@ -502,12 +502,12 @@ As mentioned earlier, this competition requires to predict the <code>root</code>
 <h1 id="Pretrain-Model">
 <a class="anchor" href="#Pretrain-Model" aria-hidden="true"><span class="octicon octicon-link"></span></a>Pretrain Model<a class="anchor-link" href="#Pretrain-Model"> </a>
 </h1>
-<p>We also tried to use a pretrained model, as it allows shorter training and give better performance by transfer learning (Using weights learn from a large dataset to as initial weight). It also gives our model a bit of improvement.</p>
+<p>We also tried to use a pretrained model, as it allows shorter training and gives better performance by transfer learning (Using weights learn from a large dataset to as initial weight). It also gives our model a bit of improvement.</p>
 <ul>
 <li>Finetune the model head, while keeping other layers freeze (except BatchNorm layer).</li>
 <li>Unfreeze the model, train all the layers together.</li>
 </ul>
-<p>I also tried training the model directly with discriminating learning rate while not freezing any layer at all. It performs similarily to freezing finetuning , so I end up just start training the entire model from the beginning.</p>
+<p>I also tried training the model directly with discriminating learning rate while not freezing any layer at all. It performs similarly  to freezing fine-tuning , so I end up just start training the entire model from the beginning.</p>
 
 </div>
 </div>
@@ -520,8 +520,8 @@ As mentioned earlier, this competition requires to predict the <code>root</code>
 </h1>
 <p>This is probably not a good habit usually, but I suggest not to do it for a competition. We spent lots of time for debugging our code after code refactoring and end up just rolling back to an older commit and cherry-picks new features. In a competition, you don't have enough time to test everything. You do not need a nice abstract class for all your features, some refactoring to keep your function/class clean is probably needed, but do not overspend your time on it. It is even common to jump between frameworks (you may find other's Kernel useful), so it is not possible to structure your code perfectly.</p>
 <ul>
-<li>If someone have create a working submission script, use it!</li>
-<li>If someone have create a working pre-processing function, use it!</li>
+<li>If someone has create a working submission script, use it!</li>
+<li>If someone has create a working pre-processing function, use it!</li>
 </ul>
 <p>Don't spend time on trying to optimize these code unless it is necessary, it is often not worth it in a competition context. You should focus on adding new features, trying out new model, testing with new augmentation technique instead.</p>
 
