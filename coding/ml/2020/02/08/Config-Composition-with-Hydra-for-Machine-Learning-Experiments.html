@@ -1,0 +1,103 @@
+<p>GitHub: https://github.com/noklam/notadatascientist/tree/master/demo/hydra-example</p>
+
+<p>Machine learning project involves large number of hyperparmeters. In many case you could have multiple config, e.g. differnet dataset, database connection, train/test mode. <strong>hydra</strong> provide a simple Command Line Interface that is useful for composing different experiment configs. In essence, it compose different files to a large config setting. It offers you the common Object Oriented Programming with YAML file. Allow you to have clear structure of configurations.</p>
+
+<p>Assume you have a config.yaml like this, where run_mode and hyperparmeter are separate folder to hold different choice of parameters. You can set defaults for them with the following structure.</p>
+
+<h2 id="folder-structure">Folder Structure</h2>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>config.yaml
+demo.py
+run_mode
+  - train.yaml
+  - test.yaml
+hyperparmeter
+  - base.yaml
+</code></pre></div></div>
+<h2 id="configyaml">config.yaml</h2>
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">defaults</span><span class="pi">:</span>
+ <span class="pi">-</span> <span class="na">run_mode</span><span class="pi">:</span> <span class="s">train</span>
+ <span class="pi">-</span> <span class="na">hyperparameter</span><span class="pi">:</span> <span class="s">base</span>
+</code></pre></div></div>
+
+<p>The benefit of using such approach is that it makes comparsion of experiments much easier. Instead of going through the parameters list, you only focus on the argument(the difference). It helps organize machine learning results and ease a lot of pain in tracking the model performance.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">hydra</span>
+<span class="kn">from</span> <span class="nn">omegaconf</span> <span class="kn">import</span> <span class="n">DictConfig</span>
+<span class="o">@</span><span class="n">hydra</span><span class="o">.</span><span class="n">main</span><span class="p">(</span><span class="n">config_path</span><span class="o">=</span><span class="s">"config.yaml"</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">my_app</span><span class="p">(</span><span class="n">cfg</span> <span class="p">:</span> <span class="n">DictConfig</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="bp">None</span><span class="p">:</span>
+    <span class="k">print</span><span class="p">(</span><span class="n">cfg</span><span class="o">.</span><span class="n">pretty</span><span class="p">())</span>
+<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">"__main__"</span><span class="p">:</span>
+    <span class="n">my_app</span><span class="p">()</span>
+</code></pre></div></div>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">python</span> <span class="n">demo</span><span class="o">.</span><span class="n">py</span> 
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gamma: 0.01
+learning_rate: 0.01
+run_mode: train
+week: 8
+</code></pre></div></div>
+
+<p>For example, with a simple example with 4 parameters only, you can simply run the experiment with default</p>
+
+<h1 id="override-default-parameters">Override default parameters</h1>
+
+<p>You can easily overrite the learning rate with an argument, it would be very clear that learning rate is the only changing parameter with this approach</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">python</span> <span class="n">demo</span><span class="o">.</span><span class="n">py</span> <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.1</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gamma: 0.01
+learning_rate: 0.1
+run_mode: train
+week: 8
+</code></pre></div></div>
+
+<p>In somecase, you may only need to test a model instead of changing it.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">python</span> <span class="n">demo</span><span class="o">.</span><span class="n">py</span> <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.1</span> <span class="n">run_mode</span><span class="o">=</span><span class="n">test</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gamma: 0.01
+learning_rate: 0.1
+run_mode: test
+week: 8
+</code></pre></div></div>
+
+<p>It also safeguard your experiment if you pass in some parameters that is not exist</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">!</span><span class="n">python</span> <span class="n">demo</span><span class="o">.</span><span class="n">py</span> <span class="n">typo</span><span class="o">=</span><span class="mf">0.2</span>
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Traceback (most recent call last):
+  File "demo.py", line 7, in &lt;module&gt;
+    my_app()
+ "C:\ProgramData\Anaconda3\lib\site-packages\omegaconf\dictconfig.py", line 41, in __setitem__
+    "Accessing unknown key in a struct : {}".format(self.get_full_key(key))
+KeyError: 'Accessing unknown key in a struct : typo'
+</code></pre></div></div>
+
+<h1 id="multirun--combination-of-parameters">–Multirun,  Combination of parameters</h1>
+<p>In case you want to gridsearch paramters, which is very common in machine learning, you can use an additional argument <strong>multirun</strong> to do that easily.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">!</span><span class="n">python</span> <span class="n">demo</span><span class="o">.</span><span class="n">py</span> <span class="o">--</span><span class="n">multirun</span> <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span><span class="mf">0.01</span><span class="p">,</span><span class="mf">0.001</span> <span class="n">gamma</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span><span class="mf">0.01</span>
+
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[2020-02-08 19:28:46,095][HYDRA] Sweep output dir : multirun/2020-02-08/19-28-46
+[2020-02-08 19:28:46,102][HYDRA] Launching 6 jobs locally
+[2020-02-08 19:28:46,103][HYDRA] 	#0 : learning_rate=0.1 gamma=0.1
+gamma: 0.1
+learning_rate: 0.1
+run_mode: train
+week: 8
+
+[2020-02-08 19:28:46,192][HYDRA] 	#1 : learning_rate=0.1 gamma=0.01
+gamma: 0.01
+learning_rate: 0.1
+run_mode: train
+week: 8
+
+... SKIPPED
+</code></pre></div></div>
