@@ -2,7 +2,7 @@
 keywords: fastai
 description: Lesson learnt from kaggle competition
 title: Lesson learnt from Kaggle - Bengali Image Classification Competition
-toc: false
+toc: true
 branch: master
 badges: true
 comments: true
@@ -30,7 +30,7 @@ layout: notebook
 
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>I have recently team up with a friend to participate the <a href="https://www.kaggle.com/c/bengaliai-cv19/?utm_medium=email&amp;utm_source=intercom&amp;utm_campaign=bengaliai-email-launch">Bengali Image Classificaiton Competition</a>. The competition is tough, we struggled along the way and couldn't figure out why we cannot get a score that matching with others in the Public Leaderboard. In the end, the result is a big surprise to everyone as the leaderboard shaked heavily.</p>
+<p>I have recently teamed up with a friend to participate in the <a href="https://www.kaggle.com/c/bengaliai-cv19/?utm_medium=email&amp;utm_source=intercom&amp;utm_campaign=bengaliai-email-launch">Bengali Image Classificaiton Competition</a>. The competition is tough, we struggled along the way and couldn't figure out why we cannot get a score that matching with others in the Public Leaderboard. In the end, the result is a big surprise to everyone as the leaderboard shook heavily.</p>
 
 </div>
 </div>
@@ -64,7 +64,7 @@ layout: notebook
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>The competition is about image classification of <strong>Bengali</strong> characters,  which you can think of a more difficult <strong>MNIST</strong> classification. It can be decompose into 3 parts, <code>root</code>, <code>consonant</code> and <code>vowel</code>, and our task is to classify them correctly.</p>
+<p>The competition is about image classification of <strong>Bengali</strong> characters,  which you can think of a more difficult <strong>MNIST</strong> classification. It can be decomposed into 3 parts, <code>root</code>, <code>consonant</code> and <code>vowel</code>, and our task is to classify them correctly.</p>
 
 </div>
 </div>
@@ -78,7 +78,7 @@ layout: notebook
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Evaluation-Metrics">Evaluation Metrics<a class="anchor-link" href="#Evaluation-Metrics"> </a></h2><p>The competition use macro-recall as the evaluation metric. In general people get &gt;96% recall in training, the tops are even getting &gt;99% recall.</p>
+<h2 id="Evaluation-Metrics">Evaluation Metrics<a class="anchor-link" href="#Evaluation-Metrics"> </a></h2><p>The competition use macro-recall as the evaluation metric. In general, people get &gt;96% recall in training, the tops are even getting &gt;99% recall.</p>
 
 </div>
 </div>
@@ -124,8 +124,8 @@ layout: notebook
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>We start with <code>xresnet50</code>, which is a relative small model. As we have the assumption that this classification task is a very standard task, therefore the difference of model will not be the most important one. Thus we pick xresnet50 as it have a good performance in terms of accuracy and train relatively fast.</p>
-<p>Near the end of the competition, we switch to a larger model <code>se-resnext101</code>. It require triple training time plus we have to scale down the batch size as it does not fit into the GPU memory. Surprisingly (maybe not surprise to everyone), bigger model did boost the performance more than I expected with ~0.3-0.5% recall. It is a big improvement as the recall is very high (~0.97), in other words it reduce <strong>~10%</strong>  error solely by just using a better model, not bad!</p>
+<p>We start with <code>xresnet50</code>, which is a relatively small model. As we have the assumption that this classification task is a very standard task, therefore the difference of model will not be the most important one. Thus we pick xresnet50 as it have a good performance in terms of accuracy and train relatively fast.</p>
+<p>Near the end of the competition, we switch to a larger model <code>se-resnext101</code>. It requires triple training time plus we have to scale down the batch size as it does not fit into the GPU memory. Surprisingly (maybe not surprising to everyone), the bigger model did boost the performance more than I expected with ~0.3-0.5% recall. It is a big improvement as the recall is very high (~0.97), in other words, it reduces <strong>~10%</strong>  error solely by just using a better model, not bad!</p>
 
 </div>
 </div>
@@ -139,7 +139,7 @@ layout: notebook
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>There are never "enough" data for deep learning, so we always try our best to collect more data. Since we cannot collect more data, we need data augmentation.
-We start with rotation + scale. We also find <strong>MixUp</strong> and <strong>CutMix</strong> is very effective to boost the performance. It also give us roughly <strong>10%</strong> boost initially from 0.96 -&gt; 0.964 recall.</p>
+We start with rotation + scale. We also find <strong>MixUp</strong> and <strong>CutMix</strong> is very effective to boost the performance. It also gives us roughly <strong>10%</strong> boost initially from 0.96 -&gt; 0.964 recall.</p>
 
 </div>
 </div>
@@ -152,16 +152,16 @@ We start with rotation + scale. We also find <strong>MixUp</strong> and <strong>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><img src="https://github.com/noklam/mediumnok/blob/master/_notebooks/nb_img/bengali_3_data_aug.png?raw=true &quot;Augmentation Example" alt="Example of Augmentation"></p>
+<p><img src="https://github.com/noklam/mediumnok/blob/master/_notebooks/nb_img/bengali_3_data_aug.png?raw=true" alt="Example of Augmentation" title="Augmentation Example"></p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><em>Mixup</em> is simple, if you know about photography, it is basically double exposure of your photos. It overlays two images (cat+dog in this case) by sampling weights. So instead of prediction P(dog) = 1, the new target could become P(dog) = 0.8 and P(cat) = 0.2.</p>
-<p><em>CutMix</em> share similar idea, instead of overlay 2 images, it crop out a certain ratio of image and replace it with another one.</p>
-<p>It always surprise me that these augmented data does not make much sense to human, but it is very effective to improve model accuracy and reduce overfitting emprically.</p>
+<p><em>Mixup</em> is simple, if you know about photography, it is similar to have double exposure of your photos. It overlays two images (cat+dog in this case) by sampling weights. So instead of prediction P(dog) = 1, the new target could become P(dog) = 0.8 and P(cat) = 0.2.</p>
+<p><em>CutMix</em> shares a similar idea, instead of overlay 2 images, it crops out a certain ratio of the image and replaces it with another one.</p>
+<p>It always surprises me that these augmented data does not make much sense to a human, but it is very effective to improve model accuracy and reduce overfitting empirically.</p>
 
 </div>
 </div>
@@ -174,16 +174,16 @@ We start with rotation + scale. We also find <strong>MixUp</strong> and <strong>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>I normally just log my experiment with a simple csv and some printing message. This start to get tedious when there are more than 1 people to work. It is important to communicate experiments result. I explore <code>Hydra</code> and <code>wandb</code> in this competition and they are very useful.</p>
+<p>I normally just log my experiment with a simple csv and some printing message. This start to get tedious when there are more than 1 people to work. It is important to communicate the experiments result. I explore <code>Hydra</code> and <code>wandb</code> in this competition and they are very useful.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Hydra"><a href="https://hydra.cc/">Hydra</a><a class="anchor-link" href="#Hydra"> </a></h2><p><img src="https://github.com/noklam/mediumnok/blob/master/_notebooks/nb_img/bengali_4_hydra.png?raw=true" alt="Hydra for configuration composition">
-It is often a good idea to make your experiment configurable. We use <code>Hydra</code> for this purpose and it is useful to compose different configuration group.
-By making your hyper-paramters configurable, you can define an experiment by configuration file and run multiple experiments. By logging the configuration with the training statistics, it is easily to do cross model comparison and find out which configuration is useful for your model.</p>
+<h2 id="Hydra"><a href="https://hydra.cc/">Hydra</a><a class="anchor-link" href="#Hydra"> </a></h2><p><img src="https://github.com/noklam/mediumnok/blob/master/_notebooks/nb_img/bengali_4_hydra.png?raw=true" alt="Hydra for configuration composition"></p>
+<p>It is often a good idea to make your experiment configurable. We use <code>Hydra</code> for this purpose and it is useful to compose different configuration group.
+By making your hyper-paramters configurable, you can define an experiment by configuration files and run multiple experiments. By logging the configuration with the training statistics, it is easily to do cross model comparison and find out which configuration is useful for your model.</p>
 <p>I have written <a href="https://mediumnok.ml/coding/ml/2020/02/08/Config-Composition-with-Hydra-for-Machine-Learning-Experiments.html">an short exmaple</a> for how to use <strong>Hydra</strong>.</p>
 
 </div>
@@ -197,13 +197,13 @@ By making your hyper-paramters configurable, you can define an experiment by con
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><strong>wandb</strong> (Weight &amp; Biases) does a few things. It provide built-in function that automatcially log all your model statistics, while keeping it easy to log anything you want.</p>
+<p><strong>wandb</strong> (Weight &amp; Biases) does a few things. It provides built-in function that automatcially log all your model statistics, while keeping it easy to log anything you want.</p>
 <ul>
-<li>Compare configuration of different experiments to find out the model with best performance.</li>
+<li>Compare the configuration of different experiments to find out the model with the best performance.</li>
 <li>Built-in function for logging model weights and gradient for debugging purpose.</li>
 <li>Log any metrics that you want</li>
 </ul>
-<p>All of these combined to make collaboration experience better. It is really important to sync the progress frequently, and getting everyone result in a single platform make these conversations easier.</p>
+<p>All of these combined to make collaboration experience better. It is really important to sync the progress frequently and getting everyone results in a single platform makes these conversations easier.</p>
 
 </div>
 </div>
@@ -217,7 +217,7 @@ By making your hyper-paramters configurable, you can define an experiment by con
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Stochastic-Weight-Averaging"><a href="https://pytorch.org/blog/stochastic-weight-averaging-in-pytorch/">Stochastic Weight Averaging</a><a class="anchor-link" href="#Stochastic-Weight-Averaging"> </a></h1><p>This is a simple yet effective technique which give about 0.3-0.4% boost to my model. In simple words, it takes snahpshot of the model weights during training and take an average at the end. It provides a cheap way to do model ensemble while you are only training 1 model. This is important for this competition as it allows me to keep training time short enough to allow feedback within hours and reduce overfitting.)</p>
+<h1 id="Stochastic-Weight-Averaging"><a href="https://pytorch.org/blog/stochastic-weight-averaging-in-pytorch/">Stochastic Weight Averaging</a><a class="anchor-link" href="#Stochastic-Weight-Averaging"> </a></h1><p>This is a simple yet effective technique which give about 0.3-0.4% boost to my model. In simple words, it takes <strong>snahpshots</strong> of the model weights during training and takes an average at the end. It provides a cheap way to do models ensemble while you are only training 1 model. This is important for this competition as it allows me to keep training time short enough to allow feedback within hours and reduce overfitting.)</p>
 <h1><img src="https://github.com/noklam/mediumnok/blob/master/_notebooks/nb_img/bengali_5_swa.png?raw=true" alt="image.png" title="Stochastic Weight Averaging"></h1>
 
 </div>
@@ -225,21 +225,21 @@ By making your hyper-paramters configurable, you can define an experiment by con
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Larger-is-better-(image-size)">Larger is better (image size)<a class="anchor-link" href="#Larger-is-better-(image-size)"> </a></h1><p>We downsample our image size to 128x128 throughout the competition, as it makes model train faster and we believe most technique should be transferable to larger image size. It is important to keep your feedback loop short enough (hours if not days). You want your training data as small as possible, while keeping them transferable to your full dataset. Once we scale our image to full size, it takes almost 20 hours to train a single model, and we only have little chance to tune the hyper-parameters before the competition end.</p>
+<h1 id="Larger-is-better-(image-size)">Larger is better (image size)<a class="anchor-link" href="#Larger-is-better-(image-size)"> </a></h1><p>We downsample our image size to 128x128 throughout the competition, as it makes the model train faster and we believe most technique should be transferable to larger image size. It is important to keep your feedback loop short enough (hours if not days). You want your training data as small as possible while keeping them transferable to your full dataset. Once we scale our image to full size, it takes almost 20 hours to train a single model, and we only have little chance to tune the hyper-parameters before the competition end.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Debug-&amp;-Checkpoint">Debug &amp; Checkpoint<a class="anchor-link" href="#Debug-&amp;-Checkpoint"> </a></h1><p>There was a time we develop our model separately and we didn't sync our code for a while. We refactor our code during the time and it was a huge mistake. It turns out our pre-refactor code trains much better model and we introduce some unknown bug. It is almost impossible to find out as we changes multiple of things. It is so hard to debug a neural network and testing it throughly is important. Injecting a large amount of code may helps you to run an experiment earlier, but you may pay much more time to debug it afterward.</p>
+<h1 id="Debug-&amp;-Checkpoint">Debug &amp; Checkpoint<a class="anchor-link" href="#Debug-&amp;-Checkpoint"> </a></h1><p>There was a time we develop our model separately and we didn't sync our code for a while. We refactor our code during the time and it was a huge mistake. It turns out our pre-refactor code trains much better model and we introduce some unknown bug. It is almost impossible to find out as we change multiple of things. It is so hard to debug a neural network and testing it thoroughly  is important. Injecting a large amount of code may help you to run an experiment earlier, but you may pay much more time to debug it afterward.</p>
 <p>I think this is applicable even if you are working alone.</p>
 <ul>
 <li>Keep your changes small.</li>
-<li>Establish a baseline early, always do a regression test after a new features introduced (especially after code refactoring)</li>
+<li>Establish a baseline early, always do a regression test after a new feature introduced (especially after code refactoring)</li>
 <li>Create checkpoint to rollback anytime, especially if you are not working on it every day.</li>
 </ul>
-<p>Implementation is really the key of a competition (in real life too). It does not matter how great your model are, a tiny little bug could have damage your model silently</p>
+<p>Implementation is the key of Kaggle competition (in real life too). It does not matter how great your model is, a tiny little bug could have damaged your model silently</p>
 
 </div>
 </div>
@@ -248,7 +248,7 @@ By making your hyper-paramters configurable, you can define an experiment by con
 <div class="text_cell_render border-box-sizing rendered_html">
 <h1 id="Use-auxiliary-label">Use auxiliary label<a class="anchor-link" href="#Use-auxiliary-label"> </a></h1><p><img src="https://github.com/noklam/mediumnok/blob/master/_notebooks/nb_img/bengali_7.png?raw=true" alt="image.png" title="The extra grapheme label">
 As mentioned earlier, this competition requires to predict the <code>root</code>, <code>vowel</code> and the <code>consonant</code> part. In the training data, they actually provide the <code>grapheme</code> too. Lots of people saying that if you train with the <code>grapheme</code>, it improves the model greatly and get the recall &gt;98% easily.</p>
-<p>This is something we could not reproduce throughout the competition, we tried it in the very last minute but it does not seems to improve our model. It turns out lots of people are overfitting the data, as the testing dataset have much more unseen character.</p>
+<p>This is something we could not reproduce throughout the competition, we tried it in the very last minute but it does not seem to improve our model. It turns out lots of people are overfitting the data, as the testing dataset has much more unseen character.</p>
 <p>But it is still a great remark that training with labels that is not your final desired output could still be very useful.</p>
 
 </div>
@@ -256,45 +256,45 @@ As mentioned earlier, this competition requires to predict the <code>root</code>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Weight-loss">Weight loss<a class="anchor-link" href="#Weight-loss"> </a></h1><p>The distribution of the training dataset is very imbalance, but in order to get a good result, we need to predict every single class accurately (macro recall). To deal with this issue, we choose to use class weights, where a higher weight would be apply to rare sample. We don't have an ablation study for this, but it seems to closen the gap between accuracy &amp; recall, and allows us to train the model slightly better.</p>
+<h1 id="Weight-loss">Weight loss<a class="anchor-link" href="#Weight-loss"> </a></h1><p>The distribution of the training dataset is very imbalance, but to get a good result, we need to predict every single class accurately (macro recall). To deal with this issue, we choose to use class weights, where a higher weight would be applied to rare sample. We don't have an ablation study for this, but it seems to help closing the gap between accuracy &amp; recall and allows us to train the model slightly better.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Find-a-teammate!">Find a teammate!<a class="anchor-link" href="#Find-a-teammate!"> </a></h1><p>Lastly, please go and find a teammate if you can. It is very common to start a Kaggle competition, but not so easy to finish them. I have stopped for a month during the competition due to my job. It is really hard to get back to the competition after you stopped for so long. Getting a teammate helps motivating you and at the end it is a great learning experience for both of us.</p>
+<h1 id="Find-a-teammate!">Find a teammate!<a class="anchor-link" href="#Find-a-teammate!"> </a></h1><p>Lastly, please go and find a teammate if you can. It is very common to start a Kaggle competition, but not so easy to finish them. I have stopped for a month during the competition due to my job. It is really hard to get back to the competition after you stopped for so long. Getting a teammate helps to motivate you and in the end, it is a great learning experience for both of us.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Pretrain-Model">Pretrain Model<a class="anchor-link" href="#Pretrain-Model"> </a></h1><p>We also tried to use pretrained model, as it allows shorter training and give better performance by transfer learning (Using weights learn from a large dataset to as initial weight). It also give our model a bit improvement.</p>
+<h1 id="Pretrain-Model">Pretrain Model<a class="anchor-link" href="#Pretrain-Model"> </a></h1><p>We also tried to use a pretrained model, as it allows shorter training and give better performance by transfer learning (Using weights learn from a large dataset to as initial weight). It also gives our model a bit of improvement.</p>
 <ul>
 <li>Finetune the model head, while keeping other layers freeze (except BatchNorm layer).</li>
 <li>Unfreeze the model, train all the layers together.</li>
 </ul>
-<p>I also tried training the model directly with discriminating learning rate while not freezing any layer at all. It seems to perform similarily, so I end up just start training the entire model from the beginning.</p>
+<p>I also tried training the model directly with discriminating learning rate while not freezing any layer at all. It performs similarily to freezing finetuning , so I end up just start training the entire model from the beginning.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="If-the-code-works,-don't-touch-it">If the code works, don't touch it<a class="anchor-link" href="#If-the-code-works,-don't-touch-it"> </a></h1><p>This is probably not a good habit usually, but I suggest not to do it for a competition. We spends lots of time for debugging our code after code refactoring, and end up just rolling back to an older commit and cherry-picks new features. In a competition, you don't have enough time to test everything. You do not need a nice abstract class for all your features, some refactoring to keep your function/class clean is probably needed, but do not over spend your time on it. It is even common to jump between frameworks (you may find other's Kernel useful), so it is not possible structure your code perfectly.</p>
+<h1 id="If-the-code-works,-don't-touch-it">If the code works, don't touch it<a class="anchor-link" href="#If-the-code-works,-don't-touch-it"> </a></h1><p>This is probably not a good habit usually, but I suggest not to do it for a competition. We spent lots of time for debugging our code after code refactoring and end up just rolling back to an older commit and cherry-picks new features. In a competition, you don't have enough time to test everything. You do not need a nice abstract class for all your features, some refactoring to keep your function/class clean is probably needed, but do not overspend your time on it. It is even common to jump between frameworks (you may find other's Kernel useful), so it is not possible to structure your code perfectly.</p>
 <ul>
 <li>If someone have create a working submission script, use it!</li>
 <li>If someone have create a working pre-processing function, use it!</li>
 </ul>
-<p>Don't spend time on trying to optimize these code unless it is neccessary, it is often not worth it in a competition context. You should focus on adding new features, trying out new model, testing with new augmentation technique instead.</p>
+<p>Don't spend time on trying to optimize these code unless it is necessary, it is often not worth it in a competition context. You should focus on adding new features, trying out new model, testing with new augmentation technique instead.</p>
 
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Summary">Summary<a class="anchor-link" href="#Summary"> </a></h1><p>This is a great learning experience and refresh some of my outdated computer vision model knowledge. If you have never join a competition, find a friend and get started. If you have just finished one, try writing it out and share your experience. 😉</p>
+<h1 id="Summary">Summary<a class="anchor-link" href="#Summary"> </a></h1><p>This is a great learning experience and refreshes  some of my outdated computer vision model knowledge. If you have never joined a competition, find a friend and get started. If you have just finished one, try writing it out and share your experience. 😉</p>
 
 </div>
 </div>
