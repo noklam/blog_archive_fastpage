@@ -259,23 +259,26 @@ font-family: "Source Code Pro", "Menlo", "DejaVu Sans Mono", "Lucida Console", m
 //
 
 .site-nav .page-link{
-  color: #fbff00;
+  color: #fff;
   font-size: 14pt;
-  border-top: 5px solid #54008C;
-  border-bottom: 5px solid #54008C;
+  border-top: 5pt solid #54008C;
+  border-bottom: 5pt solid #54008C;
 }
 
 .site-nav .page-link:hover {
   color: #000000;
   background-color: #fff;
   border-color: #fff;
+  text-decoration: none;
 }
 
 .site-title, .site-title:visited {
-  color: #fbff00;
+  // color: #fbff00;
+  color: #fff;
 }
 
   .site-title:hover {
   color: #000000;
   background-color: #fff;
+  text-decoration: none;
 }
