@@ -1,6 +1,7 @@
 //Default Overrides For Styles In Minima 
 // If you wish to override any of this CSS, do so in _sass/minima/custom-styles.css
 
+
 .post img {
         display: block;
         // border:1px solid #021a40;
@@ -236,4 +237,45 @@ table {
   pre{
     white-space: pre-wrap;
   }
+}
+
+// mediumnok custom site-header
+.site-header {
+  border-top: 5px solid rgb(128, 86, 156);
+  border-bottom: 1px solid #54008C;
+  min-height: 55.95px;
+  line-height: 54px;
+  position: relative;
+  background-color: #54008C;
+}
+.site-title
+{color: white;
+font-family: "Source Code Pro", "Menlo", "DejaVu Sans Mono", "Lucida Console", monospace;}
+
+.page-link{
+color: white;
+font-family: "Source Code Pro", "Menlo", "DejaVu Sans Mono", "Lucida Console", monospace;
+}
+//
+
+.site-nav .page-link{
+  color: #fbff00;
+  font-size: 14pt;
+  border-top: 5px solid #54008C;
+  border-bottom: 5px solid #54008C;
+}
+
+.site-nav .page-link:hover {
+  color: #000000;
+  background-color: #fff;
+  border-color: #fff;
+}
+
+.site-title, .site-title:visited {
+  color: #fbff00;
+}
+
+  .site-title:hover {
+  color: #000000;
+  background-color: #fff;
 }
