@@ -431,13 +431,13 @@ table td { text-overflow: ellipsis; overflow: hidden; max-width: 15em; }
 
 .page-link { color: white; font-family: "Source Code Pro", "Menlo", "DejaVu Sans Mono", "Lucida Console", monospace; }
 
-.site-nav .page-link { color: #fbff00; font-size: 14pt; border-top: 5px solid #54008C; border-bottom: 5px solid #54008C; }
+.site-nav .page-link { color: #fff; font-size: 14pt; border-top: 5pt solid #54008C; border-bottom: 5pt solid #54008C; }
 
-.site-nav .page-link:hover { color: #000000; background-color: #fff; border-color: #fff; }
+.site-nav .page-link:hover { color: #000000; background-color: #fff; border-color: #fff; text-decoration: none; }
 
-.site-title, .site-title:visited { color: #fbff00; }
+.site-title, .site-title:visited { color: #fff; }
 
-.site-title:hover { color: #000000; background-color: #fff; }
+.site-title:hover { color: #000000; background-color: #fff; text-decoration: none; }
 
 /*-----------------------------------*/
 /*----- ADD YOUR STYLES BELOW -------*/
