@@ -24,7 +24,15 @@ I am generally interested in tools that increase productivity, please let me kno
 
 ## Visualization
 [Visualization (University of Washington)](https://observablehq.com/collection/@uwdata/visualization-curriculum)
+### Custom Matplotlib style for Presentation (Larger font size)
+https://raw.githubusercontent.com/noklam/mediumnok/master/_demo/python-viz/presentation.mplstyle
+```
+my_style = 'https://raw.githubusercontent.com/noklam/mediumnok/master/_demo/python-viz/presentation.mplstyle'
 
+with plt.style.context(['ggplot', my_style]):
+    make_scatter_plot()
+    make_line_plot()
+```
 
 ## Useful Python Tools
 * pyinstructment: for profiling python process, which is useful for optimization
