@@ -1,7 +1,9 @@
 axes.titlesize : 24
-axes.labelsize : 20
+axes.labelsize : 24
 lines.linewidth : 3
 lines.markersize : 10
-xtick.labelsize : 16
-ytick.labelsize : 16
-figure.figsize : 12, 9
+xtick.labelsize : 18
+ytick.labelsize : 18
+figure.figsize : 10, 6
+figure.titlesize: 24
+# font.family : Lato
