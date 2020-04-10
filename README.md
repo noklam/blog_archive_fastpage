@@ -30,7 +30,7 @@ I am generally interested in tools that increase productivity, please let me kno
 * pyinstructment: for profiling python process, which is useful for optimization
 * torchsnooper -> pytorch profiling, another profiling tool which is for PyTorch, no more print x.shape anymore.
 * knockknock notification: A single line of code that get you notifications when your 10 hours model training finally done. No more starring at the progress bar.
-
+* colorama: Colored printing in terminal (cross platform)
 ## Reviewing (any suggestions for code metric report/analysis library are welcome!)
 * [coala](https://github.com/coala/coala) - coala provides a unified command-line interface for linting and fixing all your code, regardless of the programming languages you use.
 * [radon](https://github.com/rubik/radon) - Radon is a Python tool that computes various metrics from the source code 
