@@ -1,0 +1,5 @@
+defaults:
+ - run_mode: train
+ - hyperparameter: base
+
+week: 8

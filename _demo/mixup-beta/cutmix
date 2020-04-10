@@ -1,0 +1,82 @@
+# np
+def rand_bbox(last_input_size, λ):
+    '''lambd is always between .5 and 1'''
+
+    W = last_input_size[-1]
+    H = last_input_size[-2]
+    cut_rat = np.sqrt(1. - λ) # 0. - .707
+    cut_w = np.int(W * cut_rat)
+    cut_h = np.int(H * cut_rat)
+
+    # uniform
+    cx = np.random.randint(W)
+    cy = np.random.randint(H)
+
+    bbx1 = np.clip(cx - cut_w // 2, 0, W)
+    bby1 = np.clip(cy - cut_h // 2, 0, H)
+    bbx2 = np.clip(cx + cut_w // 2, 0, W)
+    if len(last_input_size) == 4:
+        bby2 = np.clip(cy + cut_h // 2, 0, H)
+    else: bby2 = last_input_size[1]
+
+    return bbx1, bby1, bbx2, bby2
+
+
+
+# torch vectorize version
+
+def rand_bbox(last_itorchut_size, λ):
+    '''lambd is always between .5 and 1'''
+    N = last_itorchut_size[0]
+    W = last_itorchut_size[-1]
+    H = last_itorchut_size[-2]
+    cut_rat = torch.sqrt(torch.tensor(1) - λ) # 0. - .707
+    cut_w = (W * cut_rat).int()
+    cut_h = (H * cut_rat).int()
+
+    # uniform
+    cx = torch.randint(W,size=(N,))
+    cy = torch.randint(H,size=(N,))
+    bbx1 = torch.clamp(cx - cut_w // 2, 0, W)
+    bby1 = torch.clamp(cy - cut_h // 2, 0, H)
+    bbx2 = torch.clamp(cx + cut_w // 2, 0, W)
+    if len(last_itorchut_size) == 4:
+        bby2 = torch.clamp(cy + cut_h // 2, 0, H)
+    else: bby2 = last_itorchut_size[1]
+
+    return bbx1, bby1, bbx2, bby2
+
+# fastai2 Cutmix (for loop version)
+# export
+class Cutmix(Callback):
+    run_after,run_valid = [Normalize],False
+    def __init__(self, alpha=1): self.distrib = Beta(tensor(alpha), tensor(alpha))
+    def begin_fit(self):
+        self.stack_y = getattr(self.learn.loss_func, 'y_int', False)
+        if self.stack_y: self.old_lf,self.learn.loss_func = self.learn.loss_func,self.lf
+
+    def after_fit(self):
+        if self.stack_y: self.learn.loss_func = self.old_lf
+
+    def begin_batch(self):
+        lam = self.distrib.sample((self.y.size(0),)).squeeze().to(self.x.device)
+        lam = torch.stack([lam, 1-lam], 1)
+        self.lam = lam.min(1)[0]
+        
+        shuffle = torch.randperm(self.y.size(0)).to(self.x.device)
+        xb1,self.yb1 = tuple(L(self.xb).itemgot(shuffle)),tuple(L(self.yb).itemgot(shuffle))
+        nx_dims = len(self.x.size())
+        import pdb
+        
+        bbx1, bby1, bbx2, bby2 = rand_bbox(xb1[0].size(), self.lam)
+        for i , (bbx1_i, bby1_i, bbx2_i, bby2_i) in enumerate(zip(bbx1, bby1, bbx2, bby2)):
+            self.learn.xb[0][i,bby1_i:bby2_i, bbx1_i:bbx2_i] = xb1[0][i, bby1_i:bby2_i, bbx1_i:bbx2_i]
+        if not self.stack_y:
+            ny_dims = len(self.y.size())
+            self.learn.yb = tuple(L(self.yb1,self.yb).map_zip(torch.lerp,weight=unsqueeze(self.lam, n=ny_dims-1)))
+
+    def lf(self, pred, *yb):
+        if not self.training: return self.old_lf(pred, *yb)
+        with NoneReduce(self.old_lf) as lf:
+            loss = torch.lerp(lf(pred,*self.yb1), lf(pred,*yb), self.lam)
+        return reduce_loss(loss, getattr(self.old_lf, 'reduction', 'mean'))
