@@ -106,7 +106,7 @@
   
       ,"page1": {
           "title": "About Me",
-          "content": "Not Great, Not Bad, Just Medium. . A data scientist in Hong Kong. This is a space for learning, sharing and discussing, I also blog on Medium (https://medium.com/@nokkk) occassionally. . Some other post published on Medium before . Jupyter Superpower — Interactive Visualization Combo with Python | ADAM in 2019 — What’s the next ADAM optimizer | Uncertainty estimation for Neural Network — Dropout as Bayesian Approximation | Jupyter Notebook Tricks for Data Science that Enhance your efficiency | Projects: . A container image classifier | NeurIPS Explorer with streamlit | This website is powered by fastpages 1. . a blogging platform that natively supports Jupyter notebooks in addition to other formats. &#8617; . |",
+          "content": "This is where you put the contents of your About page. Like all your pages, it’s in Markdown format. . This website is powered by fastpages 1. . a blogging platform that natively supports Jupyter notebooks in addition to other formats. &#8617; . |",
           "url": "https://mediumnok.ml/about/",
           "relUrl": "/about/",
           "date": ""
@@ -141,6 +141,20 @@
   
 
   
+  
+
+  
+  
+
+  
+      ,"page11": {
+          "title": "",
+          "content": "Sitemap: {{ “sitemap.xml” | absolute_url }} | .",
+          "url": "https://mediumnok.ml/robots.txt",
+          "relUrl": "/robots.txt",
+          "date": ""
+      }
+      
   
 
 }
