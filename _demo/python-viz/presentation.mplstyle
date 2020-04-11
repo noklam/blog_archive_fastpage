@@ -6,4 +6,4 @@ xtick.labelsize : 18
 ytick.labelsize : 18
 figure.figsize : 10, 6
 figure.titlesize: 24
-# font.family : Lato
+font.name: Lato
