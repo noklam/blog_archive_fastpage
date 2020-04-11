@@ -1,7 +1,7 @@
 ---
 keywords: fastai
 description: Do you know what differentiate a Powerpoint prepared by data scientist and a Business Analyst? Your Charts! But not the good way.
-title: Hey Data Scientist, I can't read your chart
+title: Hey Data Scientist, Use a Larger Font Size
 toc: true 
 badges: true
 comments: true
