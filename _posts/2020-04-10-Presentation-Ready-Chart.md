@@ -463,7 +463,7 @@ or from the matplotlib source distribution
 </div>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>I understand how painful it is to customize every chart, you need to get a right title, adjust font size, add label, legends. It is tedious yet very important for communications. I hope this tips can help you add a bit of personality into your presentation and prepare a better chart next time.</p>
+<p>I hope this blog helps you to prepare Powerpoint-ready charts better, happy coding!</p>
 
 </div>
 </div>
