@@ -8,4 +8,4 @@ figure.figsize : 10, 6
 figure.titlesize: 24
 font.name: Lato
 legend.fontsize: 18
-axes.titlelocation: left
+axes.titlelocation: left # Require matplotlib >= 3.2.1
