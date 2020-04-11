@@ -7,3 +7,5 @@ ytick.labelsize : 18
 figure.figsize : 10, 6
 figure.titlesize: 24
 font.name: Lato
+legend.fontsize: 18
+axes.titlelocation: left
