@@ -59,8 +59,8 @@
         ,"post5": {
             "title": "Hydra - Config Composition for Machine Learning Project",
             "content": "GitHub: https://github.com/noklam/notadatascientist/tree/master/demo/hydra-example . Machine learning project involves large number of hyperparmeters. In many case you could have multiple config, e.g. differnet dataset, database connection, train/test mode. hydra provide a simple Command Line Interface that is useful for composing different experiment configs. In essence, it compose different files to a large config setting. It offers you the common Object Oriented Programming with YAML file. Allow you to have clear structure of configurations. . Assume you have a config.yaml like this, where run_mode and hyperparmeter are separate folder to hold different choice of parameters. You can set defaults for them with the following structure. . Folder Structure . config.yaml demo.py run_mode - train.yaml - test.yaml hyperparmeter - base.yaml . config.yaml . defaults: - run_mode: train - hyperparameter: base . The benefit of using such approach is that it makes comparsion of experiments much easier. Instead of going through the parameters list, you only focus on the argument(the difference). It helps organize machine learning results and ease a lot of pain in tracking the model performance. . import hydra from omegaconf import DictConfig @hydra.main(config_path=&quot;config.yaml&quot;) def my_app(cfg : DictConfig) -&gt; None: print(cfg.pretty()) if __name__ == &quot;__main__&quot;: my_app() . python demo.py . gamma: 0.01 learning_rate: 0.01 run_mode: train week: 8 . For example, with a simple example with 4 parameters only, you can simply run the experiment with default . Override default parameters . You can easily overrite the learning rate with an argument, it would be very clear that learning rate is the only changing parameter with this approach . python demo.py learning_rate=0.1 . gamma: 0.01 learning_rate: 0.1 run_mode: train week: 8 . In somecase, you may only need to test a model instead of changing it. . python demo.py learning_rate=0.1 run_mode=test . gamma: 0.01 learning_rate: 0.1 run_mode: test week: 8 . It also safeguard your experiment if you pass in some parameters that is not exist . !python demo.py typo=0.2 . Traceback (most recent call last): File &quot;demo.py&quot;, line 7, in &lt;module&gt; my_app() &quot;C: ProgramData Anaconda3 lib site-packages omegaconf dictconfig.py&quot;, line 41, in __setitem__ &quot;Accessing unknown key in a struct : {}&quot;.format(self.get_full_key(key)) KeyError: &#39;Accessing unknown key in a struct : typo&#39; . –Multirun, Combination of parameters . In case you want to gridsearch paramters, which is very common in machine learning, you can use an additional argument multirun to do that easily. . !python demo.py --multirun learning_rate=0.1,0.01,0.001 gamma=0.1,0.01 . [2020-02-08 19:28:46,095][HYDRA] Sweep output dir : multirun/2020-02-08/19-28-46 [2020-02-08 19:28:46,102][HYDRA] Launching 6 jobs locally [2020-02-08 19:28:46,103][HYDRA] #0 : learning_rate=0.1 gamma=0.1 gamma: 0.1 learning_rate: 0.1 run_mode: train week: 8 [2020-02-08 19:28:46,192][HYDRA] #1 : learning_rate=0.1 gamma=0.01 gamma: 0.01 learning_rate: 0.1 run_mode: train week: 8 ... SKIPPED .",
-            "url": "https://mediumnok.ml/coding/ml/2020/02/08/Config-Composition-with-Hydra-for-Machine-Learning-Experiments.html",
-            "relUrl": "/coding/ml/2020/02/08/Config-Composition-with-Hydra-for-Machine-Learning-Experiments.html",
+            "url": "https://mediumnok.ml/python/ml/2020/02/08/Config-Composition-with-Hydra-for-Machine-Learning-Experiments.html",
+            "relUrl": "/python/ml/2020/02/08/Config-Composition-with-Hydra-for-Machine-Learning-Experiments.html",
             "date": " • Feb 8, 2020"
         }
         
@@ -81,8 +81,8 @@
         ,"post7": {
             "title": "plyer - Desktop Notification in Python",
             "content": "from plyer import notification import random class DesktopNotification: @staticmethod def notify(title=&#39;Hey~&#39;, message=&#39;Done!&#39;, timeout=10): ls = [&#39;👍&#39;,&#39;✔&#39;,&#39;✌&#39;,&#39;👌&#39;,&#39;👍&#39;,&#39;😎&#39;] notification.notify( title = title , message = random.choice(ls) * 3 + &#39; &#39; + message, timeout = timeout # seconds ) if __name__ == &#39;__main__&#39;: DesktopNotification.notify() . You could add this simple code block to notify you when the program is done! A desktop notification will be prompt on the bottom right corner in Window. .",
-            "url": "https://mediumnok.ml/coding/2019/10/19/Deskto-Notification.html",
-            "relUrl": "/coding/2019/10/19/Deskto-Notification.html",
+            "url": "https://mediumnok.ml/python/2019/10/19/Deskto-Notification.html",
+            "relUrl": "/python/2019/10/19/Deskto-Notification.html",
             "date": " • Oct 19, 2019"
         }
         
@@ -104,17 +104,6 @@
   
 
   
-      ,"page2": {
-          "title": "fastai-x",
-          "content": "fastai-related . 1st post for fastai-course v4 .",
-          "url": "https://mediumnok.ml/fastai-x/",
-          "relUrl": "/fastai-x/",
-          "date": ""
-      }
-      
-  
-
-  
 
   
   
@@ -136,7 +125,7 @@
   
 
   
-      ,"page11": {
+      ,"page10": {
           "title": "",
           "content": "Sitemap: {{ “sitemap.xml” | absolute_url }} | .",
           "url": "https://mediumnok.ml/robots.txt",
