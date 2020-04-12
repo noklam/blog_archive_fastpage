@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Beyond Unit Testing - What is Property-based Testing? | mediumnok</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="Beyond Unit Testing - What is Property-based Testing?" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Do you know what differentiate a Powerpoint prepared by data scientist and a Business Analyst? Your Charts! But not the good way." />
+<meta property="og:description" content="Do you know what differentiate a Powerpoint prepared by data scientist and a Business Analyst? Your Charts! But not the good way." />
+<link rel="canonical" href="https://mediumnok.ml/python/2020/04/12/Property-based-testing-in-Python.html" />
+<meta property="og:url" content="https://mediumnok.ml/python/2020/04/12/Property-based-testing-in-Python.html" />
+<meta property="og:site_name" content="mediumnok" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-04-12T00:00:00-05:00" />
+<script type="application/ld+json">
+{"description":"Do you know what differentiate a Powerpoint prepared by data scientist and a Business Analyst? Your Charts! But not the good way.","dateModified":"2020-04-12T00:00:00-05:00","datePublished":"2020-04-12T00:00:00-05:00","headline":"Beyond Unit Testing - What is Property-based Testing?","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://mediumnok.ml/python/2020/04/12/Property-based-testing-in-Python.html"},"url":"https://mediumnok.ml/python/2020/04/12/Property-based-testing-in-Python.html","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://mediumnok.ml/feed.xml" title="mediumnok" /><!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-83544344-5','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+<link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico"><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Beyond Unit Testing - What is Property-based Testing? | mediumnok</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="Beyond Unit Testing - What is Property-based Testing?" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Do you know what differentiate a Powerpoint prepared by data scientist and a Business Analyst? Your Charts! But not the good way." />
+<meta property="og:description" content="Do you know what differentiate a Powerpoint prepared by data scientist and a Business Analyst? Your Charts! But not the good way." />
+<link rel="canonical" href="https://mediumnok.ml/python/2020/04/12/Property-based-testing-in-Python.html" />
+<meta property="og:url" content="https://mediumnok.ml/python/2020/04/12/Property-based-testing-in-Python.html" />
+<meta property="og:site_name" content="mediumnok" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-04-12T00:00:00-05:00" />
+<script type="application/ld+json">
+{"description":"Do you know what differentiate a Powerpoint prepared by data scientist and a Business Analyst? Your Charts! But not the good way.","dateModified":"2020-04-12T00:00:00-05:00","datePublished":"2020-04-12T00:00:00-05:00","headline":"Beyond Unit Testing - What is Property-based Testing?","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://mediumnok.ml/python/2020/04/12/Property-based-testing-in-Python.html"},"url":"https://mediumnok.ml/python/2020/04/12/Property-based-testing-in-Python.html","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+<link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
+<link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css"><link type="application/atom+xml" rel="alternate" href="https://mediumnok.ml/feed.xml" title="mediumnok" /><!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-83544344-5','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head><body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">mediumnok</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About Me</a><a class="page-link" href="/search/">Search</a><a class="page-link" href="/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Beyond Unit Testing - What is Property-based Testing?</h1><p class="page-description">Do you know what differentiate a Powerpoint prepared by data scientist and a Business Analyst? Your Charts! But not the good way.</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-04-12T00:00:00-05:00" itemprop="datePublished">
+        Apr 12, 2020
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      6 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/categories/#python">python</a>
+        
+      
+      </p>
+    
+
+    
+      
+        <div class="pb-5 d-flex flex-wrap flex-justify-end">
+          <div class="px-2">
+
+    <a href="https://github.com/noklam/mediumnok/tree/master/_notebooks/2020-04-12-Property-based-testing-in-Python.ipynb" role="button" target="_blank">
+<img class="notebook-badge-image" src="/assets/badges/github.svg" alt="View On GitHub">
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://mybinder.org/v2/gh/noklam/mediumnok/master?filepath=_notebooks%2F2020-04-12-Property-based-testing-in-Python.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/assets/badges/binder.svg" alt="Open In Binder"/>
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://colab.research.google.com/github/noklam/mediumnok/blob/master/_notebooks/2020-04-12-Property-based-testing-in-Python.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/assets/badges/colab.svg" alt="Open In Colab"/>
+    </a>
+</div>
+        </div>
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+<li class="toc-entry toc-h1"><a href="#Start-with-a-simple-function">Start with a simple function </a></li>
+<li class="toc-entry toc-h1"><a href="#strategy,-your-auto-genenerated-input-for-unit-test">strategy, your auto-genenerated input for unit test </a></li>
+</ul><!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/2020-04-12-Property-based-testing-in-Python.ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-hide</span>
+<span class="c1"># https://hypothesis.readthedocs.io/en/latest/quickstart.html</span>
+<span class="o">!</span>pip install hypothesis 
+<span class="o">%</span><span class="k">load_ext</span> ipython_pytest
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+    </details>
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Requirement already satisfied: hypothesis in c:\programdata\anaconda3\lib\site-packages (5.8.1)
+Requirement already satisfied: sortedcontainers&lt;3.0.0,&gt;=2.1.0 in c:\programdata\anaconda3\lib\site-packages (from hypothesis) (2.1.0)
+Requirement already satisfied: attrs&gt;=19.2.0 in c:\programdata\anaconda3\lib\site-packages (from hypothesis) (19.2.0)
+The ipython_pytest extension is already loaded. To reload it, use:
+  %reload_ext ipython_pytest
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Unit Testing is a common technique for software engineering. Even if you are not writing a unit test explicitly, you are still doing unit testing, as your function should at least works for what you intended. You give an input <em>x</em> to a function, it should return <em>y</em>, simple as that.</p>
+<p>For example, imagine we have a function like this.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">add_ints</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">x1</span> <span class="o">+</span> <span class="n">x2</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Case 1</span>
+<span class="n">add_ints</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>2</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Case 2</span>
+<span class="n">add_ints</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="s1">'2'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_text output_error">
+<pre>
+<span class="ansi-red-intense-fg ansi-bold">---------------------------------------------------------------------------</span>
+<span class="ansi-red-intense-fg ansi-bold">TypeError</span>                                 Traceback (most recent call last)
+<span class="ansi-green-intense-fg ansi-bold">&lt;ipython-input-59-99ea9d9c8984&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+<span class="ansi-green-fg">      1</span> <span class="ansi-red-intense-fg ansi-bold"># Case 2</span>
+<span class="ansi-green-intense-fg ansi-bold">----&gt; 2</span><span class="ansi-yellow-intense-fg ansi-bold"> </span>add_ints<span class="ansi-yellow-intense-fg ansi-bold">(</span><span class="ansi-cyan-intense-fg ansi-bold">1</span><span class="ansi-yellow-intense-fg ansi-bold">,</span><span class="ansi-blue-intense-fg ansi-bold">'2'</span><span class="ansi-yellow-intense-fg ansi-bold">)</span>
+
+<span class="ansi-green-intense-fg ansi-bold">&lt;ipython-input-57-d4599be2ffda&gt;</span> in <span class="ansi-cyan-fg">add_ints</span><span class="ansi-blue-intense-fg ansi-bold">(x1, x2)</span>
+<span class="ansi-green-fg">      1</span> <span class="ansi-green-intense-fg ansi-bold">def</span> add_ints<span class="ansi-yellow-intense-fg ansi-bold">(</span>x1<span class="ansi-yellow-intense-fg ansi-bold">,</span> x2<span class="ansi-yellow-intense-fg ansi-bold">)</span><span class="ansi-yellow-intense-fg ansi-bold">:</span>
+<span class="ansi-green-intense-fg ansi-bold">----&gt; 2</span><span class="ansi-yellow-intense-fg ansi-bold">     </span><span class="ansi-green-intense-fg ansi-bold">return</span> x1 <span class="ansi-yellow-intense-fg ansi-bold">+</span> x2
+
+<span class="ansi-red-intense-fg ansi-bold">TypeError</span>: unsupported operand type(s) for +: 'int' and 'str'</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Case 3</span>
+<span class="n">add_ints</span><span class="p">(</span><span class="s1">'2'</span><span class="p">,</span> <span class="s1">'2'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The first two cases are expected behaviors, but the last case is a side-effect of how Python works. We should probably checks the input are numbers, otherwise we should throw error explicitly. Now, checking function behave properly with intend use is easy, to test the opposite is much harder. You have to test a lot of edge case, which is much harder and make your test verbose.</p>
+<p>In this article, I will introduce a library called <code>Hypothesis</code> that does property-based testing. If none of this make sense to you, please bare with me, I will explain with simple examples. I found the name of <code>Hypothesis</code> and property-based testing isn't adding a lot of information, but they are useful.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>Hypothesis</strong> comes in handy that it generated artificial input to make your test fails. Instead of specifying an input, you specify what kind of input you want to test loosely. For example, if you expect your input is number, often you may want to test when the value is negative, positive, a floating point number, or if it exceeds certain range. This list of condition can expands quickly, and <strong>Hypothesis</strong> make this easier.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Start-with-a-simple-function">
+<a class="anchor" href="#Start-with-a-simple-function" aria-hidden="true"><span class="octicon octicon-link"></span></a>Start with a simple function<a class="anchor-link" href="#Start-with-a-simple-function"> </a>
+</h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Let's stick with our simple <code>add_ints</code> function above. To keep it simple, let test for this 3 cases first.</p>
+<ol>
+<li>Adding two number -&gt; Expect Pass</li>
+<li>Adding number and string -&gt; Expect Fail</li>
+<li>Adding two number -&gt; Expect Fail</li>
+</ol>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">pytest</span> 
+# ipython magic to run pytest within a cell. This whole blog is written in a Jupyter Notebook!
+# https://github.com/akaihola/ipython_pytest/blob/master/ipython_pytest.py
+
+import pytest
+
+def add_ints(x1, x2):
+    return x1 + x2
+
+def test_add_ints():
+    assert add_ints(1,1) == 2
+
+@pytest.mark.xfail()
+def test_add_ints_fail():
+    assert add_ints(1,'2')
+
+@pytest.mark.xfail(strict=True)
+def test_add_ints_string():
+    assert add_ints('2', '2')
+    
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>============================= test session starts =============================
+platform win32 -- Python 3.7.4, pytest-5.2.1, py-1.8.0, pluggy-0.13.0
+rootdir: C:\Users\CHANNO\AppData\Local\Temp\tmp79u2a6x6
+plugins: hypothesis-5.8.1, arraydiff-0.3, doctestplus-0.4.0, openfiles-0.4.0, remotedata-0.3.2
+collected 3 items
+
+_ipytesttmp.py .xF                                                       [100%]
+
+================================== FAILURES ===================================
+____________________________ test_add_ints_string _____________________________
+[XPASS(strict)] 
+=================== 1 failed, 1 passed, 1 xfailed in 0.12s ====================
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In <code>pytest</code>, you can use a mark <code>@pytest.mark.xfail</code> to annotate a function is expected to fail the test. We have 1 pass, 1xfailed, 1 failed.</p>
+<p><code>_ipytesttmp.py .xF</code>
+indicates the last test is failed. Let's try to fix it by throwing an error is input type is not a number.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">pytest</span> 
+# ipython magic to run pytest within a cell. This whole blog is written in a Jupyter Notebook!
+# https://github.com/akaihola/ipython_pytest/blob/master/ipython_pytest.py
+
+import pytest
+
+def add_ints(x1, x2):
+    if isinstance(x1, int) and isinstance(x2, int):
+        return x1 + x2
+    else:
+        raise TypeError(f'Make sure your input is a number x1 {type(x1)}, x2 {type(x2)}')
+    
+
+def test_add_ints():
+    assert add_ints(1,1) == 2
+
+@pytest.mark.xfail()
+def test_add_ints_fail():
+    assert add_ints(1,'2')
+
+@pytest.mark.xfail(strict=True)
+def test_add_ints_string():
+    assert add_ints('2', '2')
+    
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>============================= test session starts =============================
+platform win32 -- Python 3.7.4, pytest-5.2.1, py-1.8.0, pluggy-0.13.0
+rootdir: C:\Users\CHANNO\AppData\Local\Temp\tmpfrh2uipy
+plugins: hypothesis-5.8.1, arraydiff-0.3, doctestplus-0.4.0, openfiles-0.4.0, remotedata-0.3.2
+collected 3 items
+
+_ipytesttmp.py .xx                                                       [100%]
+
+======================== 1 passed, 2 xfailed in 0.10s =========================
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Okay, now we checks if input are integers. In reality, this if often an iterative process. You start with coming up with test cases, then every now and then, you hit some edge cases and you add that into your collections of test cases.</p>
+<p>How can we make out test cases more robust to input? <code>Hypothesis</code> is exactly the tool you need.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="strategy,-your-auto-genenerated-input-for-unit-test">
+<a class="anchor" href="#strategy,-your-auto-genenerated-input-for-unit-test" aria-hidden="true"><span class="octicon octicon-link"></span></a><code>strategy</code>, your auto-genenerated input for unit test<a class="anchor-link" href="#strategy,-your-auto-genenerated-input-for-unit-test"> </a>
+</h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><code>strategy</code> is your input for unit test. Instead of specify a number, or a string, you specify what kind of input you want, and <code>Hypothesis</code> wouuld take care the rest of it. You can even composite different <code>strategies</code> to form more complicated input.</p>
+<p>But let's keep it simple, we would just use integer for this demo.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">hypothesis</span> <span class="kn">import</span> <span class="n">strategies</span> <span class="k">as</span> <span class="n">st</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">pytest</span> 
+# ipython magic to run pytest within a cell. This whole blog is written in a Jupyter Notebook!
+# https://github.com/akaihola/ipython_pytest/blob/master/ipython_pytest.py
+
+import pytest
+from hypothesis import given
+from hypothesis import strategies as st
+
+def add_ints(x1, x2):
+    if isinstance(x1, int) and isinstance(x2, int):
+        return x1 + x2
+    else:
+        raise TypeError(f'Make sure your input is a number x1 {type(x1)}, x2 {type(x2)}')
+    
+@given(st.integers(), st.integers())
+def test_add_ints(x1, x2):
+    assert add_ints(x1, x2)
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>============================= test session starts =============================
+platform win32 -- Python 3.7.4, pytest-5.2.1, py-1.8.0, pluggy-0.13.0
+rootdir: C:\Users\CHANNO\AppData\Local\Temp\tmpmdbi_h6f
+plugins: hypothesis-5.8.1, arraydiff-0.3, doctestplus-0.4.0, openfiles-0.4.0, remotedata-0.3.2
+collected 1 item
+
+_ipytesttmp.py F                                                         [100%]
+
+================================== FAILURES ===================================
+________________________________ test_add_ints ________________________________
+
+    @given(st.integers(), st.integers())
+&gt;   def test_add_ints(x1, x2):
+
+_ipytesttmp.py:15: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+
+x1 = 0, x2 = 0
+
+    @given(st.integers(), st.integers())
+    def test_add_ints(x1, x2):
+&gt;       assert add_ints(x1, x2)
+E       assert 0
+E        +  where 0 = add_ints(0, 0)
+
+_ipytesttmp.py:16: AssertionError
+--------------------------------- Hypothesis ----------------------------------
+Falsifying example: test_add_ints(
+    x1=0, x2=0,
+)
+============================== 1 failed in 0.30s ==============================
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The test was simple, as should pass as long as no error was thrown. Look what <code>Hypothesis</code> found, it found when both x1, x2=0, the assertion will fail, because we are asserting 0 + 0 = 0, thus evaluated as False in Python.</p>
+<p>Hence, I modified my test to not assert anything, it should just keep silent as long as no error is thrown.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nd">@given</span><span class="p">(</span><span class="n">st</span><span class="o">.</span><span class="n">integers</span><span class="p">(),</span> <span class="n">st</span><span class="o">.</span><span class="n">integers</span><span class="p">())</span>
+<span class="k">def</span> <span class="nf">test_add_ints</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">):</span>
+    <span class="k">assert</span> <span class="n">add_ints</span><span class="p">(</span><span class="n">x1</span><span class="p">,</span> <span class="n">x2</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%</span><span class="k">pytest</span> 
+# ipython magic to run pytest within a cell. This whole blog is written in a Jupyter Notebook!
+# https://github.com/akaihola/ipython_pytest/blob/master/ipython_pytest.py
+
+import pytest
+from hypothesis import given
+from hypothesis import strategies as st
+
+def add_ints(x1, x2):
+    if isinstance(x1, int) and isinstance(x2, int):
+        return x1 + x2
+    else:
+        raise TypeError(f'Make sure your input is a number x1 {type(x1)}, x2 {type(x2)}')
+    
+@given(st.integers(), st.integers())
+def test_add_ints(x1, x2):
+    add_ints(x1, x2)
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>============================= test session starts =============================
+platform win32 -- Python 3.7.4, pytest-5.2.1, py-1.8.0, pluggy-0.13.0
+rootdir: C:\Users\CHANNO\AppData\Local\Temp\tmpwicd08ny
+plugins: hypothesis-5.8.1, arraydiff-0.3, doctestplus-0.4.0, openfiles-0.4.0, remotedata-0.3.2
+collected 1 item
+
+_ipytesttmp.py .                                                         [100%]
+
+============================== 1 passed in 0.25s ==============================
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Yes, now our test finally pass.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+
+
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="noklam/mediumnok"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/python/2020/04/12/Property-based-testing-in-Python.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Explaining ideas one post at a time</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/noklam" title="noklam"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/mediumnok" title="mediumnok"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
