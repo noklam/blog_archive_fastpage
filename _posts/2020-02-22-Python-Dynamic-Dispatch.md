@@ -8,7 +8,7 @@ badges: true
 comments: true
 categories: [fastai-x]
 nb_path: _notebooks/2020-02-22-Python-Dynamic-Dispatch.ipynb
-layout: notebook
+layout: python
 ---
 
 <!--

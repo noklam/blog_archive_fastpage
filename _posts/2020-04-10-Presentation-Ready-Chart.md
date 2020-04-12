@@ -8,7 +8,7 @@ comments: true
 categories: [visualization]
 image: images/powerpoint-ready-chart.png
 nb_path: _notebooks/2020-04-10-Presentation-Ready-Chart.ipynb
-layout: notebook
+layout: python
 ---
 
 <!--
