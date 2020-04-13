@@ -6,9 +6,9 @@ toc: false
 branch: master
 badges: true
 comments: true
-categories: [fastai-x]
+categories: ["python", fastai]
 nb_path: _notebooks/2020-02-22-Python-Dynamic-Dispatch.ipynb
-layout: python
+layout: notebook
 ---
 
 <!--
