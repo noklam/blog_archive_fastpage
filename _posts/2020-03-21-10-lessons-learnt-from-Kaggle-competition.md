@@ -6,10 +6,9 @@ toc: true
 branch: master
 badges: true
 comments: true
-categories: [ml, Kaggle]
+categories: [ML]
 image: images/bengali_00_header.png
 nb_path: _notebooks/2020-03-21-10-lessons-learnt-from-Kaggle-competition.ipynb
-layout: ml
 ---
 
 <!--
