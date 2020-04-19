@@ -5,10 +5,10 @@ title: Hey Data Scientist, Use a Larger Font Size
 toc: true 
 badges: true
 comments: true
-categories: [visualization]
+categories: ["python"]
 image: images/powerpoint-ready-chart.png
 nb_path: _notebooks/2020-04-10-Presentation-Ready-Chart.ipynb
-layout: python
+layout: notebook
 ---
 
 <!--
@@ -27,6 +27,14 @@ layout: python
 </div>
     {% endraw %}
 
+<div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img src="/images/copied_from_nb/nb_img/powerpoint-ready-chart.png" alt="Large Font Size Title" title="Over-exaggerated title"></p>
+<p>In reality, you probably don't need a title as big as this one. But using library defautls often is not the best choice.</p>
+
+</div>
+</div>
+</div>
     {% raw %}
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -36,7 +44,7 @@ layout: python
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#collapse-hide</span>
 <span class="k">def</span> <span class="nf">make_scatter_plot</span><span class="p">():</span>
     <span class="n">num_points</span> <span class="o">=</span> <span class="mi">100</span>
     <span class="n">gradient</span> <span class="o">=</span> <span class="mf">0.5</span>
@@ -213,16 +221,16 @@ Luckily, it is easy to do with the following tips.</p>
 <div class="cell border-box-sizing text_cell rendered"><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Custom <code>presentation</code> theme</p>
-<div class="highlight"><pre><span></span><span class="n">axes</span><span class="o">.</span><span class="n">titlesize</span> <span class="p">:</span> <span class="mi">24</span>
-<span class="n">axes</span><span class="o">.</span><span class="n">labelsize</span> <span class="p">:</span> <span class="mi">24</span>
-<span class="n">axes</span><span class="o">.</span><span class="n">location</span><span class="p">:</span> <span class="s1">&#39;left&#39;</span>
-<span class="n">lines</span><span class="o">.</span><span class="n">linewidth</span> <span class="p">:</span> <span class="mi">3</span>
-<span class="n">lines</span><span class="o">.</span><span class="n">markersize</span> <span class="p">:</span> <span class="mi">10</span>
-<span class="n">xtick</span><span class="o">.</span><span class="n">labelsize</span> <span class="p">:</span> <span class="mi">18</span>
-<span class="n">ytick</span><span class="o">.</span><span class="n">labelsize</span> <span class="p">:</span> <span class="mi">18</span>
-<span class="n">figure</span><span class="o">.</span><span class="n">figsize</span> <span class="p">:</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">6</span>
-<span class="n">figure</span><span class="o">.</span><span class="n">titlesize</span><span class="p">:</span> <span class="mi">24</span>
-</pre></div>
+
+<pre><code>axes.titlesize : 24
+axes.labelsize : 24
+axes.location: 'left'
+lines.linewidth : 3
+lines.markersize : 10
+xtick.labelsize : 18
+ytick.labelsize : 18
+figure.figsize : 10, 6
+figure.titlesize: 24</code></pre>
 
 </div>
 </div>
