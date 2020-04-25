@@ -6,6 +6,6 @@ xtick.labelsize : 18
 ytick.labelsize : 18
 figure.figsize : 10, 6
 figure.titlesize: 24
-font.name: Lato
+font.sans-serif: Lato-Regular
 legend.fontsize: 18
 axes.titlelocation: left # Require matplotlib >= 3.2.1
