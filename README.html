@@ -1,0 +1,92 @@
+<h1 id="readme">README</h1>
+
+<p>A catalog of various machine learning topics.</p>
+
+<ul>
+  <li><a href="./#graph-neural-network-basics">Graph Neural Network Basics</a>
+    <ul>
+      <li><a href="./#understand-what-is-the-weird-dsup-12supldsup-12sup">Understand What is the weird D-1/2LD-1/2</a></li>
+      <li><a href="./#supplement-chinese-reading">Supplement Chinese Reading</a></li>
+    </ul>
+  </li>
+  <li><a href="./#time-series-forecast">Time Series Forecast</a>
+    <ul>
+      <li><a href="./#motivation">Motivation</a></li>
+      <li><a href="./#forecasting-methods">Forecasting Methods</a>
+        <ul>
+          <li><a href="./#statistical-method">Statistical Method</a></li>
+          <li><a href="./#machine-learning">Machine Learning</a></li>
+          <li><a href="./#deep-neural-network">Deep Neural Network</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="./#prediction-interval">Prediction Interval</a>
+    <ul>
+      <li><a href="./#python-time-series-forecasting-library">Python Time Series Forecasting Library</a></li>
+    </ul>
+  </li>
+  <li><a href="./#contribution">Contribution</a></li>
+  <li><a href="./#under-review">Under Review</a></li>
+</ul>
+
+<h2 id="graph-neural-network-basics">Graph Neural Network Basics</h2>
+
+<h3 id="understand-what-is-the-weird-d-12ld-12">Understand What is the weird D-1/2LD-1/2</h3>
+
+<ol>
+  <li><a href="https://math.stackexchange.com/questions/1113467/why-laplacian-matrix-need-normalization-and-how-come-the-sqrt-of-degree-matrix">spectral graph theory - Why Laplacian Matrix need normalization and how come the sqrt of Degree Matrix? - Mathematics Stack Exchange</a></li>
+  <li><a href="https://math.stackexchange.com/questions/1113467/why-laplacian-matrix-need-normalization-and-how-come-the-sqrt-of-degree-matrix">spectral graph theory - Why Laplacian Matrix need normalization and how come the sqrt of Degree Matrix? - Mathematics Stack Exchange</a></li>
+  <li><a href="https://www.quora.com/Whats-the-intuition-behind-a-Laplacian-matrix-Im-not-so-much-interested-in-mathematical-details-or-technical-applications-Im-trying-to-grasp-what-a-laplacian-matrix-actually-represents-and-what-aspects-of-a-graph-it-makes-accessible">What’s the intuition behind a Laplacian matrix? I’m not so much interested in mathematical details or technical applications. I’m trying to grasp what a laplacian matrix actually represents, and what aspects of a graph it makes accessible. - Quora</a></li>
+</ol>
+
+<h3 id="supplement-chinese-reading">Supplement Chinese Reading</h3>
+
+<ol>
+  <li><a href="https://www.zhihu.com/question/54504471/answer/630639025">Heat Diffusion</a></li>
+  <li><a href="https://www.zhihu.com/question/54504471/answer/611222866">GCN use edge to agg node information</a></li>
+  <li><a href="https://zhuanlan.zhihu.com/p/55191463">How to do batch training with GCN</a></li>
+</ol>
+
+<h2 id="time-series-forecast">Time Series Forecast</h2>
+
+<h3 id="motivation">Motivation</h3>
+
+<p>While neural network have gain a lot of success in NLP and computer vision, there are relatively less changes for traditional time series forecasting. This repository aims to study the lastest practical technique for time series prediction, with either statistical method, machine learning or deep neural network. I will also try to summarize practical solution from Kaggles.</p>
+
+<h3 id="forecasting-methods">Forecasting Methods</h3>
+
+<h4 id="statistical-method">Statistical Method</h4>
+
+<h4 id="machine-learning">Machine Learning</h4>
+
+<h4 id="deep-neural-network">Deep Neural Network</h4>
+
+<p><a href="https://forums.fast.ai/t/time-series-sequential-data-study-group/29686/2?u=nok">Gramian Angular Field </a>: Transform time series into an image and use transfer learning with CNN</p>
+
+<h2 id="prediction-interval">Prediction Interval</h2>
+
+<p>While forecasting accuracy is important, the prediction interval is also important and it is an area that the machine learning world has less focus on.</p>
+
+<ul>
+  <li>Traditional statistical forecast (ARIMA, ETS etc)</li>
+  <li>Bayesian Neural Network</li>
+  <li>Random Forest jackknife approximation</li>
+  <li>MCDropout  (Use Dropout at inference time as variation inference)</li>
+  <li>Quantile Regression</li>
+  <li>VOGN (Optimizer weight pertubation)</li>
+  <li>Random Forest jackknife appoximation</li>
+</ul>
+
+<h3 id="python-time-series-forecasting-library">Python Time Series Forecasting Library</h3>
+
+<p><a href="https://github.com/facebook/prophet">Prophet (Facebook)</a>: Tool for producing high quality forecasts for time series data that has multiple seasonality with linear or non-linear growth. It has build-in modelling for Holiday effect.</p>
+
+<p><a href="https://johannfaouzi.github.io/pyts/">pyts</a> : state-of-the-art algorithms for time series transformation and classification</p>
+
+<h2 id="contribution">Contribution</h2>
+
+<p>Feel free to send a PR or discuss by staring an issue.😁</p>
+
+<h2 id="under-review">Under Review</h2>
+
