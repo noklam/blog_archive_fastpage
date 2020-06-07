@@ -1,0 +1,35 @@
+<h1 id="explainable-ai">Explainable AI</h1>
+
+<h2 id="introduction">Introduction</h2>
+
+<p>Personal collecions of model interpretation utilities.</p>
+
+<p>This repository include general model interpretation methods. Most articles focus on library, but the method are actually general than that. For example, we can use partial indepedence for deep learning model too. You will find most tutorials out there are only using it on Tree.</p>
+
+<p>Same applied on SHAP, many tutorials use Tree as example, but the library actually support much more general algorithm. Your feature don’t even have to be a column.</p>
+
+<ol>
+  <li>Partial Depedence</li>
+  <li>SHAP</li>
+  <li>Tensorflow (What-if tools)[<a href="https://pair-code.github.io/what-if-tool/age.html">https://pair-code.github.io/what-if-tool/age.html</a>]</li>
+</ol>
+
+<h2 id="model-interpretation">Model interpretation</h2>
+
+<p>Model interpretation can be divided into local or global. Different method are complementary instead of replacement. For example, SHAP give you an idea what features are important for a particular prediction. But Partial Depdence plot supplement the “What-if” condition, namely, how will your prediction changes when a depedent variable changes. These are two different information which are often overlooked.</p>
+
+<h3 id="partial-dependence">Partial Dependence</h3>
+
+<ul>
+  <li>Local</li>
+  <li>Global</li>
+</ul>
+
+<p>Partial depedence can be applied in row level or dataset level. It gives you a sense that how <strong>Change</strong> of a feature will change the model output accordingly.</p>
+
+<p>We can also “zoom in” if we want, say using a subset of data (e.g. at country level) or even at row level to dig into the model.</p>
+
+<p>The what-if tool allows you to change the value of a feature and run inference. Partial dependence is doing the exact same thing except it run multiple prediction by changing one features to different values to obtain a continuous plot.</p>
+
+<p><img src=".gitbook/assets/image%20%281%29.png" alt="What-if tools allow user to change the model input and see how prediction changes" /></p>
+
