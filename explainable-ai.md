@@ -34,3 +34,9 @@ The what-if tool allows you to change the value of a feature and run inference. 
 
 ![What-if tools allow user to change the model input and see how prediction changes](.gitbook/assets/image%20%281%29.png)
 
+### SHAP
+
+* Squashing function \(e.g. log transformation of Target variable\)
+
+It can affect the "feature importance" as it will change the order of feature importance even with a monotonic transformation
+
