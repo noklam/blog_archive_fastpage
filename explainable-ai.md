@@ -12,13 +12,14 @@ This repository include general model interpretation methods. Most articles focu
 
 Same applied on SHAP, many tutorials use Tree as example, but the library actually support much more general algorithm. Your feature don't even have to be a column.
 
-1. Partial Depedence
+1. Partial Depedence Plot 
 2. SHAP
 3. Tensorflow \(What-if tools\)\[[https://pair-code.github.io/what-if-tool/age.html](https://pair-code.github.io/what-if-tool/age.html)\]
+4. Counterfactual \(Most simliar data point, but very different inference value\)
 
 ## Model interpretation
 
-Model interpretation can be divided into local or global. Different method are complementary instead of replacement. For example, SHAP give you an idea what features are important for a particular prediction. But Partial Depdence plot supplement the "What-if" condition, namely, how will your prediction changes when a depedent variable changes. These are two different information which are often overlooked.
+Model interpretation can be divided into local or global. Different method are complementary instead of replacement. For example, SHAP give you an idea what features are important for a particular prediction. But Partial Dependence plot supplement the "What-if" condition, namely, how will your prediction changes when a dependent variable changes. These are two different information which are often overlooked.
 
 ### Partial Dependence
 
