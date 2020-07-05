@@ -1,0 +1,14 @@
+{
+
+    "launch": {
+
+    
+    },
+    "python.linting.flake8Args": [
+        "--ignore=E303,E302,E225"
+    ],
+    "workbench.colorCustomizations": {
+        "editorWarning.foreground": "#ffffff",
+         "editorError.foreground": "#ffc400"
+    }
+}

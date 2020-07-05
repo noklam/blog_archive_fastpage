@@ -1,0 +1,5 @@
+name: cs50
+dependencies:
+    - python
+    - django
+
