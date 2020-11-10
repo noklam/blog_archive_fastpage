@@ -7,7 +7,8 @@
         "panel.border": "#e5c7bf",
         "sideBar.border": "#e5c7bf",
         "editorGroup.border": "#e5c7bf",
-        "tab.activeBorder": "#e5c7bf"
+        "tab.activeBorder": "#e5c7bf",
+        "titleBar.border": "#d7a89a"
     },
     "peacock.color": "#d7a89a",
     "python.pythonPath": "C:\\ProgramData\\Anaconda3\\python.exe"
