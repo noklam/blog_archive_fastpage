@@ -1,0 +1,30 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+```{r}
+library('rayshader)
+```
+
+```{r}
+tiff_file = '../data/rayshader/hk_elevation_map.tif'
+```
+
+```{r}
+
+# I copy this snippet from rayshader site directly.
+library(rayshader)
+
+#Here, I load a map with the raster package.
+localtif = raster::raster(tiff_file)
+unlink(loadzip)
+
+#And convert it to a matrix:
+elmat = raster_to_matrix(localtif)
+
+#We use another one of rayshader's built-in textures:
+elmat %>%
+  sphere_shade(texture = "desert") %>%
+  plot_map()
+```
+
