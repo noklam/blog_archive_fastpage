@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>[Drafted] - Hong Kong Elevation map with rayshader (with R) | mediumnok</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="[Drafted] - Hong Kong Elevation map with rayshader (with R)" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Inspired by https://www.reddit.com/r/dataisbeautiful/comments/bjp8bg/the_united_states_of_elevation_oc/. This is my little weekend project, Hong Kong elevation tile with rayshader, powered by fastpages with Jupyter notebook! I haven’t used R in years, so I spent a lot more time than expected to finish this." />
+<meta property="og:description" content="Inspired by https://www.reddit.com/r/dataisbeautiful/comments/bjp8bg/the_united_states_of_elevation_oc/. This is my little weekend project, Hong Kong elevation tile with rayshader, powered by fastpages with Jupyter notebook! I haven’t used R in years, so I spent a lot more time than expected to finish this." />
+<link rel="canonical" href="https://mediumnok.ml/r/rayshader/2020/11/14/Hong-Kong-Elevation-Map-with-rayshader.html" />
+<meta property="og:url" content="https://mediumnok.ml/r/rayshader/2020/11/14/Hong-Kong-Elevation-Map-with-rayshader.html" />
+<meta property="og:site_name" content="mediumnok" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-11-14T00:00:00-06:00" />
+<script type="application/ld+json">
+{"datePublished":"2020-11-14T00:00:00-06:00","dateModified":"2020-11-14T00:00:00-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://mediumnok.ml/r/rayshader/2020/11/14/Hong-Kong-Elevation-Map-with-rayshader.html"},"description":"Inspired by https://www.reddit.com/r/dataisbeautiful/comments/bjp8bg/the_united_states_of_elevation_oc/. This is my little weekend project, Hong Kong elevation tile with rayshader, powered by fastpages with Jupyter notebook! I haven’t used R in years, so I spent a lot more time than expected to finish this.","@type":"BlogPosting","url":"https://mediumnok.ml/r/rayshader/2020/11/14/Hong-Kong-Elevation-Map-with-rayshader.html","headline":"[Drafted] - Hong Kong Elevation map with rayshader (with R)","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://mediumnok.ml/feed.xml" title="mediumnok" /><!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-83544344-5','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+<link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico"><link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
+<link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css">
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">mediumnok</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About Me</a><a class="page-link" href="/r_notebook.Rmd">R Notebook</a><a class="page-link" href="/search/">Search</a><a class="page-link" href="/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">[Drafted] - Hong Kong Elevation map with rayshader (with R)</h1><p class="page-description">Inspired by https://www.reddit.com/r/dataisbeautiful/comments/bjp8bg/the_united_states_of_elevation_oc/. This is my little weekend project, Hong Kong elevation tile with `rayshader`, powered by `fastpages` with Jupyter notebook! I haven't used R in years, so I spent a lot more time than expected to finish this.</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-11-14T00:00:00-06:00" itemprop="datePublished">
+        Nov 14, 2020
+      </time>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      3 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/categories/#R">R</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/categories/#rayshader">rayshader</a>
+        
+      
+      </p>
+    
+
+    
+      
+        <div class="pb-5 d-flex flex-wrap flex-justify-end">
+          <div class="px-2">
+
+    <a href="https://github.com/noklam/mediumnok/tree/master/_notebooks/2020-11-14-Hong-Kong-Elevation-Map-with-rayshader.ipynb" role="button" target="_blank">
+<img class="notebook-badge-image" src="/assets/badges/github.svg" alt="View On GitHub">
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://mybinder.org/v2/gh/noklam/mediumnok/master?filepath=_notebooks%2F2020-11-14-Hong-Kong-Elevation-Map-with-rayshader.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/assets/badges/binder.svg" alt="Open In Binder"/>
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://colab.research.google.com/github/noklam/mediumnok/blob/master/_notebooks/2020-11-14-Hong-Kong-Elevation-Map-with-rayshader.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/assets/badges/colab.svg" alt="Open In Colab"/>
+    </a>
+</div>
+        </div>
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#Data">Data </a></li>
+<li class="toc-entry toc-h2"><a href="#Setup">Setup </a></li>
+</ul><!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/2020-11-14-Hong-Kong-Elevation-Map-with-rayshader.ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>This blog is mainly reproducing the blog with different data <a href="https://www.tylermw.com/a-step-by-step-guide-to-making-3d-maps-with-satellite-imagery-in-r/">https://www.tylermw.com/a-step-by-step-guide-to-making-3d-maps-with-satellite-imagery-in-r/</a>. My impression is that R is doing so much better for graph compare to Python. (<code>ggplot</code> and now <code>rayshader</code> for 3D plots!)</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Data">
+<a class="anchor" href="#Data" aria-hidden="true"><span class="octicon octicon-link"></span></a>Data<a class="anchor-link" href="#Data"> </a>
+</h2>
+<p>Two datasets was used for this images.
+Landset for RGB</p>
+<ul>
+<li>LC08_L1TP_122044_20200218_20200225_01_T1.TIF  </li>
+</ul>
+<p>SRTM 30M resolution elevation map</p>
+<ul>
+<li>n21e113.hgt</li>
+<li>n21e114.hgt</li>
+<li>n22e113.hgt</li>
+<li>n22e114.hgt
+The USGS explorer is a very nice tool to search data.</li>
+</ul>
+<p>I actually couldn't find a Landsat image cover entire hong kong (some western part is missing). Further enhancement is needed for stitching together different images.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Setup">
+<a class="anchor" href="#Setup" aria-hidden="true"><span class="octicon octicon-link"></span></a>Setup<a class="anchor-link" href="#Setup"> </a>
+</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ol>
+<li>conda with R Kernel</li>
+<li>Jupyter Notebook</li>
+<li>fastpages</li>
+<li>rayshader</li>
+</ol>
+<blockquote>
+<p>Use conda install even for R Packages, I spend hours to get the environment going back and forth in Windows and Linux</p>
+</blockquote>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## Library</span>
+<span class="n">library</span><span class="p">(</span><span class="n">rayshader</span><span class="p">)</span>
+<span class="n">library</span><span class="p">(</span><span class="n">sp</span><span class="p">)</span>
+<span class="n">library</span><span class="p">(</span><span class="n">raster</span><span class="p">)</span>
+<span class="n">library</span><span class="p">(</span><span class="n">scales</span><span class="p">)</span>
+<span class="n">library</span><span class="p">(</span><span class="n">dplyr</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">elevation1</span> <span class="o">=</span> <span class="n">raster</span><span class="p">::</span><span class="n">raster</span><span class="p">(</span><span class="s2">"../data/rayshader/HongKong/N21E113.hgt"</span><span class="p">)</span>
+<span class="n">elevation2</span> <span class="o">=</span> <span class="n">raster</span><span class="p">::</span><span class="n">raster</span><span class="p">(</span><span class="s2">"../data/rayshader/HongKong/N21E114.hgt"</span><span class="p">)</span>
+<span class="n">elevation3</span> <span class="o">=</span> <span class="n">raster</span><span class="p">::</span><span class="n">raster</span><span class="p">(</span><span class="s2">"../data/rayshader/HongKong/N22E113.hgt"</span><span class="p">)</span>
+<span class="n">elevation4</span> <span class="o">=</span> <span class="n">raster</span><span class="p">::</span><span class="n">raster</span><span class="p">(</span><span class="s2">"../data/rayshader/HongKong/N22E114.hgt"</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Let's plot the elevation map. The whole image is green-ish because most of the area is ocean, so they are at sea-level. The orange color indicate a higher elevation.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">hk_elevation</span> <span class="o">=</span> <span class="n">raster</span><span class="p">::</span><span class="n">merge</span><span class="p">(</span><span class="n">elevation1</span><span class="p">,</span><span class="n">elevation2</span><span class="p">,</span> <span class="n">elevation3</span><span class="p">,</span> <span class="n">elevation4</span><span class="p">)</span>
+
+<span class="n">height_shade</span><span class="p">(</span><span class="n">raster_to_matrix</span><span class="p">(</span><span class="n">hk_elevation</span><span class="p">))</span> <span class="o">%&gt;%</span>
+<span class="n">plot_map</span><span class="p">();</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img src="/images/copied_from_nb/rayshader_img/elevation_map.png" alt="elevation"></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Next, we are going to process the RGB image from Landsat-8 ,The raw jpeg look like this.</p>
+<p><img src="/images/copied_from_nb/rayshader_img/raw_jpg.jpg" alt="raw_jpeg"></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Satellite raw images requries some preprocessing, before they look like what we expected.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">hk_r</span> <span class="o">=</span> <span class="n">raster</span><span class="p">::</span><span class="n">raster</span><span class="p">(</span><span class="s2">"../data/rayshader/HongKong/LC08_L1TP_122044_20200218_20200225_01_T1_B4.TIF"</span><span class="p">)</span>
+<span class="n">hk_g</span> <span class="o">=</span> <span class="n">raster</span><span class="p">::</span><span class="n">raster</span><span class="p">(</span><span class="s2">"../data/rayshader/HongKong/LC08_L1TP_122044_20200218_20200225_01_T1_B3.TIF"</span><span class="p">)</span>
+<span class="n">hk_b</span> <span class="o">=</span> <span class="n">raster</span><span class="p">::</span><span class="n">raster</span><span class="p">(</span><span class="s2">"../data/rayshader/HongKong/LC08_L1TP_122044_20200218_20200225_01_T1_B2.TIF"</span><span class="p">)</span>
+
+
+<span class="n">hk_rbg_corrected</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">raster</span><span class="p">::</span><span class="n">stack</span><span class="p">(</span><span class="n">hk_r</span><span class="p">,</span> <span class="n">hk_g</span><span class="p">,</span> <span class="n">hk_b</span><span class="p">))</span>
+<span class="n">raster</span><span class="p">::</span><span class="n">plotRGB</span><span class="p">(</span><span class="n">hk_rbg_corrected</span><span class="p">);</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img src="/images/copied_from_nb/rayshader_img/corrected_rgb.png" alt="raw_corrected"></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The image is quite hazzy, which doesn't look like the jpeg we saw earlier. We need to improve the contrast.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Since the RGB image and elevation map does not use the same coordinate system, we need to do some projections.</span>
+<span class="n">hk_elevation_utm</span> <span class="o">=</span> <span class="n">raster</span><span class="p">::</span><span class="n">projectRaster</span><span class="p">(</span><span class="n">hk_elevation</span><span class="p">,</span> <span class="n">crs</span> <span class="o">=</span> <span class="n">crs</span><span class="p">(</span><span class="n">hk_r</span><span class="p">),</span> <span class="n">method</span> <span class="o">=</span> <span class="s2">"bilinear"</span><span class="p">)</span>
+<span class="n">crs</span><span class="p">(</span><span class="n">hk_elevation_utm</span><span class="p">)</span>
+
+<span class="n">bottom_left</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mf">113.888</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="mf">22.1365</span><span class="p">)</span>
+<span class="n">top_right</span>   <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mf">114.330</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="mf">22.5493</span><span class="p">)</span>
+
+<span class="n">extent_latlong</span> <span class="o">=</span> <span class="n">sp</span><span class="p">::</span><span class="n">SpatialPoints</span><span class="p">(</span><span class="n">rbind</span><span class="p">(</span><span class="n">bottom_left</span><span class="p">,</span> <span class="n">top_right</span><span class="p">),</span> <span class="n">proj4string</span><span class="o">=</span><span class="n">sp</span><span class="p">::</span><span class="n">CRS</span><span class="p">(</span><span class="s2">"+proj=longlat +ellps=WGS84 +datum=WGS84"</span><span class="p">))</span>
+<span class="n">extent_utm</span> <span class="o">=</span> <span class="n">sp</span><span class="p">::</span><span class="n">spTransform</span><span class="p">(</span><span class="n">extent_latlong</span><span class="p">,</span> <span class="n">raster</span><span class="p">::</span><span class="n">crs</span><span class="p">(</span><span class="n">hk_elevation_utm</span><span class="p">))</span>
+
+<span class="n">e</span> <span class="o">=</span> <span class="n">raster</span><span class="p">::</span><span class="n">extent</span><span class="p">(</span><span class="n">extent_utm</span><span class="p">)</span>
+<span class="n">e</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea ">
+<pre>CRS arguments:
+ +proj=utm +zone=49 +datum=WGS84 +units=m +no_defs </pre>
+</div>
+
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea ">
+<pre>class      : Extent 
+xmin       : 797906.6 
+xmax       : 842523 
+ymin       : 2450766 
+ymax       : 2497449 </pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">hk_rgb_cropped</span> <span class="o">=</span> <span class="n">raster</span><span class="p">::</span><span class="n">crop</span><span class="p">(</span><span class="n">hk_rbg_corrected</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+<span class="n">elevation_cropped</span> <span class="o">=</span> <span class="n">raster</span><span class="p">::</span><span class="n">crop</span><span class="p">(</span><span class="n">hk_elevation_utm</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+
+<span class="n">names</span><span class="p">(</span><span class="n">hk_rgb_cropped</span><span class="p">)</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="s2">"r"</span><span class="p">,</span><span class="s2">"g"</span><span class="p">,</span><span class="s2">"b"</span><span class="p">)</span>
+
+<span class="n">hk_r_cropped</span> <span class="o">=</span> <span class="n">rayshader</span><span class="p">::</span><span class="n">raster_to_matrix</span><span class="p">(</span><span class="n">hk_rgb_cropped</span><span class="err">$</span><span class="n">r</span><span class="p">)</span>
+<span class="n">hk_g_cropped</span> <span class="o">=</span> <span class="n">rayshader</span><span class="p">::</span><span class="n">raster_to_matrix</span><span class="p">(</span><span class="n">hk_rgb_cropped</span><span class="err">$</span><span class="n">g</span><span class="p">)</span>
+<span class="n">hk_b_cropped</span> <span class="o">=</span> <span class="n">rayshader</span><span class="p">::</span><span class="n">raster_to_matrix</span><span class="p">(</span><span class="n">hk_rgb_cropped</span><span class="err">$</span><span class="n">b</span><span class="p">)</span>
+
+<span class="n">hkel_matrix</span> <span class="o">=</span> <span class="n">rayshader</span><span class="p">::</span><span class="n">raster_to_matrix</span><span class="p">(</span><span class="n">elevation_cropped</span><span class="p">)</span>
+
+<span class="n">hk_rgb_array</span> <span class="o">=</span> <span class="n">array</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">dim</span><span class="o">=</span><span class="n">c</span><span class="p">(</span><span class="n">nrow</span><span class="p">(</span><span class="n">hk_r_cropped</span><span class="p">),</span><span class="n">ncol</span><span class="p">(</span><span class="n">hk_r_cropped</span><span class="p">),</span><span class="mi">3</span><span class="p">))</span>
+
+<span class="n">hk_rgb_array</span><span class="p">[,,</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">hk_r_cropped</span><span class="o">/</span><span class="mi">255</span> <span class="c1">#Red layer</span>
+<span class="n">hk_rgb_array</span><span class="p">[,,</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">hk_g_cropped</span><span class="o">/</span><span class="mi">255</span> <span class="c1">#Blue layer</span>
+<span class="n">hk_rgb_array</span><span class="p">[,,</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">hk_b_cropped</span><span class="o">/</span><span class="mi">255</span> <span class="c1">#Green layer</span>
+
+<span class="n">hk_rgb_array</span> <span class="o">=</span> <span class="n">aperm</span><span class="p">(</span><span class="n">hk_rgb_array</span><span class="p">,</span> <span class="n">c</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+
+<span class="n">plot_map</span><span class="p">(</span><span class="n">hk_rgb_array</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img src="/images/copied_from_nb/rayshader_img/hazzy_rgb.png" alt="hazzy"></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The whole image is bright because we have some dark pixels in the corner. It's similiar to taking images in a dark room, any light source will become a bright spot.</p>
+<p>We can improve this by stretching the intensity. It's really no different than how you fine tune your images on Instagram.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">hk_rgb_cropped</span> <span class="o">=</span> <span class="n">raster</span><span class="p">::</span><span class="n">crop</span><span class="p">(</span><span class="n">hk_rbg_corrected</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+<span class="n">elevation_cropped</span> <span class="o">=</span> <span class="n">raster</span><span class="p">::</span><span class="n">crop</span><span class="p">(</span><span class="n">hk_elevation_utm</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+<span class="c1"># Stretch the images</span>
+<span class="n">hk_rgb_cropped</span> <span class="o">&lt;-</span>
+<span class="n">raster</span><span class="p">::</span><span class="n">stretch</span><span class="p">(</span><span class="n">hk_rgb_cropped</span><span class="p">,</span>
+<span class="n">minq</span> <span class="o">=</span> <span class="o">.</span><span class="mi">01</span><span class="p">,</span>
+<span class="n">maxq</span> <span class="o">=</span> <span class="o">.</span><span class="mi">999</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">names</span><span class="p">(</span><span class="n">hk_rgb_cropped</span><span class="p">)</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="s2">"r"</span><span class="p">,</span><span class="s2">"g"</span><span class="p">,</span><span class="s2">"b"</span><span class="p">)</span>
+
+<span class="n">hk_r_cropped</span> <span class="o">=</span> <span class="n">rayshader</span><span class="p">::</span><span class="n">raster_to_matrix</span><span class="p">(</span><span class="n">hk_rgb_cropped</span><span class="err">$</span><span class="n">r</span><span class="p">)</span>
+<span class="n">hk_g_cropped</span> <span class="o">=</span> <span class="n">rayshader</span><span class="p">::</span><span class="n">raster_to_matrix</span><span class="p">(</span><span class="n">hk_rgb_cropped</span><span class="err">$</span><span class="n">g</span><span class="p">)</span>
+<span class="n">hk_b_cropped</span> <span class="o">=</span> <span class="n">rayshader</span><span class="p">::</span><span class="n">raster_to_matrix</span><span class="p">(</span><span class="n">hk_rgb_cropped</span><span class="err">$</span><span class="n">b</span><span class="p">)</span>
+
+<span class="n">hkel_matrix</span> <span class="o">=</span> <span class="n">rayshader</span><span class="p">::</span><span class="n">raster_to_matrix</span><span class="p">(</span><span class="n">elevation_cropped</span><span class="p">)</span>
+
+<span class="n">hk_rgb_array</span> <span class="o">=</span> <span class="n">array</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">dim</span><span class="o">=</span><span class="n">c</span><span class="p">(</span><span class="n">nrow</span><span class="p">(</span><span class="n">hk_r_cropped</span><span class="p">),</span><span class="n">ncol</span><span class="p">(</span><span class="n">hk_r_cropped</span><span class="p">),</span><span class="mi">3</span><span class="p">))</span>
+
+<span class="n">hk_rgb_array</span><span class="p">[,,</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">hk_r_cropped</span><span class="o">/</span><span class="mi">255</span> <span class="c1">#Red layer</span>
+<span class="n">hk_rgb_array</span><span class="p">[,,</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">hk_g_cropped</span><span class="o">/</span><span class="mi">255</span> <span class="c1">#Blue layer</span>
+<span class="n">hk_rgb_array</span><span class="p">[,,</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">hk_b_cropped</span><span class="o">/</span><span class="mi">255</span> <span class="c1">#Green layer</span>
+
+<span class="n">hk_rgb_array</span> <span class="o">=</span> <span class="n">aperm</span><span class="p">(</span><span class="n">hk_rgb_array</span><span class="p">,</span> <span class="n">c</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="n">hk_rgb_contrast</span> <span class="o">=</span> <span class="n">scales</span><span class="p">::</span><span class="n">rescale</span><span class="p">(</span><span class="n">hk_rgb_array</span><span class="p">,</span><span class="n">to</span><span class="o">=</span><span class="n">c</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">plot_map</span><span class="p">(</span><span class="n">hk_rgb_contrast</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img src="/images/copied_from_nb/rayshader_img/bright_hk.png" alt="bright"></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now we get a much better image</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">plot_3d</span><span class="p">(</span><span class="n">hk_rgb_contrast</span><span class="p">,</span> <span class="n">hkel_matrix</span><span class="p">,</span> <span class="n">windowsize</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="mi">1100</span><span class="p">,</span><span class="mi">900</span><span class="p">),</span> <span class="n">zscale</span> <span class="o">=</span> <span class="mi">15</span><span class="p">,</span> <span class="n">shadowdepth</span> <span class="o">=</span> <span class="o">-</span><span class="mi">50</span><span class="p">,</span>
+        <span class="n">zoom</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">phi</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span><span class="n">theta</span><span class="o">=-</span><span class="mi">15</span><span class="p">,</span><span class="n">fov</span><span class="o">=</span><span class="mi">70</span><span class="p">,</span> <span class="n">background</span> <span class="o">=</span> <span class="s2">"#F2E1D0"</span><span class="p">,</span> <span class="n">shadowcolor</span> <span class="o">=</span> <span class="s2">"#523E2B"</span><span class="p">)</span>
+
+
+<span class="n">render_scalebar</span><span class="p">(</span><span class="n">limits</span><span class="o">=</span><span class="n">c</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span><span class="n">label_unit</span> <span class="o">=</span> <span class="s2">"km"</span><span class="p">,</span><span class="n">position</span> <span class="o">=</span> <span class="s2">"W"</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
+                <span class="n">scale_length</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="mf">0.33</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">render_compass</span><span class="p">(</span><span class="n">position</span> <span class="o">=</span> <span class="s2">"N"</span><span class="p">)</span>
+<span class="n">render_snapshot</span><span class="p">(</span><span class="n">title_text</span> <span class="o">=</span> <span class="s2">"Hong Kong | Imagery: Landsat 8 | DEM: 30m SRTM"</span><span class="p">,</span>
+                <span class="n">title_bar_color</span> <span class="o">=</span> <span class="s2">"#000000"</span><span class="p">,</span> <span class="n">title_color</span> <span class="o">=</span> <span class="s2">"white"</span><span class="p">,</span> <span class="n">title_bar_alpha</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
+               <span class="n">clear</span><span class="o">=</span><span class="n">TRUE</span><span class="p">,</span> <span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img src="/images/copied_from_nb/rayshader_img/3d_hk.png" alt="3d"></p>
+
+</div>
+</div>
+</div>
+</div>
+
+
+
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="noklam/mediumnok"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/r/rayshader/2020/11/14/Hong-Kong-Elevation-Map-with-rayshader.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Explaining ideas one post at a time</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/noklam" title="noklam"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/mediumnok" title="mediumnok"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
