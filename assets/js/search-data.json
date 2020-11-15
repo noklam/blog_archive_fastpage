@@ -172,17 +172,6 @@
   
 
   
-      ,"page5": {
-          "title": "R Notebook",
-          "content": "install.packages(&quot;rgdal&quot;) . tiff_file = &#39;../data/rayshader/hk_elevation_map.tif&#39; library(rayshader) #Here, I load a map with the raster package. localtif = raster::raster(tiff_file) unlink(loadzip) #And convert it to a matrix: elmat = raster_to_matrix(localtif) #We use another one of rayshader&#39;s built-in textures: elmat %&gt;% sphere_shade(texture = &quot;desert&quot;) %&gt;% plot_map() . library(rayshader) #Here, I load a map with the raster package. loadzip = tempfile() download.file(&quot;https://tylermw.com/data/dem_01.tif.zip&quot;, loadzip) localtif = raster::raster(unzip(loadzip, &quot;dem_01.tif&quot;)) unlink(loadzip) #And convert it to a matrix: elmat = raster_to_matrix(localtif) #We use another one of rayshader&#39;s built-in textures: elmat %&gt;% sphere_shade(texture = &quot;desert&quot;) %&gt;% plot_map() .",
-          "url": "https://mediumnok.ml/r_notebook.Rmd",
-          "relUrl": "/r_notebook.Rmd",
-          "date": ""
-      }
-      
-  
-
-  
   
 
   
@@ -202,7 +191,7 @@
   
 
   
-      ,"page13": {
+      ,"page12": {
           "title": "",
           "content": "Sitemap: {{ “sitemap.xml” | absolute_url }} | .",
           "url": "https://mediumnok.ml/robots.txt",
