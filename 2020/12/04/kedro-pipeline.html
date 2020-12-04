@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Introduction to Kedro - pipeline for data science | NoKiDoKi</title>
+<meta name="generator" content="Jekyll v4.0.0" />
+<meta property="og:title" content="Introduction to Kedro - pipeline for data science" />
+<meta name="author" content="noklam" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Kedro" />
+<meta property="og:description" content="Kedro" />
+<link rel="canonical" href="https://nokidoki.ml/2020/12/04/kedro-pipeline.html" />
+<meta property="og:url" content="https://nokidoki.ml/2020/12/04/kedro-pipeline.html" />
+<meta property="og:site_name" content="NoKiDoKi" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2020-12-04T00:00:00-06:00" />
+<script type="application/ld+json">
+{"datePublished":"2020-12-04T00:00:00-06:00","dateModified":"2020-12-04T00:00:00-06:00","author":{"@type":"Person","name":"noklam"},"mainEntityOfPage":{"@type":"WebPage","@id":"https://nokidoki.ml/2020/12/04/kedro-pipeline.html"},"description":"Kedro","@type":"BlogPosting","url":"https://nokidoki.ml/2020/12/04/kedro-pipeline.html","headline":"Introduction to Kedro - pipeline for data science","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://nokidoki.ml/feed.xml" title="NoKiDoKi" /><!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-83544344-5','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+<link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico"><link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
+<link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css">
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">NoKiDoKi</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About Me</a><a class="page-link" href="/search/">Search</a><a class="page-link" href="/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Introduction to Kedro - pipeline for data science</h1><p class="page-description">Kedro</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-12-04T00:00:00-06:00" itemprop="datePublished">
+        Dec 4, 2020
+      </time>• 
+          <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+            <span class="p-author h-card" itemprop="name">noklam</span></span>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      9 min read
+    
+</span></p>
+
+    
+
+    
+      
+        <div class="pb-5 d-flex flex-wrap flex-justify-end">
+          <div class="px-2">
+
+    <a href="https://github.com/noklam/mediumnok/tree/master/_notebooks/2020-12-04-kedro-pipeline.ipynb" role="button" target="_blank">
+<img class="notebook-badge-image" src="/assets/badges/github.svg" alt="View On GitHub">
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://mybinder.org/v2/gh/noklam/mediumnok/master?filepath=_notebooks%2F2020-12-04-kedro-pipeline.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/assets/badges/binder.svg" alt="Open In Binder"/>
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://colab.research.google.com/github/noklam/mediumnok/blob/master/_notebooks/2020-12-04-kedro-pipeline.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/assets/badges/colab.svg" alt="Open In Colab"/>
+    </a>
+</div>
+        </div>
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+<li class="toc-entry toc-h1"><a href="#Why-we-need-a-pipeline-tool">Why we need a pipeline tool </a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#What-is-Kedro">What is Kedro </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#Nodes">Nodes </a></li>
+<li class="toc-entry toc-h3"><a href="#Pipeline">Pipeline </a></li>
+<li class="toc-entry toc-h3"><a href="#Kedro-Viz">Kedro Viz </a></li>
+<li class="toc-entry toc-h3"><a href="#Kedro-Run,-partial-pipeline,-parallel-exeuction">Kedro Run, partial pipeline, parallel exeuction </a></li>
+<li class="toc-entry toc-h3"><a href="#Functional-programming">Functional programming </a></li>
+<li class="toc-entry toc-h3"><a href="#Decompose-program-to-pipeline-is-not-just-copy-and-paste">Decompose program to pipeline is not just copy and paste </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#Data-Catalog-&-Paramaeters">Data Catalog &amp; Paramaeters </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#Connect-Data-Catalog-with-Node">Connect Data Catalog with Node </a></li>
+<li class="toc-entry toc-h3"><a href="#Memory-Dataset-(optional-to-skip)">Memory Dataset (optional to skip) </a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul><!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/2020-12-04-kedro-pipeline.ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Why-we-need-a-pipeline-tool">
+<a class="anchor" href="#Why-we-need-a-pipeline-tool" aria-hidden="true"><span class="octicon octicon-link"></span></a>Why we need a pipeline tool<a class="anchor-link" href="#Why-we-need-a-pipeline-tool"> </a>
+</h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Data Scientist often starts their development with a Jupyter Notebook. As the notebook grows larger, it's inevitable to convert it to a python script. It starts with one file, then another one, and it accumulates quickly. Converting a notebook could be more than just pasting the code in a script. It involves careful thinking and refactoring.</p>
+<p>A pipeline library can be helpful in a few ways:</p>
+<ul>
+<li>modular pipeline, it can be executed partially.</li>
+<li>easily run in parallel</li>
+<li>check for loop dependecies</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="What-is-Kedro">
+<a class="anchor" href="#What-is-Kedro" aria-hidden="true"><span class="octicon octicon-link"></span></a>What is Kedro<a class="anchor-link" href="#What-is-Kedro"> </a>
+</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Kedro is a development workflow tool that allows you to create portable data pipelines. It applies software engineering best practices to make your data science code reproducible, modular and  well-documented. For example, you can easily create a template for new projects, build a documentation site, lint your code and always have an expected structure to find your config and data.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<blockquote>
+<p>Kedro is a lightweight pipeline library without need to setup infracstructure.</p>
+</blockquote>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In comparison to Airflow or Luigi, Kedro is much more lightweighted. It helps you to write production-ready code, and let data engineer and data scientist work together with the same code base. It also has good Jupyter support, so data scientist can still use the tool that they are familiar with.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Functions and Pipeline</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Nodes">
+<a class="anchor" href="#Nodes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Nodes<a class="anchor-link" href="#Nodes"> </a>
+</h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">split_data</span><span class="p">(</span><span class="n">data</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">,</span> <span class="n">example_test_data_ratio</span><span class="p">:</span> <span class="nb">float</span><span class="p">):</span>
+    <span class="o">...</span>
+    <span class="k">return</span> <span class="nb">dict</span><span class="p">(</span>
+        <span class="n">train_x</span><span class="o">=</span><span class="n">train_data_x</span><span class="p">,</span>
+        <span class="n">train_y</span><span class="o">=</span><span class="n">train_data_y</span><span class="p">,</span>
+        <span class="n">test_x</span><span class="o">=</span><span class="n">test_data_x</span><span class="p">,</span>
+        <span class="n">test_y</span><span class="o">=</span><span class="n">test_data_y</span><span class="p">,</span>
+    <span class="p">)</span>
+</pre></div>
+<p><code>Node</code> is the core component of kedro <code>Pipeline</code>. For example, we have a python function that split data into train/test set. A node take 4 arguments. <code>func</code>, <code>inputs</code>, <code>outputs</code>, <code>name</code>. To use this function as a node, we would write something like this.</p>
+<div class="highlight"><pre><span></span><span class="n">node</span><span class="p">(</span><span class="n">split_data</span><span class="p">,</span> <span class="n">inputs</span><span class="o">=</span><span class="p">[</span><span class="s2">"example_iris_data"</span><span class="p">,</span> <span class="s2">"params:example_test_data_ratio"</span><span class="p">],</span>
+                <span class="n">outputs</span><span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+                <span class="n">train_x</span><span class="o">=</span><span class="s2">"example_train_x"</span><span class="p">,</span>
+                <span class="n">train_y</span><span class="o">=</span><span class="s2">"example_train_y"</span><span class="p">,</span>
+                <span class="n">test_x</span><span class="o">=</span><span class="s2">"example_test_x"</span><span class="p">,</span>
+                <span class="n">test_y</span><span class="o">=</span><span class="s2">"example_test_y"</span><span class="p">,</span>
+                <span class="p">),</span>
+         <span class="n">name</span><span class="o">=</span><span class="s2">"split_data"</span><span class="p">)</span>
+</pre></div>
+<p>It's fairly simple, and it resemble the original function. The only significant difference is, <code>split_data</code> takes a <code>df</code> and <code>float</code>, but in our nodes, it becomes a list of strings. I will explain it in <strong>Section 3.2</strong>.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Pipeline">
+<a class="anchor" href="#Pipeline" aria-hidden="true"><span class="octicon octicon-link"></span></a>Pipeline<a class="anchor-link" href="#Pipeline"> </a>
+</h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Pipeline is nothing more than a list of <code>Node</code>, it helps you to reuse nodes for different pipelines</p>
+<div class="highlight"><pre><span></span><span class="n">Pipeline</span><span class="p">([</span><span class="n">ṅode</span><span class="p">(),</span>
+         <span class="p">[</span><span class="n">node</span><span class="p">(),</span>
+            <span class="o">...</span><span class="p">]])</span>
+</pre></div>
+<p>Here is an simple <code>Pipeline</code> which does splitting data, train a model, make predictions, and report metrics.</p>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">create_pipeline</span><span class="p">(</span><span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">Pipeline</span><span class="p">(</span>
+        <span class="p">[</span>
+            <span class="n">node</span><span class="p">(</span>
+                <span class="n">split_data</span><span class="p">,</span>
+                <span class="p">[</span><span class="s2">"example_iris_data"</span><span class="p">,</span> <span class="s2">"params:example_test_data_ratio"</span><span class="p">],</span>
+                <span class="nb">dict</span><span class="p">(</span>
+                    <span class="n">train_x</span><span class="o">=</span><span class="s2">"example_train_x"</span><span class="p">,</span>
+                    <span class="n">train_y</span><span class="o">=</span><span class="s2">"example_train_y"</span><span class="p">,</span>
+                    <span class="n">test_x</span><span class="o">=</span><span class="s2">"example_test_x"</span><span class="p">,</span>
+                    <span class="n">test_y</span><span class="o">=</span><span class="s2">"example_test_y"</span><span class="p">,</span>
+                <span class="p">),</span>
+            <span class="p">),</span>
+            <span class="n">node</span><span class="p">(</span>
+                <span class="n">train_model</span><span class="p">,</span>
+                <span class="p">[</span><span class="s2">"example_train_x"</span><span class="p">,</span> <span class="s2">"example_train_y"</span><span class="p">,</span> <span class="s2">"parameters"</span><span class="p">],</span>
+                <span class="s2">"example_model"</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="n">node</span><span class="p">(</span>
+                <span class="n">predict</span><span class="p">,</span>
+                <span class="nb">dict</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s2">"example_model"</span><span class="p">,</span> <span class="n">test_x</span><span class="o">=</span><span class="s2">"example_test_x"</span><span class="p">),</span>
+                <span class="s2">"example_predictions"</span><span class="p">,</span>
+            <span class="p">),</span>
+            <span class="n">node</span><span class="p">(</span><span class="n">report_accuracy</span><span class="p">,</span> <span class="p">[</span><span class="s2">"example_predictions"</span><span class="p">,</span> <span class="s2">"example_test_y"</span><span class="p">],</span> <span class="kc">None</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">'report1'</span><span class="p">),</span>
+            <span class="n">node</span><span class="p">(</span><span class="n">report_accuracy</span><span class="p">,</span> <span class="p">[</span><span class="s2">"example_predictions"</span><span class="p">,</span> <span class="s2">"example_test_y"</span><span class="p">],</span> <span class="kc">None</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s1">'report2'</span><span class="p">),</span>
+        <span class="p">]</span>
+    <span class="p">)</span>
+</pre></div>
+<p>You can also use <strong>node tags</strong> or writing different defined pipeline to reuse your node easily.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Kedro-Viz">
+<a class="anchor" href="#Kedro-Viz" aria-hidden="true"><span class="octicon octicon-link"></span></a>Kedro Viz<a class="anchor-link" href="#Kedro-Viz"> </a>
+</h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Internally, Kedro always form a <strong>graph</strong> for your entire pipelines, which can be visaulized with this command.</p>
+<p><code>kedro viz</code></p>
+<p>This starts a web server that visualizes the dependencies of your function, parameters and data,you can also filter some nodes of function with the UI.</p>
+<p><img src="/images/copied_from_nb/images/kedro_viz.png" alt="viz"></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Kedro-Run,-partial-pipeline,-parallel-exeuction">
+<a class="anchor" href="#Kedro-Run,-partial-pipeline,-parallel-exeuction" aria-hidden="true"><span class="octicon octicon-link"></span></a>Kedro Run, partial pipeline, parallel exeuction<a class="anchor-link" href="#Kedro-Run,-partial-pipeline,-parallel-exeuction"> </a>
+</h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img src="/images/copied_from_nb/images/graph.jpg" alt="image.png" title="A simple pipeline graph"></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>You can execute your pipeline partially with this command. This with execute your pipeline from A to C except the last Node D.</p>
+<p><code>kedro run --from-nodes="A, B, C"</code></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>If you pay attention to this graph, Node B and Node C has no dependency, they only depends on Node A. With kedro, you can parallelize this exeuction for free by using this command.</p>
+<p><code>kedro run --parallel</code></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Functional-programming">
+<a class="anchor" href="#Functional-programming" aria-hidden="true"><span class="octicon octicon-link"></span></a>Functional programming<a class="anchor-link" href="#Functional-programming"> </a>
+</h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now, you have basic understand of what is <code>Node</code> and <code>Pipeline</code>, you also learnt that you can use <code>kedro run</code> command to execute your pipeline with different options. Before I jump into other <code>kedro</code> features, let me explain a bit more about <strong>functional programming</strong>. This concept is at the heart of data processing library like <code>spark</code>.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Functional programming, means using functions to program literally. It may sounds silly, but bear with me.</p>
+<p><strong>Pure Function</strong> has these characteristics:</p>
+
+<pre><code>1. No side effect, it won't change state outside of the function scope.
+2. If you repeating running the same function with same input(argument), it should give you the same output. 
+3. Easy to parallel if there is no data dependency</code></pre>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Consider this simple function that add 1 to your input:</p>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">func1</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="n">x</span><span class="o">=</span><span class="n">x</span><span class="o">+</span><span class="mi">1</span>
+
+<span class="k">def</span> <span class="nf">func2</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">x</span><span class="o">+</span><span class="mi">1</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="highlight"><pre><span></span><span class="n">var1</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">var2</span> <span class="o">=</span> <span class="mi">1</span>
+
+
+<span class="n">func1</span><span class="p">(</span><span class="n">var1</span><span class="p">)</span> <span class="c1"># var1=2</span>
+<span class="n">func2</span><span class="p">(</span><span class="n">var2</span><span class="p">)</span> <span class="c1"># var2=2</span>
+</pre></div>
+<p>They both add 1 to your input, so which version is a better function?</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="highlight"><pre><span></span><span class="n">func1</span><span class="p">(</span><span class="n">var1</span><span class="p">)</span> <span class="c1"># var1=3</span>
+<span class="n">func2</span><span class="p">(</span><span class="n">var2</span><span class="p">)</span> <span class="c1"># var2=2</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now consider if we run this function twice. <code>func1</code> changes the result to 3, while <code>func2</code> still give you 2. I argue <code>func2</code> is better in this case.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Why does this matter? Or how is it going to be useful at all? Well, it makes debugging much easier. It is because you only need to debug code inside a function, not 200 lines of code before it. This greatly reduce the complexity that you have to worried about your data. This fundamental principle is what powering the pipeline, and the reason why you can just use <code>kedro run --parallel</code> to parallelize some computation.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>It will also be easier to write test for function. <code>func1</code> is harder to test, because you need to consider all possible code path. You may end up need to write verbose test cases like this.</p>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">test_case1</span><span class="p">():</span>
+    <span class="n">func_A</span><span class="p">()</span>
+    <span class="n">func_B</span><span class="p">()</span>
+
+<span class="k">def</span> <span class="nf">test_case2</span><span class="p">():</span>
+    <span class="n">func_A</span><span class="p">()</span>
+    <span class="n">func_A</span><span class="p">()</span>
+    <span class="n">func_B</span><span class="p">()</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>How does using Kedro helps to achieve this? Think about <code>func1</code>, if it is written as a <code>Node</code>, it will look like this.</p>
+<div class="highlight"><pre><span></span><span class="n">Node</span><span class="p">(</span><span class="n">func1</span><span class="p">,</span> <span class="n">inputs</span><span class="o">=</span><span class="n">var1</span><span class="p">,</span> <span class="n">output</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s2">"func1"</span><span class="p">)</span>
+</pre></div>
+<p>Since it is a Node without any output, it will have no impact to the downstreams. In order to use that variable, you will naturally writing code looks more like <code>func2</code> instead.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Let's look at one more example.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">k</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="k">def</span> <span class="nf">func3</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">x</span><span class="o">+</span><span class="n">k</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">func3</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>20</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now consider <code>func3</code>, it is a valid Python function. You can run it in a notebook or in a script, but it wouldn't be possible for a Node, sinec a Node only have access to its input. It will just throw an error to you immediately.</p>
+
+<pre><code>pyton
+node(func3, inputs='x', outputs='some_result', name='func3')</code></pre>
+<p>By writing nodes, you limit your function to only access variable within its scope. It helps to prevent a lot of bug.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Decompose-program-to-pipeline-is-not-just-copy-and-paste">
+<a class="anchor" href="#Decompose-program-to-pipeline-is-not-just-copy-and-paste" aria-hidden="true"><span class="octicon octicon-link"></span></a>Decompose program to pipeline is not just copy and paste<a class="anchor-link" href="#Decompose-program-to-pipeline-is-not-just-copy-and-paste"> </a>
+</h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>I hope the examples demonstrate how writing nodes help transform your code towards functional style. In reality, decoupling your functions from a programming is not straight forward.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Consider this example.
+<img src="/images/copied_from_nb/images/nan.jpg" alt="na"></p>
+<p>Look at how data <code>np.nan</code> is changed. This wouldn't be a problem if we have one program, since we will just passing all variable in memroy, without the step that writing and reading from a file.</p>
+<p>Error like these are subtle and dangerous, it may not throw error, but ruining our features quality. We have better chance to catch these error in a small program, but it would be much harder to isolate the issue if we have 1000 lines of code. The sooner you integrate it into your pipeline, the easier the integration is. In fact, we can do better. We could introduce test case for validating data, I would explain more in <strong>Section 3.5</strong>.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Data-Catalog-&amp;-Paramaeters">
+<a class="anchor" href="#Data-Catalog-&amp;-Paramaeters" aria-hidden="true"><span class="octicon octicon-link"></span></a>Data Catalog &amp; Paramaeters<a class="anchor-link" href="#Data-Catalog-&amp;-Paramaeters"> </a>
+</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><img src="/images/copied_from_nb/images/catalog.jpg" alt="catalog" title="Supported integration">
+Data Catalog is an API for Dataset. It includes a Data Model from from raw data, feature, to reporting layer and a standard Data I/O API. It integrates with pandas, spark, SQLAlchemy and Cloud Storage.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>To use Data Catalog, you would first need to define your dataset in the <code>catalog.yml</code>. You will have give it a <code>name</code>
+and <code>type</code>, denoting whether it is a SQL query or a CSV. Optionally, you can pass in any arguments that are supported from the underlying API as well.</p>
+<div class="highlight"><pre><span></span><span class="nt">example_iris_data</span><span class="p">:</span>
+  <span class="nt">type</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">pandas.CSVDataSet</span>
+  <span class="nt">filepath</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">data/01_raw/iris.csv</span>
+</pre></div>
+<h3 id="Connect-Data-Catalog-with-Node">
+<a class="anchor" href="#Connect-Data-Catalog-with-Node" aria-hidden="true"><span class="octicon octicon-link"></span></a>Connect Data Catalog with Node<a class="anchor-link" href="#Connect-Data-Catalog-with-Node"> </a>
+</h3>
+<p>Let's reuse our <code>split_data</code> function. When you create a node that using the <code>split_data</code> function, you would pass in the string of the dataset instead of an actual dataframe, the Reading/Writing operation is handled by Kedro, so you don't have to write to_csv() or read_csv() yourself.</p>
+<p><code>parameters.yml</code></p>
+<div class="highlight"><pre><span></span><span class="nt">example_test_data_ratio</span><span class="p">:</span> <span class="l l-Scalar l-Scalar-Plain">0.2</span>
+</pre></div>
+<p>A node using the <code>split_data</code> function.</p>
+<div class="highlight"><pre><span></span><span class="n">node</span><span class="p">(</span><span class="n">split_data</span><span class="p">,</span> <span class="n">inputs</span><span class="o">=</span><span class="p">[</span><span class="s2">"example_iris_data"</span><span class="p">,</span> <span class="s2">"params:example_test_data_ratio"</span><span class="p">],</span>
+                <span class="n">outputs</span><span class="o">=</span> <span class="nb">dict</span><span class="p">(</span>
+                <span class="n">train_x</span><span class="o">=</span><span class="s2">"example_train_x"</span><span class="p">,</span>
+                <span class="n">train_y</span><span class="o">=</span><span class="s2">"example_train_y"</span><span class="p">,</span>
+                <span class="n">test_x</span><span class="o">=</span><span class="s2">"example_test_x"</span><span class="p">,</span>
+                <span class="n">test_y</span><span class="o">=</span><span class="s2">"example_test_y"</span><span class="p">,</span>
+                <span class="p">),</span>
+         <span class="n">name</span><span class="o">=</span><span class="s2">"split_data"</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Here the inputs "example_iris_data" is refering to a dataset defined by <code>catalog.yml</code>, kedro will load the csv for you. Same applies for <code>params:example_test_data_ratio</code>.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>By using <code>catalog</code> and <code>parmaeters</code>, it already makes your program cleaner. You now have a single file to manager all data source, and a single file contains all parameters, which is configurable. Your functions now is parameterized, you can simply change configuration in a single file without going into every possible script to change a number.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Data Catalog abstract away the Data I/O logic from the data processing function.</p>
+<p>It process data and write a file.</p>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">process_data</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
+    <span class="o">...</span> <span class="c1"># do some processing</span>
+    <span class="n">df</span><span class="o">.</span><span class="n">to_csv</span><span class="p">(</span><span class="s1">'xxx.csv'</span><span class="p">)</span>
+</pre></div>
+<p>It only process data</p>
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">process_data</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
+    <span class="o">...</span> <span class="c1">#do some processing</span>
+    <span class="k">return</span> <span class="n">df</span>
+</pre></div>
+<p>This applies the <strong>single-responsibility principle (SRP)</strong>, meaning that your function is only doing one thing at a time. There are many benefits from it, for example, it makes data versioning easier. I will explain this in <strong>Section 3.3</strong>.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Memory-Dataset-(optional-to-skip)">
+<a class="anchor" href="#Memory-Dataset-(optional-to-skip)" aria-hidden="true"><span class="octicon octicon-link"></span></a>Memory Dataset (optional to skip)<a class="anchor-link" href="#Memory-Dataset-(optional-to-skip)"> </a>
+</h3>
+<p>Remember our we pass in a string to our node, and it will look for the corresponding dataset? What if we do not define it? It could be a lot of work if we need to define everything. Besides, some variable are not needed to be written out as a file, it could just stay as in memory.</p>
+<p>In fact, kedro use <code>MemroyDataset</code> by default. Which means you could simply pass in a string that is not defined, the string will be use as the name of the variable. There are more useful dataset like <code>CacheDataset</code>, you can find more details in this link.</p>
+<p><a href="https://kedro.readthedocs.io/en/stable/kedro.extras.datasets.html">https://kedro.readthedocs.io/en/stable/kedro.extras.datasets.html</a></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>p.s. When using kedro pipeline, you only define the node's inputs and outputs, but you never defined the order of execution. From my experience, there are pros and cons. The benefits is, your code is less coupled, and due to this, kedro is able to execute your pipeline in parallel whenever possible to speed up your program. However, it means the order of execution is not guaranteed, this may cause unexpected effect. For example, if you are training a machine learning model, it is common to set a random seed at the beginning. Due to the randomness of execution, you may not get identical result, as the order of execution is different everytime, thus the sequence of the random number used is random too. In general this is not a big problem, but if you have a strong need to make sure you have identical output (e.g. regression test), it may cause some trouble and you need to use dummy input and output to force kedro run your pipeline in a specific order.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+
+
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="noklam/mediumnok"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/2020/12/04/kedro-pipeline.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Explaining ideas one post at a time</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/noklam" title="noklam"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/nookidoki" title="nookidoki"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
