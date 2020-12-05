@@ -1,1 +1,1 @@
-Sitemap: https://nokidoki.ml/sitemap.xml
+Sitemap: https://noklam.github.io/blog/sitemap.xml
