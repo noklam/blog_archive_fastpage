@@ -322,7 +322,7 @@ window.onload = wrap_img;
 <p>Internally, Kedro always form a <strong>graph</strong> for your entire pipelines, which can be visaulized with this command.</p>
 <p><code>kedro viz</code></p>
 <p>This starts a web server that visualizes the dependencies of your function, parameters and data,you can also filter some nodes of function with the UI.</p>
-<p><img src="/images/copied_from_nb/images/kedro_viz.png" alt="viz"></p>
+<p><img src="/blog/images/copied_from_nb/images/kedro_viz.png" alt="viz"></p>
 
 </div>
 </div>
@@ -339,7 +339,7 @@ window.onload = wrap_img;
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><img src="/images/copied_from_nb/images/graph.jpg" alt="image.png" title="A simple pipeline graph"></p>
+<p><img src="/blog/images/copied_from_nb/images/graph.jpg" alt="image.png" title="A simple pipeline graph"></p>
 
 </div>
 </div>
@@ -568,7 +568,7 @@ node(func3, inputs='x', outputs='some_result', name='func3')</code></pre>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Consider this example.
-<img src="/images/copied_from_nb/images/nan.jpg" alt="na"></p>
+<img src="/blog/images/copied_from_nb/images/nan.jpg" alt="na"></p>
 <p>Look at how data <code>np.nan</code> is changed. This wouldn't be a problem if we have one program, since we will just passing all variable in memroy, without the step that writing and reading from a file.</p>
 <p>Error like these are subtle and dangerous, it may not throw error, but ruining our features quality. We have better chance to catch these error in a small program, but it would be much harder to isolate the issue if we have 1000 lines of code. The sooner you integrate it into your pipeline, the easier the integration is. In fact, we can do better. We could introduce test case for validating data, I would explain more in <strong>Section 3.5</strong>.</p>
 
@@ -587,7 +587,7 @@ node(func3, inputs='x', outputs='some_result', name='func3')</code></pre>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><img src="/images/copied_from_nb/images/catalog.jpg" alt="catalog" title="Supported integration">
+<p><img src="/blog/images/copied_from_nb/images/catalog.jpg" alt="catalog" title="Supported integration">
 Data Catalog is an API for Dataset. It includes a Data Model from from raw data, feature, to reporting layer and a standard Data I/O API. It integrates with pandas, spark, SQLAlchemy and Cloud Storage.</p>
 
 </div>
