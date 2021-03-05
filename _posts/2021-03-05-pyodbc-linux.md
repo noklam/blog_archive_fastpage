@@ -1,14 +1,15 @@
 ---
 title: Setting up pyodbc for Impala connection, works on both Linux and Window
+description: Easiest way to connect with Impala in Windows
+comments: true
+hide: false
+toc: false
+layout: post
 author: noklam
 authorURL: https://github.com/noklam
 authorTitle: A data scientist in Hong Kong
 authorImageURL: https://avatars0.githubusercontent.com/u/18221871?s=400&u=0ca734683fc7e41a3565c5591218008af5a77e9b&v=4
 categories: [pyodbc, impala]
-comments: true
-hide: false
-toc: false
-layout: post
 ---
 
 # Introduction

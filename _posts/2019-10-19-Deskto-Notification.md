@@ -4,7 +4,7 @@ description: Desktop notifiaction with Python
 comments: true
 hide: false
 layout: post
-toc: falsae
+toc: false
 author: noklam
 authorURL: https://github.com/noklam
 authorTitle: A data scientist in Hong Kong
