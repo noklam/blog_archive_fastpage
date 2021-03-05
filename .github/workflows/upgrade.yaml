@@ -9,6 +9,8 @@ jobs:
       (github.repository != 'fastai/fastpages') &&
       (github.event.issue.title == '[fastpages] Automated Upgrade')   
     runs-on: ubuntu-latest
+    env:
+      ACTIONS_ALLOW_UNSECURE_COMMANDS: true
     steps:
 
     - name: see payload
