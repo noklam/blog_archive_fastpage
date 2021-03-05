@@ -189,7 +189,7 @@
   
     
         ,"post17": {
-            "title": "plyer - Desktop Notification in Python",
+            "title": "plyer - Desktop Notification with Python",
             "content": "from plyer import notification import random class DesktopNotification: @staticmethod def notify(title=&#39;Hey~&#39;, message=&#39;Done!&#39;, timeout=10): ls = [&#39;👍&#39;,&#39;✔&#39;,&#39;✌&#39;,&#39;👌&#39;,&#39;👍&#39;,&#39;😎&#39;] notification.notify( title = title , message = random.choice(ls) * 3 + &#39; &#39; + message, timeout = timeout # seconds ) if __name__ == &#39;__main__&#39;: DesktopNotification.notify() . You could add this simple code block to notify you when the program is done! A desktop notification will be prompt on the bottom right corner in Window. .",
             "url": "https://noklam.github.io/blog/python/2019/10/19/Deskto-Notification.html",
             "relUrl": "/python/2019/10/19/Deskto-Notification.html",
