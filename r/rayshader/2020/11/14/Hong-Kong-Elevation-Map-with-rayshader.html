@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
 <title>Hong Kong Elevation map with rayshader (with R) | NokKnock✊✊</title>
-<meta name="generator" content="Jekyll v4.0.0" />
+<meta name="generator" content="Jekyll v4.1.1" />
 <meta property="og:title" content="Hong Kong Elevation map with rayshader (with R)" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="Inspired by https://www.reddit.com/r/dataisbeautiful/comments/bjp8bg/the_united_states_of_elevation_oc/. This is my little weekend project, Hong Kong elevation tile with rayshader, powered by fastpages with Jupyter notebook! I haven’t used R in years, so I spent a lot more time than expected to finish this." />
@@ -16,7 +16,7 @@
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2020-11-14T00:00:00-06:00" />
 <script type="application/ld+json">
-{"description":"Inspired by https://www.reddit.com/r/dataisbeautiful/comments/bjp8bg/the_united_states_of_elevation_oc/. This is my little weekend project, Hong Kong elevation tile with rayshader, powered by fastpages with Jupyter notebook! I haven’t used R in years, so I spent a lot more time than expected to finish this.","@type":"BlogPosting","headline":"Hong Kong Elevation map with rayshader (with R)","dateModified":"2020-11-14T00:00:00-06:00","datePublished":"2020-11-14T00:00:00-06:00","url":"https://noklam.github.io/blog/r/rayshader/2020/11/14/Hong-Kong-Elevation-Map-with-rayshader.html","mainEntityOfPage":{"@type":"WebPage","@id":"https://noklam.github.io/blog/r/rayshader/2020/11/14/Hong-Kong-Elevation-Map-with-rayshader.html"},"@context":"https://schema.org"}</script>
+{"url":"https://noklam.github.io/blog/r/rayshader/2020/11/14/Hong-Kong-Elevation-Map-with-rayshader.html","@type":"BlogPosting","headline":"Hong Kong Elevation map with rayshader (with R)","dateModified":"2020-11-14T00:00:00-06:00","datePublished":"2020-11-14T00:00:00-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://noklam.github.io/blog/r/rayshader/2020/11/14/Hong-Kong-Elevation-Map-with-rayshader.html"},"description":"Inspired by https://www.reddit.com/r/dataisbeautiful/comments/bjp8bg/the_united_states_of_elevation_oc/. This is my little weekend project, Hong Kong elevation tile with rayshader, powered by fastpages with Jupyter notebook! I haven’t used R in years, so I spent a lot more time than expected to finish this.","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://noklam.github.io/blog/feed.xml" title="NokKnock✊✊" /><!-- the google_analytics_id gets auto inserted from the config file -->
 
@@ -24,8 +24,8 @@
 
 <script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-83544344-5','auto');ga('require','displayfeatures');ga('send','pageview');</script>
 
-<link rel="shortcut icon" type="image/x-icon" href="/blog/images/favicon.ico"><link href="https://unpkg.com/@primer/css/dist/primer.css" rel="stylesheet" />
-<link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.7/css/all.css">
+<link rel="shortcut icon" type="image/x-icon" href="/blog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
 
 <script>
 function wrap_img(fn) {
@@ -83,7 +83,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      3 min read
+      2 min read
     
 </span></p>
 
@@ -136,13 +136,6 @@ window.onload = wrap_img;
 
 <div class="container" id="notebook-container">
         
-    
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-</div>
-    
-
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -207,12 +200,11 @@ The USGS explorer is a very nice tool to search data.</li>
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## Library</span>
-<span class="n">library</span><span class="p">(</span><span class="n">rayshader</span><span class="p">)</span>
-<span class="n">library</span><span class="p">(</span><span class="n">sp</span><span class="p">)</span>
-<span class="n">library</span><span class="p">(</span><span class="n">raster</span><span class="p">)</span>
-<span class="n">library</span><span class="p">(</span><span class="n">scales</span><span class="p">)</span>
-<span class="n">library</span><span class="p">(</span><span class="n">dplyr</span><span class="p">)</span>
+<div class=" highlight hl-r"><pre><span></span><span class="nf">library</span><span class="p">(</span><span class="n">rayshader</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">sp</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">raster</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">scales</span><span class="p">)</span>
+<span class="nf">library</span><span class="p">(</span><span class="n">dplyr</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -229,10 +221,10 @@ The USGS explorer is a very nice tool to search data.</li>
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">elevation1</span> <span class="o">=</span> <span class="n">raster</span><span class="p">::</span><span class="n">raster</span><span class="p">(</span><span class="s2">"../data/rayshader/HongKong/N21E113.hgt"</span><span class="p">)</span>
-<span class="n">elevation2</span> <span class="o">=</span> <span class="n">raster</span><span class="p">::</span><span class="n">raster</span><span class="p">(</span><span class="s2">"../data/rayshader/HongKong/N21E114.hgt"</span><span class="p">)</span>
-<span class="n">elevation3</span> <span class="o">=</span> <span class="n">raster</span><span class="p">::</span><span class="n">raster</span><span class="p">(</span><span class="s2">"../data/rayshader/HongKong/N22E113.hgt"</span><span class="p">)</span>
-<span class="n">elevation4</span> <span class="o">=</span> <span class="n">raster</span><span class="p">::</span><span class="n">raster</span><span class="p">(</span><span class="s2">"../data/rayshader/HongKong/N22E114.hgt"</span><span class="p">)</span>
+<div class=" highlight hl-r"><pre><span></span><span class="n">elevation1</span> <span class="o">=</span> <span class="n">raster</span><span class="o">::</span><span class="nf">raster</span><span class="p">(</span><span class="s">"../data/rayshader/HongKong/N21E113.hgt"</span><span class="p">)</span>
+<span class="n">elevation2</span> <span class="o">=</span> <span class="n">raster</span><span class="o">::</span><span class="nf">raster</span><span class="p">(</span><span class="s">"../data/rayshader/HongKong/N21E114.hgt"</span><span class="p">)</span>
+<span class="n">elevation3</span> <span class="o">=</span> <span class="n">raster</span><span class="o">::</span><span class="nf">raster</span><span class="p">(</span><span class="s">"../data/rayshader/HongKong/N22E113.hgt"</span><span class="p">)</span>
+<span class="n">elevation4</span> <span class="o">=</span> <span class="n">raster</span><span class="o">::</span><span class="nf">raster</span><span class="p">(</span><span class="s">"../data/rayshader/HongKong/N22E114.hgt"</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -257,10 +249,10 @@ The USGS explorer is a very nice tool to search data.</li>
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">hk_elevation</span> <span class="o">=</span> <span class="n">raster</span><span class="p">::</span><span class="n">merge</span><span class="p">(</span><span class="n">elevation1</span><span class="p">,</span><span class="n">elevation2</span><span class="p">,</span> <span class="n">elevation3</span><span class="p">,</span> <span class="n">elevation4</span><span class="p">)</span>
+<div class=" highlight hl-r"><pre><span></span><span class="n">hk_elevation</span> <span class="o">=</span> <span class="n">raster</span><span class="o">::</span><span class="nf">merge</span><span class="p">(</span><span class="n">elevation1</span><span class="p">,</span><span class="n">elevation2</span><span class="p">,</span> <span class="n">elevation3</span><span class="p">,</span> <span class="n">elevation4</span><span class="p">)</span>
 
-<span class="n">height_shade</span><span class="p">(</span><span class="n">raster_to_matrix</span><span class="p">(</span><span class="n">hk_elevation</span><span class="p">))</span> <span class="o">%&gt;%</span>
-<span class="n">plot_map</span><span class="p">();</span>
+<span class="nf">height_shade</span><span class="p">(</span><span class="nf">raster_to_matrix</span><span class="p">(</span><span class="n">hk_elevation</span><span class="p">))</span> <span class="o">%&gt;%</span>
+<span class="nf">plot_map</span><span class="p">();</span>
 </pre></div>
 
     </div>
@@ -302,13 +294,13 @@ The USGS explorer is a very nice tool to search data.</li>
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">hk_r</span> <span class="o">=</span> <span class="n">raster</span><span class="p">::</span><span class="n">raster</span><span class="p">(</span><span class="s2">"../data/rayshader/HongKong/LC08_L1TP_122044_20200218_20200225_01_T1_B4.TIF"</span><span class="p">)</span>
-<span class="n">hk_g</span> <span class="o">=</span> <span class="n">raster</span><span class="p">::</span><span class="n">raster</span><span class="p">(</span><span class="s2">"../data/rayshader/HongKong/LC08_L1TP_122044_20200218_20200225_01_T1_B3.TIF"</span><span class="p">)</span>
-<span class="n">hk_b</span> <span class="o">=</span> <span class="n">raster</span><span class="p">::</span><span class="n">raster</span><span class="p">(</span><span class="s2">"../data/rayshader/HongKong/LC08_L1TP_122044_20200218_20200225_01_T1_B2.TIF"</span><span class="p">)</span>
+<div class=" highlight hl-r"><pre><span></span><span class="n">hk_r</span> <span class="o">=</span> <span class="n">raster</span><span class="o">::</span><span class="nf">raster</span><span class="p">(</span><span class="s">"../data/rayshader/HongKong/LC08_L1TP_122044_20200218_20200225_01_T1_B4.TIF"</span><span class="p">)</span>
+<span class="n">hk_g</span> <span class="o">=</span> <span class="n">raster</span><span class="o">::</span><span class="nf">raster</span><span class="p">(</span><span class="s">"../data/rayshader/HongKong/LC08_L1TP_122044_20200218_20200225_01_T1_B3.TIF"</span><span class="p">)</span>
+<span class="n">hk_b</span> <span class="o">=</span> <span class="n">raster</span><span class="o">::</span><span class="nf">raster</span><span class="p">(</span><span class="s">"../data/rayshader/HongKong/LC08_L1TP_122044_20200218_20200225_01_T1_B2.TIF"</span><span class="p">)</span>
 
 
-<span class="n">hk_rbg_corrected</span> <span class="o">=</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">raster</span><span class="p">::</span><span class="n">stack</span><span class="p">(</span><span class="n">hk_r</span><span class="p">,</span> <span class="n">hk_g</span><span class="p">,</span> <span class="n">hk_b</span><span class="p">))</span>
-<span class="n">raster</span><span class="p">::</span><span class="n">plotRGB</span><span class="p">(</span><span class="n">hk_rbg_corrected</span><span class="p">);</span>
+<span class="n">hk_rbg_corrected</span> <span class="o">=</span> <span class="nf">sqrt</span><span class="p">(</span><span class="n">raster</span><span class="o">::</span><span class="nf">stack</span><span class="p">(</span><span class="n">hk_r</span><span class="p">,</span> <span class="n">hk_g</span><span class="p">,</span> <span class="n">hk_b</span><span class="p">))</span>
+<span class="n">raster</span><span class="o">::</span><span class="nf">plotRGB</span><span class="p">(</span><span class="n">hk_rbg_corrected</span><span class="p">);</span>
 </pre></div>
 
     </div>
@@ -341,17 +333,16 @@ The USGS explorer is a very nice tool to search data.</li>
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Since the RGB image and elevation map does not use the same coordinate system, we need to do some projections.</span>
-<span class="n">hk_elevation_utm</span> <span class="o">=</span> <span class="n">raster</span><span class="p">::</span><span class="n">projectRaster</span><span class="p">(</span><span class="n">hk_elevation</span><span class="p">,</span> <span class="n">crs</span> <span class="o">=</span> <span class="n">crs</span><span class="p">(</span><span class="n">hk_r</span><span class="p">),</span> <span class="n">method</span> <span class="o">=</span> <span class="s2">"bilinear"</span><span class="p">)</span>
-<span class="n">crs</span><span class="p">(</span><span class="n">hk_elevation_utm</span><span class="p">)</span>
+<div class=" highlight hl-r"><pre><span></span><span class="n">hk_elevation_utm</span> <span class="o">=</span> <span class="n">raster</span><span class="o">::</span><span class="nf">projectRaster</span><span class="p">(</span><span class="n">hk_elevation</span><span class="p">,</span> <span class="n">crs</span> <span class="o">=</span> <span class="nf">crs</span><span class="p">(</span><span class="n">hk_r</span><span class="p">),</span> <span class="n">method</span> <span class="o">=</span> <span class="s">"bilinear"</span><span class="p">)</span>
+<span class="nf">crs</span><span class="p">(</span><span class="n">hk_elevation_utm</span><span class="p">)</span>
 
-<span class="n">bottom_left</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mf">113.888</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="mf">22.1365</span><span class="p">)</span>
-<span class="n">top_right</span>   <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="mf">114.330</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="mf">22.5493</span><span class="p">)</span>
+<span class="n">bottom_left</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="m">113.888</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="m">22.1365</span><span class="p">)</span>
+<span class="n">top_right</span>   <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="n">y</span><span class="o">=</span><span class="m">114.330</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="m">22.5493</span><span class="p">)</span>
 
-<span class="n">extent_latlong</span> <span class="o">=</span> <span class="n">sp</span><span class="p">::</span><span class="n">SpatialPoints</span><span class="p">(</span><span class="n">rbind</span><span class="p">(</span><span class="n">bottom_left</span><span class="p">,</span> <span class="n">top_right</span><span class="p">),</span> <span class="n">proj4string</span><span class="o">=</span><span class="n">sp</span><span class="p">::</span><span class="n">CRS</span><span class="p">(</span><span class="s2">"+proj=longlat +ellps=WGS84 +datum=WGS84"</span><span class="p">))</span>
-<span class="n">extent_utm</span> <span class="o">=</span> <span class="n">sp</span><span class="p">::</span><span class="n">spTransform</span><span class="p">(</span><span class="n">extent_latlong</span><span class="p">,</span> <span class="n">raster</span><span class="p">::</span><span class="n">crs</span><span class="p">(</span><span class="n">hk_elevation_utm</span><span class="p">))</span>
+<span class="n">extent_latlong</span> <span class="o">=</span> <span class="n">sp</span><span class="o">::</span><span class="nf">SpatialPoints</span><span class="p">(</span><span class="nf">rbind</span><span class="p">(</span><span class="n">bottom_left</span><span class="p">,</span> <span class="n">top_right</span><span class="p">),</span> <span class="n">proj4string</span><span class="o">=</span><span class="n">sp</span><span class="o">::</span><span class="nf">CRS</span><span class="p">(</span><span class="s">"+proj=longlat +ellps=WGS84 +datum=WGS84"</span><span class="p">))</span>
+<span class="n">extent_utm</span> <span class="o">=</span> <span class="n">sp</span><span class="o">::</span><span class="nf">spTransform</span><span class="p">(</span><span class="n">extent_latlong</span><span class="p">,</span> <span class="n">raster</span><span class="o">::</span><span class="nf">crs</span><span class="p">(</span><span class="n">hk_elevation_utm</span><span class="p">))</span>
 
-<span class="n">e</span> <span class="o">=</span> <span class="n">raster</span><span class="p">::</span><span class="n">extent</span><span class="p">(</span><span class="n">extent_utm</span><span class="p">)</span>
+<span class="n">e</span> <span class="o">=</span> <span class="n">raster</span><span class="o">::</span><span class="nf">extent</span><span class="p">(</span><span class="n">extent_utm</span><span class="p">)</span>
 <span class="n">e</span>
 </pre></div>
 
@@ -400,26 +391,26 @@ ymax       : 2497449 </pre>
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">hk_rgb_cropped</span> <span class="o">=</span> <span class="n">raster</span><span class="p">::</span><span class="n">crop</span><span class="p">(</span><span class="n">hk_rbg_corrected</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
-<span class="n">elevation_cropped</span> <span class="o">=</span> <span class="n">raster</span><span class="p">::</span><span class="n">crop</span><span class="p">(</span><span class="n">hk_elevation_utm</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+<div class=" highlight hl-r"><pre><span></span><span class="n">hk_rgb_cropped</span> <span class="o">=</span> <span class="n">raster</span><span class="o">::</span><span class="nf">crop</span><span class="p">(</span><span class="n">hk_rbg_corrected</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+<span class="n">elevation_cropped</span> <span class="o">=</span> <span class="n">raster</span><span class="o">::</span><span class="nf">crop</span><span class="p">(</span><span class="n">hk_elevation_utm</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
 
-<span class="n">names</span><span class="p">(</span><span class="n">hk_rgb_cropped</span><span class="p">)</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="s2">"r"</span><span class="p">,</span><span class="s2">"g"</span><span class="p">,</span><span class="s2">"b"</span><span class="p">)</span>
+<span class="nf">names</span><span class="p">(</span><span class="n">hk_rgb_cropped</span><span class="p">)</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="s">"r"</span><span class="p">,</span><span class="s">"g"</span><span class="p">,</span><span class="s">"b"</span><span class="p">)</span>
 
-<span class="n">hk_r_cropped</span> <span class="o">=</span> <span class="n">rayshader</span><span class="p">::</span><span class="n">raster_to_matrix</span><span class="p">(</span><span class="n">hk_rgb_cropped</span><span class="err">$</span><span class="n">r</span><span class="p">)</span>
-<span class="n">hk_g_cropped</span> <span class="o">=</span> <span class="n">rayshader</span><span class="p">::</span><span class="n">raster_to_matrix</span><span class="p">(</span><span class="n">hk_rgb_cropped</span><span class="err">$</span><span class="n">g</span><span class="p">)</span>
-<span class="n">hk_b_cropped</span> <span class="o">=</span> <span class="n">rayshader</span><span class="p">::</span><span class="n">raster_to_matrix</span><span class="p">(</span><span class="n">hk_rgb_cropped</span><span class="err">$</span><span class="n">b</span><span class="p">)</span>
+<span class="n">hk_r_cropped</span> <span class="o">=</span> <span class="n">rayshader</span><span class="o">::</span><span class="nf">raster_to_matrix</span><span class="p">(</span><span class="n">hk_rgb_cropped</span><span class="o">$</span><span class="n">r</span><span class="p">)</span>
+<span class="n">hk_g_cropped</span> <span class="o">=</span> <span class="n">rayshader</span><span class="o">::</span><span class="nf">raster_to_matrix</span><span class="p">(</span><span class="n">hk_rgb_cropped</span><span class="o">$</span><span class="n">g</span><span class="p">)</span>
+<span class="n">hk_b_cropped</span> <span class="o">=</span> <span class="n">rayshader</span><span class="o">::</span><span class="nf">raster_to_matrix</span><span class="p">(</span><span class="n">hk_rgb_cropped</span><span class="o">$</span><span class="n">b</span><span class="p">)</span>
 
-<span class="n">hkel_matrix</span> <span class="o">=</span> <span class="n">rayshader</span><span class="p">::</span><span class="n">raster_to_matrix</span><span class="p">(</span><span class="n">elevation_cropped</span><span class="p">)</span>
+<span class="n">hkel_matrix</span> <span class="o">=</span> <span class="n">rayshader</span><span class="o">::</span><span class="nf">raster_to_matrix</span><span class="p">(</span><span class="n">elevation_cropped</span><span class="p">)</span>
 
-<span class="n">hk_rgb_array</span> <span class="o">=</span> <span class="n">array</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">dim</span><span class="o">=</span><span class="n">c</span><span class="p">(</span><span class="n">nrow</span><span class="p">(</span><span class="n">hk_r_cropped</span><span class="p">),</span><span class="n">ncol</span><span class="p">(</span><span class="n">hk_r_cropped</span><span class="p">),</span><span class="mi">3</span><span class="p">))</span>
+<span class="n">hk_rgb_array</span> <span class="o">=</span> <span class="nf">array</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="n">dim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="nf">nrow</span><span class="p">(</span><span class="n">hk_r_cropped</span><span class="p">),</span><span class="nf">ncol</span><span class="p">(</span><span class="n">hk_r_cropped</span><span class="p">),</span><span class="m">3</span><span class="p">))</span>
 
-<span class="n">hk_rgb_array</span><span class="p">[,,</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">hk_r_cropped</span><span class="o">/</span><span class="mi">255</span> <span class="c1">#Red layer</span>
-<span class="n">hk_rgb_array</span><span class="p">[,,</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">hk_g_cropped</span><span class="o">/</span><span class="mi">255</span> <span class="c1">#Blue layer</span>
-<span class="n">hk_rgb_array</span><span class="p">[,,</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">hk_b_cropped</span><span class="o">/</span><span class="mi">255</span> <span class="c1">#Green layer</span>
+<span class="n">hk_rgb_array</span><span class="p">[,,</span><span class="m">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">hk_r_cropped</span><span class="o">/</span><span class="m">255</span> <span class="c1">#Red layer</span>
+<span class="n">hk_rgb_array</span><span class="p">[,,</span><span class="m">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">hk_g_cropped</span><span class="o">/</span><span class="m">255</span> <span class="c1">#Blue layer</span>
+<span class="n">hk_rgb_array</span><span class="p">[,,</span><span class="m">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">hk_b_cropped</span><span class="o">/</span><span class="m">255</span> <span class="c1">#Green layer</span>
 
-<span class="n">hk_rgb_array</span> <span class="o">=</span> <span class="n">aperm</span><span class="p">(</span><span class="n">hk_rgb_array</span><span class="p">,</span> <span class="n">c</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
+<span class="n">hk_rgb_array</span> <span class="o">=</span> <span class="nf">aperm</span><span class="p">(</span><span class="n">hk_rgb_array</span><span class="p">,</span> <span class="nf">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="m">1</span><span class="p">,</span><span class="m">3</span><span class="p">))</span>
 
-<span class="n">plot_map</span><span class="p">(</span><span class="n">hk_rgb_array</span><span class="p">)</span>
+<span class="nf">plot_map</span><span class="p">(</span><span class="n">hk_rgb_array</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -453,32 +444,32 @@ ymax       : 2497449 </pre>
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">hk_rgb_cropped</span> <span class="o">=</span> <span class="n">raster</span><span class="p">::</span><span class="n">crop</span><span class="p">(</span><span class="n">hk_rbg_corrected</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
-<span class="n">elevation_cropped</span> <span class="o">=</span> <span class="n">raster</span><span class="p">::</span><span class="n">crop</span><span class="p">(</span><span class="n">hk_elevation_utm</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+<div class=" highlight hl-r"><pre><span></span><span class="n">hk_rgb_cropped</span> <span class="o">=</span> <span class="n">raster</span><span class="o">::</span><span class="nf">crop</span><span class="p">(</span><span class="n">hk_rbg_corrected</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
+<span class="n">elevation_cropped</span> <span class="o">=</span> <span class="n">raster</span><span class="o">::</span><span class="nf">crop</span><span class="p">(</span><span class="n">hk_elevation_utm</span><span class="p">,</span> <span class="n">e</span><span class="p">)</span>
 <span class="c1"># Stretch the images</span>
 <span class="n">hk_rgb_cropped</span> <span class="o">&lt;-</span>
-<span class="n">raster</span><span class="p">::</span><span class="n">stretch</span><span class="p">(</span><span class="n">hk_rgb_cropped</span><span class="p">,</span>
-<span class="n">minq</span> <span class="o">=</span> <span class="o">.</span><span class="mi">01</span><span class="p">,</span>
-<span class="n">maxq</span> <span class="o">=</span> <span class="o">.</span><span class="mi">999</span><span class="p">,</span>
+<span class="n">raster</span><span class="o">::</span><span class="nf">stretch</span><span class="p">(</span><span class="n">hk_rgb_cropped</span><span class="p">,</span>
+<span class="n">minq</span> <span class="o">=</span> <span class="n">.</span><span class="m">01</span><span class="p">,</span>
+<span class="n">maxq</span> <span class="o">=</span> <span class="n">.</span><span class="m">999</span><span class="p">,</span>
 <span class="p">)</span>
 
-<span class="n">names</span><span class="p">(</span><span class="n">hk_rgb_cropped</span><span class="p">)</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="s2">"r"</span><span class="p">,</span><span class="s2">"g"</span><span class="p">,</span><span class="s2">"b"</span><span class="p">)</span>
+<span class="nf">names</span><span class="p">(</span><span class="n">hk_rgb_cropped</span><span class="p">)</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="s">"r"</span><span class="p">,</span><span class="s">"g"</span><span class="p">,</span><span class="s">"b"</span><span class="p">)</span>
 
-<span class="n">hk_r_cropped</span> <span class="o">=</span> <span class="n">rayshader</span><span class="p">::</span><span class="n">raster_to_matrix</span><span class="p">(</span><span class="n">hk_rgb_cropped</span><span class="err">$</span><span class="n">r</span><span class="p">)</span>
-<span class="n">hk_g_cropped</span> <span class="o">=</span> <span class="n">rayshader</span><span class="p">::</span><span class="n">raster_to_matrix</span><span class="p">(</span><span class="n">hk_rgb_cropped</span><span class="err">$</span><span class="n">g</span><span class="p">)</span>
-<span class="n">hk_b_cropped</span> <span class="o">=</span> <span class="n">rayshader</span><span class="p">::</span><span class="n">raster_to_matrix</span><span class="p">(</span><span class="n">hk_rgb_cropped</span><span class="err">$</span><span class="n">b</span><span class="p">)</span>
+<span class="n">hk_r_cropped</span> <span class="o">=</span> <span class="n">rayshader</span><span class="o">::</span><span class="nf">raster_to_matrix</span><span class="p">(</span><span class="n">hk_rgb_cropped</span><span class="o">$</span><span class="n">r</span><span class="p">)</span>
+<span class="n">hk_g_cropped</span> <span class="o">=</span> <span class="n">rayshader</span><span class="o">::</span><span class="nf">raster_to_matrix</span><span class="p">(</span><span class="n">hk_rgb_cropped</span><span class="o">$</span><span class="n">g</span><span class="p">)</span>
+<span class="n">hk_b_cropped</span> <span class="o">=</span> <span class="n">rayshader</span><span class="o">::</span><span class="nf">raster_to_matrix</span><span class="p">(</span><span class="n">hk_rgb_cropped</span><span class="o">$</span><span class="n">b</span><span class="p">)</span>
 
-<span class="n">hkel_matrix</span> <span class="o">=</span> <span class="n">rayshader</span><span class="p">::</span><span class="n">raster_to_matrix</span><span class="p">(</span><span class="n">elevation_cropped</span><span class="p">)</span>
+<span class="n">hkel_matrix</span> <span class="o">=</span> <span class="n">rayshader</span><span class="o">::</span><span class="nf">raster_to_matrix</span><span class="p">(</span><span class="n">elevation_cropped</span><span class="p">)</span>
 
-<span class="n">hk_rgb_array</span> <span class="o">=</span> <span class="n">array</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">dim</span><span class="o">=</span><span class="n">c</span><span class="p">(</span><span class="n">nrow</span><span class="p">(</span><span class="n">hk_r_cropped</span><span class="p">),</span><span class="n">ncol</span><span class="p">(</span><span class="n">hk_r_cropped</span><span class="p">),</span><span class="mi">3</span><span class="p">))</span>
+<span class="n">hk_rgb_array</span> <span class="o">=</span> <span class="nf">array</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="n">dim</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="nf">nrow</span><span class="p">(</span><span class="n">hk_r_cropped</span><span class="p">),</span><span class="nf">ncol</span><span class="p">(</span><span class="n">hk_r_cropped</span><span class="p">),</span><span class="m">3</span><span class="p">))</span>
 
-<span class="n">hk_rgb_array</span><span class="p">[,,</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">hk_r_cropped</span><span class="o">/</span><span class="mi">255</span> <span class="c1">#Red layer</span>
-<span class="n">hk_rgb_array</span><span class="p">[,,</span><span class="mi">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">hk_g_cropped</span><span class="o">/</span><span class="mi">255</span> <span class="c1">#Blue layer</span>
-<span class="n">hk_rgb_array</span><span class="p">[,,</span><span class="mi">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">hk_b_cropped</span><span class="o">/</span><span class="mi">255</span> <span class="c1">#Green layer</span>
+<span class="n">hk_rgb_array</span><span class="p">[,,</span><span class="m">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">hk_r_cropped</span><span class="o">/</span><span class="m">255</span> <span class="c1">#Red layer</span>
+<span class="n">hk_rgb_array</span><span class="p">[,,</span><span class="m">2</span><span class="p">]</span> <span class="o">=</span> <span class="n">hk_g_cropped</span><span class="o">/</span><span class="m">255</span> <span class="c1">#Blue layer</span>
+<span class="n">hk_rgb_array</span><span class="p">[,,</span><span class="m">3</span><span class="p">]</span> <span class="o">=</span> <span class="n">hk_b_cropped</span><span class="o">/</span><span class="m">255</span> <span class="c1">#Green layer</span>
 
-<span class="n">hk_rgb_array</span> <span class="o">=</span> <span class="n">aperm</span><span class="p">(</span><span class="n">hk_rgb_array</span><span class="p">,</span> <span class="n">c</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">3</span><span class="p">))</span>
-<span class="n">hk_rgb_contrast</span> <span class="o">=</span> <span class="n">scales</span><span class="p">::</span><span class="n">rescale</span><span class="p">(</span><span class="n">hk_rgb_array</span><span class="p">,</span><span class="n">to</span><span class="o">=</span><span class="n">c</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
-<span class="n">plot_map</span><span class="p">(</span><span class="n">hk_rgb_contrast</span><span class="p">)</span>
+<span class="n">hk_rgb_array</span> <span class="o">=</span> <span class="nf">aperm</span><span class="p">(</span><span class="n">hk_rgb_array</span><span class="p">,</span> <span class="nf">c</span><span class="p">(</span><span class="m">2</span><span class="p">,</span><span class="m">1</span><span class="p">,</span><span class="m">3</span><span class="p">))</span>
+<span class="n">hk_rgb_contrast</span> <span class="o">=</span> <span class="n">scales</span><span class="o">::</span><span class="nf">rescale</span><span class="p">(</span><span class="n">hk_rgb_array</span><span class="p">,</span><span class="n">to</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span><span class="m">1</span><span class="p">))</span>
+<span class="nf">plot_map</span><span class="p">(</span><span class="n">hk_rgb_contrast</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -511,16 +502,16 @@ ymax       : 2497449 </pre>
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">plot_3d</span><span class="p">(</span><span class="n">hk_rgb_contrast</span><span class="p">,</span> <span class="n">hkel_matrix</span><span class="p">,</span> <span class="n">windowsize</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="mi">1100</span><span class="p">,</span><span class="mi">900</span><span class="p">),</span> <span class="n">zscale</span> <span class="o">=</span> <span class="mi">15</span><span class="p">,</span> <span class="n">shadowdepth</span> <span class="o">=</span> <span class="o">-</span><span class="mi">50</span><span class="p">,</span>
-        <span class="n">zoom</span><span class="o">=</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">phi</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span><span class="n">theta</span><span class="o">=-</span><span class="mi">15</span><span class="p">,</span><span class="n">fov</span><span class="o">=</span><span class="mi">70</span><span class="p">,</span> <span class="n">background</span> <span class="o">=</span> <span class="s2">"#F2E1D0"</span><span class="p">,</span> <span class="n">shadowcolor</span> <span class="o">=</span> <span class="s2">"#523E2B"</span><span class="p">)</span>
+<div class=" highlight hl-r"><pre><span></span><span class="nf">plot_3d</span><span class="p">(</span><span class="n">hk_rgb_contrast</span><span class="p">,</span> <span class="n">hkel_matrix</span><span class="p">,</span> <span class="n">windowsize</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">1100</span><span class="p">,</span><span class="m">900</span><span class="p">),</span> <span class="n">zscale</span> <span class="o">=</span> <span class="m">15</span><span class="p">,</span> <span class="n">shadowdepth</span> <span class="o">=</span> <span class="m">-50</span><span class="p">,</span>
+        <span class="n">zoom</span><span class="o">=</span><span class="m">0.5</span><span class="p">,</span> <span class="n">phi</span><span class="o">=</span><span class="m">45</span><span class="p">,</span><span class="n">theta</span><span class="o">=</span><span class="m">-15</span><span class="p">,</span><span class="n">fov</span><span class="o">=</span><span class="m">70</span><span class="p">,</span> <span class="n">background</span> <span class="o">=</span> <span class="s">"#F2E1D0"</span><span class="p">,</span> <span class="n">shadowcolor</span> <span class="o">=</span> <span class="s">"#523E2B"</span><span class="p">)</span>
 
 
-<span class="n">render_scalebar</span><span class="p">(</span><span class="n">limits</span><span class="o">=</span><span class="n">c</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span><span class="n">label_unit</span> <span class="o">=</span> <span class="s2">"km"</span><span class="p">,</span><span class="n">position</span> <span class="o">=</span> <span class="s2">"W"</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span>
-                <span class="n">scale_length</span> <span class="o">=</span> <span class="n">c</span><span class="p">(</span><span class="mf">0.33</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
-<span class="n">render_compass</span><span class="p">(</span><span class="n">position</span> <span class="o">=</span> <span class="s2">"N"</span><span class="p">)</span>
-<span class="n">render_snapshot</span><span class="p">(</span><span class="n">title_text</span> <span class="o">=</span> <span class="s2">"Hong Kong | Imagery: Landsat 8 | DEM: 30m SRTM"</span><span class="p">,</span>
-                <span class="n">title_bar_color</span> <span class="o">=</span> <span class="s2">"#000000"</span><span class="p">,</span> <span class="n">title_color</span> <span class="o">=</span> <span class="s2">"white"</span><span class="p">,</span> <span class="n">title_bar_alpha</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span>
-               <span class="n">clear</span><span class="o">=</span><span class="n">TRUE</span><span class="p">,</span> <span class="p">)</span>
+<span class="nf">render_scalebar</span><span class="p">(</span><span class="n">limits</span><span class="o">=</span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="p">,</span> <span class="m">5</span><span class="p">,</span> <span class="m">10</span><span class="p">),</span><span class="n">label_unit</span> <span class="o">=</span> <span class="s">"km"</span><span class="p">,</span><span class="n">position</span> <span class="o">=</span> <span class="s">"W"</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="m">50</span><span class="p">,</span>
+                <span class="n">scale_length</span> <span class="o">=</span> <span class="nf">c</span><span class="p">(</span><span class="m">0.33</span><span class="p">,</span><span class="m">1</span><span class="p">))</span>
+<span class="nf">render_compass</span><span class="p">(</span><span class="n">position</span> <span class="o">=</span> <span class="s">"N"</span><span class="p">)</span>
+<span class="nf">render_snapshot</span><span class="p">(</span><span class="n">title_text</span> <span class="o">=</span> <span class="s">"Hong Kong | Imagery: Landsat 8 | DEM: 30m SRTM"</span><span class="p">,</span>
+                <span class="n">title_bar_color</span> <span class="o">=</span> <span class="s">"#000000"</span><span class="p">,</span> <span class="n">title_color</span> <span class="o">=</span> <span class="s">"white"</span><span class="p">,</span> <span class="n">title_bar_alpha</span> <span class="o">=</span> <span class="m">1</span><span class="p">,</span>
+               <span class="n">clear</span><span class="o">=</span><span class="kc">TRUE</span><span class="p">,</span> <span class="p">)</span>
 </pre></div>
 
     </div>
