@@ -3,6 +3,8 @@ keywords: fastai
 description: Dispatch is an amazing useful features which is underused in Python. In this article, I will show you how you can use it to make Python more powerful.
 title: The missing piece in Python tutorial - What is dispatch why you should care
 toc: false
+layout: post
+hide: false
 branch: master
 badges: true
 comments: true

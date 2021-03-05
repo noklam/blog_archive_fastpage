@@ -4,6 +4,10 @@ author: noklam
 authorURL: https://github.com/noklam
 authorTitle: A data scientist in Hong Kong
 authorImageURL: https://avatars0.githubusercontent.com/u/18221871?s=400&u=0ca734683fc7e41a3565c5591218008af5a77e9b&v=4
+comments: true
+hide: false
+toc: false
+layout: post
 categories: [python, ML]
 ---
 

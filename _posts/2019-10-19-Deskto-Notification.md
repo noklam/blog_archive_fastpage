@@ -1,5 +1,10 @@
 ---
-title: plyer - Desktop Notification in Python
+title: plyer - Desktop Notification with Python
+description: Desktop notifiaction with Python 
+comments: true
+hide: false
+layout: post
+toc: falsae
 author: noklam
 authorURL: https://github.com/noklam
 authorTitle: A data scientist in Hong Kong
