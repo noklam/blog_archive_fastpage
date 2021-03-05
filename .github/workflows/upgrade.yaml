@@ -18,6 +18,7 @@ jobs:
       env:
         PAYLOAD: ${{ toJSON(github.event) }}
         PR_PAYLOAD: ${{ github.event.pull_request }}
+        ACTIONS_ALLOW_UNSECURE_COMMANDS: true
 
     - name: Comment on issue if sufficient access does not exist
       if: |
