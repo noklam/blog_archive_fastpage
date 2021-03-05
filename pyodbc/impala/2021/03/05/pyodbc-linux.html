@@ -1,0 +1,46 @@
+<h1 id="introduction">Introduction</h1>
+<p>Long story short, connect with Impala is a big headache in Windows. <code class="highlighter-rouge">pyhive</code>, <code class="highlighter-rouge">impyla</code> are both buggy. At the end, I stick with <code class="highlighter-rouge">pyodbc</code> as it works on both Linux and Windows, and seems to have better performance. There are not many steps, but it would be tricky if you try to Google as there are not much guide that just work out of the box</p>
+
+<h1 id="setup">Setup</h1>
+<p>First, you need to download the ODBC driver from <a href="https://www.cloudera.com/downloads/connectors/impala/odbc/2-6-11.html">Cloudera</a>.</p>
+
+<p>Then you need to instsall the driver properly.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>dpkg -i docker/clouderaimpalaodbc_2.6.10.1010-2_amd64.deb
+</code></pre></div></div>
+
+<p>Add this file to the directory /etc/odbcinst.ini, if you already have add, append this to the file.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code># /etc/odbcinst.ini
+[ODBC Drivers]
+Cloudera Impala ODBC Driver 32-bit=Installed
+Cloudera Impala ODBC Driver 64-bit=Installed
+[Cloudera Impala ODBC Driver 32-bit]
+Description=Cloudera Impala ODBC Driver (32-bit)
+Driver=/opt/cloudera/impalaodbc/lib/32/libclouderaimpalaodbc32.so
+[Cloudera Impala ODBC Driver 64-bit]
+Description=Cloudera Impala ODBC Driver (64-bit)
+Driver=/opt/cloudera/impalaodbc/lib/64/libclouderaimpalaodbc64.so
+</code></pre></div></div>
+<p>Then install some additional package.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>apt-get update <span class="o">&amp;&amp;</span> apt-get <span class="nt">-y</span> <span class="nb">install </span>gnupg apt-transport-https
+apt-get update <span class="o">&amp;&amp;</span> apt-get <span class="nt">-y</span> <span class="nb">install </span>libssl1.0.0 unixodbc unixodbc-dev <span class="se">\</span>
+<span class="o">&amp;&amp;</span> <span class="nv">ACCEPT_EULA</span><span class="o">=</span>Y apt-get <span class="nt">-y</span> <span class="nb">install </span>msodbcsql17
+apt-get <span class="nb">install </span>unixodbc-dev <span class="nt">-y</span>
+
+</code></pre></div></div>
+<p>Last, <code class="highlighter-rouge">pip install pyodbc</code>  and have fun.</p>
+
+<p>To read a database table, you can simply do this.</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">pyodbc</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="n">pd</span>
+
+<span class="n">conn</span> <span class="o">=</span> <span class="n">pyodbc</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="n">f</span><span class="s">"""
+Driver=Cloudera ODBC Driver for Impala 64-bit; 
+PWD=password;
+UID=username;
+Database=database
+"""</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>There are multiple way to connect, but I found using a connection string is the most straight forward solution that does not require any additional enviornment variable setup.</p>
+
