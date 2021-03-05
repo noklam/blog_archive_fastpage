@@ -6,7 +6,7 @@
 # https://learn-the-web.algonquindesign.ca/topics/markdown-yaml-cheat-sheet/#yaml
 # https://learnxinyminutes.com/docs/yaml/
 
-title: NokKnock✊✊
+title: noklam✊
 description: Explaining ideas one post at a time
 github_username: noklam
 # you can comment the below line out if your repo name is not different than your baseurl
@@ -88,7 +88,7 @@ plugins:
 
 # See https://jekyllrb.com/docs/pagination/
 # For pagination to work, you cannot have index.md at the root of your repo, instead you must rename this file to index.html
-paginate: 15
+paginate: 20
 paginate_path: /page:num/
 
 remote_theme: jekyll/minima
