@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
+<loc>https://noklam.github.io/blog/codespaces</loc>
+<lastmod>2019-01-01T00:00:00-06:00</lastmod>
+</url>
+<url>
 <loc>https://noklam.github.io/blog/python/2019/10/19/Deskto-Notification.html</loc>
 <lastmod>2019-10-19T00:00:00-05:00</lastmod>
 </url>
@@ -57,8 +61,16 @@
 <lastmod>2020-12-10T00:00:00-06:00</lastmod>
 </url>
 <url>
+<loc>https://noklam.github.io/blog/python/fastai/2021/02/06/leetcode-Copy1.html</loc>
+<lastmod>2021-02-06T00:00:00-06:00</lastmod>
+</url>
+<url>
 <loc>https://noklam.github.io/blog/python/fastai/2021/02/06/leetcode.html</loc>
 <lastmod>2021-02-06T00:00:00-06:00</lastmod>
+</url>
+<url>
+<loc>https://noklam.github.io/blog/python/web/wsgi/2021/03/02/python-web-server-wsgi.html</loc>
+<lastmod>2021-03-02T00:00:00-06:00</lastmod>
 </url>
 <url>
 <loc>https://noklam.github.io/blog/pyodbc/impala/2021/03/05/pyodbc-linux.html</loc>
