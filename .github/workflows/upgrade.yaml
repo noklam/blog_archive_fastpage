@@ -138,6 +138,8 @@ jobs:
 
     - name: sync baseurl
       if: steps.check_version.outputs.vbump == 'true'
+      env:
+       ACTIONS_ALLOW_UNSECURE_COMMANDS: true
       run: |
         import re, os, yaml
         from pathlib import Path
@@ -175,6 +177,8 @@ jobs:
       shell: python
 
     - uses: webfactory/ssh-agent@v0.2.0
+      env:
+       ACTIONS_ALLOW_UNSECURE_COMMANDS: true
       if: steps.check_version.outputs.vbump == 'true'
       with:
           ssh-private-key: ${{ secrets.SSH_DEPLOY_KEY }}
