@@ -11,3 +11,7 @@
 
 * [CMU Database System](unstructured-studied-topic/cmu-database-system.md)
 
+## LeetCode
+
+* [1781- Sum of Beauty of All Substrings](leetcode/1781-sum-of-beauty-of-all-substrings.md)
+
