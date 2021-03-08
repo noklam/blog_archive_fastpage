@@ -9,7 +9,7 @@
 
 ## Unstructured Studied Topic
 
-* [CMU Database System](unstructured-studied-topic/cmu-database-system.md)
+* [CMU Database System - Lec 03 Database Storage](unstructured-studied-topic/cmu-database-system.md)
 
 ## LeetCode
 
