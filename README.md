@@ -1,5 +1,5 @@
 ---
-description: Machine Learning Journey
+description: My learning notes. Just in time (JIT) is better than Just in Case
 ---
 
 # README
@@ -12,15 +12,15 @@ https://noklam.ml
 
 ## All things data
 
-I am a data scientist. Recently, I find myself studying database, data structure, data pipeline way more than machine learning. To build a good model, I found the importance of writing good code to produce data with quality often triumps a SOTA model.
+I am a data scientist. Recently, I find myself studying database, data structure, data pipeline way more than machine learning. To build a good model, I found the importance of writing good code to produce data with quality often triumphs a SOTA model.
 
-Delivering the model is the job of data scientist. Inevitably, every data scientist should somewhat be a "full-stack" data scientist.
+Delivering the model is the job of a data scientist. Inevitably, every data scientist should somewhat be a "full-stack" data scientist.
 
 
 
 This is a central repository for my blogs and notes
 
-* Blog: noklam.ml \(Github Page\) - Usually blog or notes with code with shorter articles
+* Blog: https://noklam.ml \(Github Page\) - Usually blog or notes with code with shorter articles
 * Blog: Medium \([https://medium.com/@nokknocknok](https://medium.com/@nokknocknok)\)
 * GitBook \(Study notes mainly, I use Joplin to keep notes in markdown, am considering sync to Gitbook from time to time. I haven't figured out what's the best way to do so.\)
 
