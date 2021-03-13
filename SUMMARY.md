@@ -19,3 +19,11 @@
 
 * [Kubernetes](cloud/kubernetes.md)
 
+## Full Stack Deep Learning
+
+* [Lab 1](full-stack-deep-learning/lab-1.md)
+
+---
+
+* [Launching Kubernetes in Google Cloud Platform \(GCP\)](launching-kubernetes-in-google-cloud-platform-gcp.md)
+
