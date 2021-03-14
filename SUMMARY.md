@@ -13,8 +13,8 @@
 
 ## LeetCode
 
-* [1781- Sum of Beauty of All Substrings](leetcode/1781-sum-of-beauty-of-all-substrings/README.md)
-  * [1792. Maximum Average Pass Ratio](leetcode/1781-sum-of-beauty-of-all-substrings/1792.-maximum-average-pass-ratio.md)
+* [1792. Maximum Average Pass Ratio](leetcode/1792.-maximum-average-pass-ratio.md)
+* [1781. Sum of Beauty of All Substrings](leetcode/1781-sum-of-beauty-of-all-substrings.md)
 
 ## Cloud
 
