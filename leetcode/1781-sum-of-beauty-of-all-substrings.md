@@ -1,4 +1,4 @@
-# 1781- Sum of Beauty of All Substrings
+# 1781. Sum of Beauty of All Substrings
 
 [https://leetcode.com/problems/sum-of-beauty-of-all-substrings/discuss/1096457/python-on2-with-counter](https://leetcode.com/problems/sum-of-beauty-of-all-substrings/discuss/1096457/python-on2-with-counter)
 
@@ -12,7 +12,7 @@ Two Loop + maximum 26 key\(lower case dictionary\) to find Min/Max.
 Since This question has a constrain with length &lt;=500, so this answer is reasonable. We can eliminate the use of dict to find Max/Min if needed.  
 
 
-```text
+```python
 from collections import Counter
 
 class Solution:
