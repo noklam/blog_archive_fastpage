@@ -4,20 +4,20 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>deepcopy, lightGBM and pickle | noklam✊</title>
+<title>deepcopy, LGBM and pickle | noklam✊</title>
 <meta name="generator" content="Jekyll v4.1.1" />
-<meta property="og:title" content="deepcopy, lightGBM and pickle" />
+<meta property="og:title" content="deepcopy, LGBM and pickle" />
 <meta name="author" content="noklam" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="At first sight, these 3 things may not sounds related at all. I am writing this article to share a bug with lightgbm that I encountered and it eventually leads to deeper understanding of what pickle really are." />
 <meta property="og:description" content="At first sight, these 3 things may not sounds related at all. I am writing this article to share a bug with lightgbm that I encountered and it eventually leads to deeper understanding of what pickle really are." />
-<link rel="canonical" href="https://noklam.ml/python/pickle/deepcopy/2021/03/19/deepcopy,-lightgbm-and-Pickles.html" />
-<meta property="og:url" content="https://noklam.ml/python/pickle/deepcopy/2021/03/19/deepcopy,-lightgbm-and-Pickles.html" />
+<link rel="canonical" href="https://noklam.ml/python/pickle/deepcopy/2021/03/19/deepcopy-lightgbm-and-Pickles.html" />
+<meta property="og:url" content="https://noklam.ml/python/pickle/deepcopy/2021/03/19/deepcopy-lightgbm-and-Pickles.html" />
 <meta property="og:site_name" content="noklam✊" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2021-03-19T00:00:00-05:00" />
 <script type="application/ld+json">
-{"url":"https://noklam.ml/python/pickle/deepcopy/2021/03/19/deepcopy,-lightgbm-and-Pickles.html","@type":"BlogPosting","headline":"deepcopy, lightGBM and pickle","dateModified":"2021-03-19T00:00:00-05:00","datePublished":"2021-03-19T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://noklam.ml/python/pickle/deepcopy/2021/03/19/deepcopy,-lightgbm-and-Pickles.html"},"author":{"@type":"Person","name":"noklam"},"description":"At first sight, these 3 things may not sounds related at all. I am writing this article to share a bug with lightgbm that I encountered and it eventually leads to deeper understanding of what pickle really are.","@context":"https://schema.org"}</script>
+{"url":"https://noklam.ml/python/pickle/deepcopy/2021/03/19/deepcopy-lightgbm-and-Pickles.html","@type":"BlogPosting","headline":"deepcopy, LGBM and pickle","dateModified":"2021-03-19T00:00:00-05:00","datePublished":"2021-03-19T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://noklam.ml/python/pickle/deepcopy/2021/03/19/deepcopy-lightgbm-and-Pickles.html"},"author":{"@type":"Person","name":"noklam"},"description":"At first sight, these 3 things may not sounds related at all. I am writing this article to share a bug with lightgbm that I encountered and it eventually leads to deeper understanding of what pickle really are.","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://noklam.ml/feed.xml" title="noklam✊" /><!-- the google_analytics_id gets auto inserted from the config file -->
 
@@ -78,7 +78,7 @@ window.onload = wrap_img;
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">deepcopy, lightGBM and pickle</h1><p class="page-description">At first sight, these 3 things may not sounds related at all. I am writing this article to share a bug with lightgbm that I encountered and it eventually leads to deeper understanding of what `pickle` really are.</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-03-19T00:00:00-05:00" itemprop="datePublished">
+    <h1 class="post-title p-name" itemprop="name headline">deepcopy, LGBM and pickle</h1><p class="page-description">At first sight, these 3 things may not sounds related at all. I am writing this article to share a bug with lightgbm that I encountered and it eventually leads to deeper understanding of what `pickle` really are.</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-03-19T00:00:00-05:00" itemprop="datePublished">
         Mar 19, 2021
       </time>• 
           <span itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -86,7 +86,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      2 min read
+      5 min read
     
 </span></p>
 
@@ -110,19 +110,19 @@ window.onload = wrap_img;
         <div class="pb-5 d-flex flex-wrap flex-justify-end">
           <div class="px-2">
 
-    <a href="https://github.com/noklam/blog/tree/master/_notebooks/2021-03-19-© deepcopy,⚒ lightgbm and 🥒Pickles.ipynb" role="button" target="_blank">
+    <a href="https://github.com/noklam/blog/tree/master/_notebooks/2021-03-19-deepcopy-lightgbm-and-🥒Pickles.ipynb" role="button" target="_blank">
 <img class="notebook-badge-image" src="/assets/badges/github.svg" alt="View On GitHub">
     </a>
 </div>
 
           <div class="px-2">
-    <a href="https://mybinder.org/v2/gh/noklam/blog/master?filepath=_notebooks%2F2021-03-19-%C2%A9+deepcopy%2C%E2%9A%92+lightgbm+and+%F0%9F%A5%92Pickles.ipynb" target="_blank">
+    <a href="https://mybinder.org/v2/gh/noklam/blog/master?filepath=_notebooks%2F2021-03-19-deepcopy-lightgbm-and-%F0%9F%A5%92Pickles.ipynb" target="_blank">
         <img class="notebook-badge-image" src="/assets/badges/binder.svg" alt="Open In Binder"/>
     </a>
 </div>
 
           <div class="px-2">
-    <a href="https://colab.research.google.com/github/noklam/blog/blob/master/_notebooks/2021-03-19-© deepcopy,⚒ lightgbm and 🥒Pickles.ipynb" target="_blank">
+    <a href="https://colab.research.google.com/github/noklam/blog/blob/master/_notebooks/2021-03-19-deepcopy-lightgbm-and-🥒Pickles.ipynb" target="_blank">
         <img class="notebook-badge-image" src="/assets/badges/colab.svg" alt="Open In Colab"/>
     </a>
 </div>
@@ -131,12 +131,19 @@ window.onload = wrap_img;
 
   <div class="post-content e-content" itemprop="articleBody">
     <ul class="section-nav">
-<li class="toc-entry toc-h1"><a href="#🥖Italian-BMT,-🥬Lettuce--🍅-tomato-and-some-🥒pickles-please">🥖Italian BMT, 🥬Lettuce  🍅 tomato and some 🥒pickles please </a></li>
+<li class="toc-entry toc-h2"><a href="#deepcopy-or-no-copy?">deepcopy or no copy? </a></li>
+<li class="toc-entry toc-h2"><a href="#🥖Italian-BMT,-🥬Lettuce--🍅-tomato-and-some-🥒pickles-please">🥖Italian BMT, 🥬Lettuce  🍅 tomato and some 🥒pickles please </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#What-is-Pickle">What is Pickle </a></li>
+<li class="toc-entry toc-h3"><a href="#What-makes-something-picklable">What makes something picklable </a></li>
+<li class="toc-entry toc-h3"><a href="#Last-Word">Last Word </a></li>
+</ul>
+</li>
 </ul><!--
 #################################################
 ### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
 #################################################
-# file to edit: _notebooks/2021-03-19-© deepcopy,⚒ lightgbm and 🥒Pickles.ipynb
+# file to edit: _notebooks/2021-03-19-deepcopy-lightgbm-and-🥒Pickles.ipynb
 -->
 
 <div class="container" id="notebook-container">
@@ -146,6 +153,15 @@ window.onload = wrap_img;
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>To start with, let's look at some code to get some context.</p>
 
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="deepcopy-or-no-copy?">
+<a class="anchor" href="#deepcopy-or-no-copy?" aria-hidden="true"><span class="octicon octicon-link"></span></a>deepcopy or no copy?<a class="anchor-link" href="#deepcopy-or-no-copy?"> </a>
+</h2>
 </div>
 </div>
 </div>
@@ -407,9 +423,9 @@ Their response is</p>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="🥖Italian-BMT,-🥬Lettuce--🍅-tomato-and-some-🥒pickles-please">
+<h2 id="🥖Italian-BMT,-🥬Lettuce--🍅-tomato-and-some-🥒pickles-please">
 <a class="anchor" href="#%F0%9F%A5%96Italian-BMT,-%F0%9F%A5%ACLettuce--%F0%9F%8D%85-tomato-and-some-%F0%9F%A5%92pickles-please" aria-hidden="true"><span class="octicon octicon-link"></span></a>🥖Italian BMT, 🥬Lettuce  🍅 tomato and some 🥒pickles please<a class="anchor-link" href="#%F0%9F%A5%96Italian-BMT,-%F0%9F%A5%ACLettuce--%F0%9F%8D%85-tomato-and-some-%F0%9F%A5%92pickles-please"> </a>
-</h1>
+</h2>
 </div>
 </div>
 </div>
@@ -435,7 +451,7 @@ Their response is</p>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Serialization roughly means translating the data in memory into a format that can be stored on disk or sent over network. It's like ordering a chair from Ikea, they will send you a box, but not a chair.</p>
-<p>The process of decomposing the chair and put it into a box is <code>serialization</code>, while putting it together is <code>deserialization</code>.</p>
+<p>The process of decomposing the chair and put it into a box is <code>serialization</code>, while putting it together is <code>deserialization</code>. With pickle terms, we called it <code>Pickling</code> and <code>Unpickling</code>.</p>
 
 </div>
 </div>
@@ -444,6 +460,431 @@ Their response is</p>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p><img src="/images/copied_from_nb/images/serialize.jpg" alt="deserialize and serialize" title="Putting the chair together is `deseralization`, decomposing the chair and make it packable in a box is `serialization`"></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="What-is-Pickle">
+<a class="anchor" href="#What-is-Pickle" aria-hidden="true"><span class="octicon octicon-link"></span></a>What is Pickle<a class="anchor-link" href="#What-is-Pickle"> </a>
+</h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><code>Pickle</code> is a protocol for <strong>Python</strong>, you and either pickling a Python object to memory or to file.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pickle</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'a'</span><span class="p">:</span> <span class="mi">1</span><span class="p">}</span>
+<span class="n">pickle_d</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">d</span><span class="p">)</span>
+<span class="n">pickle_d</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>b'\x80\x04\x95\n\x00\x00\x00\x00\x00\x00\x00}\x94\x8c\x01a\x94K\x01s.'</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The python dict is now transfrom into a series of binary str, this string can be only understand by Python. We can also deserialize a binary string back to a python dict.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">binary_str</span> <span class="o">=</span> <span class="sa">b</span><span class="s1">'</span><span class="se">\x80\x04\x95\n\x00\x00\x00\x00\x00\x00\x00</span><span class="s1">}</span><span class="se">\x94\x8c\x01</span><span class="s1">a</span><span class="se">\x94</span><span class="s1">K</span><span class="se">\x01</span><span class="s1">s.'</span>
+<span class="n">pickle</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">binary_str</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>{'a': 1}</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Reference: <a href="https://www.python.org/dev/peps/pep-0574/#:~:text=The%20pickle%20protocol%20was%20originally%20designed%20in%201995,copying%20temporary%20data%20before%20writing%20it%20to%20disk">https://www.python.org/dev/peps/pep-0574/#:~:text=The%20pickle%20protocol%20was%20originally%20designed%20in%201995,copying%20temporary%20data%20before%20writing%20it%20to%20disk</a>.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="What-makes-something-picklable">
+<a class="anchor" href="#What-makes-something-picklable" aria-hidden="true"><span class="octicon octicon-link"></span></a>What makes something picklable<a class="anchor-link" href="#What-makes-something-picklable"> </a>
+</h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Finally, we come back to our initial questions.</p>
+<blockquote>
+<p>What makes something picklable? Why lightgbm need to have <code>deepcopy</code> to make the <code>Booster</code> class picklable?</p>
+</blockquote>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<blockquote>
+<p>What can be pickled and unpickled? The following types can be pickled:<em> None, True, and False      </em> integers, floating point numbers, complex numbers</p>
+
+<pre><code>* strings, bytes, bytearrays  
+* tuples, lists, sets, and dictionaries containing only picklable objects  
+* functions defined at the top level of a module (using def, not lambda)  
+* built-in functions defined at the top level of a module  
+* classes that are defined at the top level of a module  </code></pre>
+</blockquote>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>So pretty much common datatype, functions and classes are picklable. Let's see without <code>__deepcopy__</code>, the <code>Booster</code> class is not serializable as it claims.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">lightgbm</span>
+<span class="kn">from</span> <span class="nn">lightgbm</span> <span class="kn">import</span> <span class="n">Booster</span>
+<span class="k">del</span> <span class="n">Booster</span><span class="o">.</span><span class="n">__deepcopy__</span>
+
+<span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+<span class="s1">'objective'</span><span class="p">:</span> <span class="s1">'regression'</span><span class="p">,</span>
+<span class="s1">'verbose'</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">,</span>
+<span class="s1">'num_leaves'</span><span class="p">:</span> <span class="mi">3</span>
+<span class="p">}</span>
+
+<span class="n">X</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">Y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ravel</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="mi">100</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">lgbm</span> <span class="o">=</span> <span class="n">lgb</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">lgb</span><span class="o">.</span><span class="n">Dataset</span><span class="p">(</span><span class="n">X</span><span class="p">,</span><span class="n">label</span><span class="o">=</span><span class="n">Y</span><span class="p">),</span><span class="n">num_boost_round</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+
+
+<span class="n">deepcopy_lgbm</span> <span class="o">=</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">lgbm</span><span class="p">)</span>
+<span class="n">lgbm</span><span class="o">.</span><span class="n">params</span><span class="p">,</span> <span class="n">deepcopy_lgbm</span><span class="o">.</span><span class="n">params</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>({'objective': 'regression',
+  'verbose': -1,
+  'num_leaves': 3,
+  'num_iterations': 1,
+  'early_stopping_round': None},
+ {'objective': 'regression',
+  'verbose': -1,
+  'num_leaves': 3,
+  'num_iterations': 1,
+  'early_stopping_round': None})</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">pickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">deepcopy_lgbm</span><span class="p">)</span> <span class="o">==</span> <span class="n">pickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">lgbm</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>True</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">unpickle_model</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">pickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">deepcopy_lgbm</span><span class="p">))</span>
+<span class="n">unpickle_deepcopy_model</span> <span class="o">=</span> <span class="n">pickle</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">pickle</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">lgbm</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">unpickle_model</span><span class="o">.</span><span class="n">params</span><span class="p">,</span> <span class="n">unpickle_deepcopy_model</span><span class="o">.</span><span class="n">params</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>({'objective': 'regression',
+  'verbose': -1,
+  'num_leaves': 3,
+  'num_iterations': 1,
+  'early_stopping_round': None},
+ {'objective': 'regression',
+  'verbose': -1,
+  'num_leaves': 3,
+  'num_iterations': 1,
+  'early_stopping_round': None})</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">unpickle_model</span><span class="o">.</span><span class="n">model_to_string</span><span class="p">()</span> <span class="o">==</span> <span class="n">unpickle_deepcopy_model</span><span class="o">.</span><span class="n">model_to_string</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>True</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">unpickle_deepcopy_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>array([0.48439803, 0.48439803, 0.50141491, 0.48439803, 0.48439803,
+       0.48439803, 0.50141491, 0.48439803, 0.48439803, 0.48439803,
+       0.49029787, 0.49029787, 0.48439803, 0.48439803, 0.48439803,
+       0.49029787, 0.48439803, 0.50141491, 0.50141491, 0.50141491,
+       0.48439803, 0.50141491, 0.48439803, 0.49029787, 0.50141491,
+       0.50141491, 0.48439803, 0.49029787, 0.49029787, 0.49029787,
+       0.49029787, 0.50141491, 0.48439803, 0.50141491, 0.48439803,
+       0.49029787, 0.50141491, 0.48439803, 0.48439803, 0.48439803,
+       0.48439803, 0.50141491, 0.50141491, 0.48439803, 0.49029787,
+       0.48439803, 0.48439803, 0.50141491, 0.48439803, 0.48439803,
+       0.48439803, 0.48439803, 0.48439803, 0.48439803, 0.50141491,
+       0.49029787, 0.48439803, 0.50141491, 0.49029787, 0.49029787,
+       0.50141491, 0.50141491, 0.48439803, 0.50141491, 0.48439803,
+       0.48439803, 0.48439803, 0.48439803, 0.50141491, 0.48439803,
+       0.48439803, 0.50141491, 0.50141491, 0.49029787, 0.50141491,
+       0.48439803, 0.49029787, 0.48439803, 0.48439803, 0.50141491,
+       0.50141491, 0.48439803, 0.49029787, 0.48439803, 0.48439803,
+       0.50141491, 0.49029787, 0.50141491, 0.50141491, 0.49029787,
+       0.48439803, 0.49029787, 0.48439803, 0.48439803, 0.48439803,
+       0.48439803, 0.48439803, 0.48439803, 0.50141491, 0.49029787])</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Last-Word">
+<a class="anchor" href="#Last-Word" aria-hidden="true"><span class="octicon octicon-link"></span></a>Last Word<a class="anchor-link" href="#Last-Word"> </a>
+</h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Well.... It seems actually picklable? I may need to investigate the issue a bit more. For now, the <code>__deepcopy__</code> does not seems to be necessary.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>I tried to dig into <code>lightgbm</code> source code and find this potential related issue.
+<a href="https://github.com/microsoft/LightGBM/blame/dc1bc23adf1137ef78722176e2da69f8411b1feb/python-package/lightgbm/basic.py#L2298">https://github.com/microsoft/LightGBM/blame/dc1bc23adf1137ef78722176e2da69f8411b1feb/python-package/lightgbm/basic.py#L2298</a></p>
 
 </div>
 </div>
@@ -460,7 +901,7 @@ Their response is</p>
         theme="github-light"
         crossorigin="anonymous"
         async>
-</script><a class="u-url" href="/python/pickle/deepcopy/2021/03/19/deepcopy,-lightgbm-and-Pickles.html" hidden></a>
+</script><a class="u-url" href="/python/pickle/deepcopy/2021/03/19/deepcopy-lightgbm-and-Pickles.html" hidden></a>
 </article>
       </div>
     </main><footer class="site-footer h-card">
