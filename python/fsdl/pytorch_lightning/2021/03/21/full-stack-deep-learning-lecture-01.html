@@ -1,0 +1,1205 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Full Stack Deep Learning Notes - Lecture 01 | noklam✊</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="Full Stack Deep Learning Notes - Lecture 01" />
+<meta name="author" content="noklam" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Lecture &amp; Lab notes, explain DataModules, Trainer LightningModule." />
+<meta property="og:description" content="Lecture &amp; Lab notes, explain DataModules, Trainer LightningModule." />
+<link rel="canonical" href="https://noklam.ml/python/fsdl/pytorch_lightning/2021/03/21/full-stack-deep-learning-lecture-01.html" />
+<meta property="og:url" content="https://noklam.ml/python/fsdl/pytorch_lightning/2021/03/21/full-stack-deep-learning-lecture-01.html" />
+<meta property="og:site_name" content="noklam✊" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-03-21T00:00:00-05:00" />
+<script type="application/ld+json">
+{"url":"https://noklam.ml/python/fsdl/pytorch_lightning/2021/03/21/full-stack-deep-learning-lecture-01.html","@type":"BlogPosting","headline":"Full Stack Deep Learning Notes - Lecture 01","dateModified":"2021-03-21T00:00:00-05:00","datePublished":"2021-03-21T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://noklam.ml/python/fsdl/pytorch_lightning/2021/03/21/full-stack-deep-learning-lecture-01.html"},"author":{"@type":"Person","name":"noklam"},"description":"Lecture &amp; Lab notes, explain DataModules, Trainer LightningModule.","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://noklam.ml/feed.xml" title="noklam✊" /><!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-83544344-5','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+<link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/">noklam✊</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/about/">About Me</a><a class="page-link" href="/search/">Search</a><a class="page-link" href="/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Full Stack Deep Learning Notes - Lecture 01</h1><p class="page-description">Lecture & Lab notes, explain `DataModules`, `Trainer` `LightningModule`.</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-03-21T00:00:00-05:00" itemprop="datePublished">
+        Mar 21, 2021
+      </time>• 
+          <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+            <span class="p-author h-card" itemprop="name">noklam</span></span>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      8 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/categories/#python">python</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/categories/#fsdl">fsdl</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/categories/#pytorch_lightning">pytorch_lightning</a>
+        
+      
+      </p>
+    
+
+    
+      
+        <div class="pb-5 d-flex flex-wrap flex-justify-end">
+          <div class="px-2">
+
+    <a href="https://github.com/noklam/blog/tree/master/_notebooks/2021-03-21-full-stack-deep-learning-lecture-01.ipynb" role="button" target="_blank">
+<img class="notebook-badge-image" src="/assets/badges/github.svg" alt="View On GitHub">
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://mybinder.org/v2/gh/noklam/blog/master?filepath=_notebooks%2F2021-03-21-full-stack-deep-learning-lecture-01.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/assets/badges/binder.svg" alt="Open In Binder"/>
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://colab.research.google.com/github/noklam/blog/blob/master/_notebooks/2021-03-21-full-stack-deep-learning-lecture-01.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/assets/badges/colab.svg" alt="Open In Colab"/>
+    </a>
+</div>
+        </div>
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#Advantages-over-unstructured-PyTorch">Advantages over unstructured PyTorch </a></li>
+<li class="toc-entry toc-h1"><a href="#Basic-Trainer">Basic Trainer </a></li>
+<li class="toc-entry toc-h1"><a href="#Pytorch-nn.Module-versus-pl.LightningModule">Pytorch nn.Module versus pl.LightningModule </a></li>
+<li class="toc-entry toc-h1"><a href="#Pytorch-Dataloader-versus-pl.DataMoudle">Pytorch Dataloader versus pl.DataMoudle </a></li>
+<li class="toc-entry toc-h1"><a href="#Trainer.tune()">Trainer.tune() </a></li>
+<li class="toc-entry toc-h1"><a href="#Now-Back-to-our-Lab1-(training/run_experiment.py)">Now Back to our Lab1 (training/run_experiment.py) </a></li>
+</ul><!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/2021-03-21-full-stack-deep-learning-lecture-01.ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Advantages-over-unstructured-PyTorch">
+<a class="anchor" href="#Advantages-over-unstructured-PyTorch" aria-hidden="true"><span class="octicon octicon-link"></span></a>Advantages over unstructured PyTorch<a class="anchor-link" href="#Advantages-over-unstructured-PyTorch"> </a>
+</h2>
+<ul>
+<li>Models become hardware agnostic</li>
+<li>Code is clear to read because engineering code is abstracted away</li>
+<li>Easier to reproduce</li>
+<li>Make fewer mistakes because lightning handles the tricky engineering</li>
+<li>Keeps all the flexibility (LightningModules are still PyTorch modules), but removes a ton of boilerplate</li>
+<li>Lightning has dozens of integrations with popular machine learning tools.</li>
+<li>
+<a href="https://github.com/PyTorchLightning/pytorch-lightning/tree/master/tests">Tested rigorously with every new PR</a>. We test every combination of PyTorch and Python supported versions, every OS, multi GPUs and even TPUs.</li>
+<li>Minimal running speed overhead (about 300 ms per epoch compared with pure PyTorch).</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Basic-Trainer">
+<a class="anchor" href="#Basic-Trainer" aria-hidden="true"><span class="octicon octicon-link"></span></a>Basic Trainer<a class="anchor-link" href="#Basic-Trainer"> </a>
+</h1>
+<p><a href="https://pytorch-lightning.readthedocs.io/en/0.7.3/lightning-module.html">https://pytorch-lightning.readthedocs.io/en/0.7.3/lightning-module.html</a></p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">pytorch_lightning</span> <span class="kn">import</span> <span class="n">Trainer</span>
+
+<span class="kn">import</span> <span class="nn">os</span>
+
+<span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">from</span> <span class="nn">torch.nn</span> <span class="kn">import</span> <span class="n">functional</span> <span class="k">as</span> <span class="n">F</span>
+<span class="kn">from</span> <span class="nn">torch.utils.data</span> <span class="kn">import</span> <span class="n">DataLoader</span>
+<span class="kn">from</span> <span class="nn">torchvision.datasets</span> <span class="kn">import</span> <span class="n">MNIST</span>
+<span class="kn">from</span> <span class="nn">torchvision</span> <span class="kn">import</span> <span class="n">transforms</span>
+<span class="kn">import</span> <span class="nn">pytorch_lightning</span> <span class="k">as</span> <span class="nn">pl</span>
+
+
+<span class="k">class</span> <span class="nc">SimpleLightningModel</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">LightningModule</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">l1</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">28</span> <span class="o">*</span> <span class="mi">28</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">relu</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">l1</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">view</span><span class="p">(</span><span class="n">x</span><span class="o">.</span><span class="n">size</span><span class="p">(</span><span class="mi">0</span><span class="p">),</span> <span class="o">-</span><span class="mi">1</span><span class="p">)))</span>
+
+    <span class="k">def</span> <span class="nf">training_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">batch_nb</span><span class="p">):</span>
+        <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">batch</span>
+        <span class="n">loss</span> <span class="o">=</span> <span class="n">F</span><span class="o">.</span><span class="n">cross_entropy</span><span class="p">(</span><span class="bp">self</span><span class="p">(</span><span class="n">x</span><span class="p">),</span> <span class="n">y</span><span class="p">)</span>
+        <span class="n">tensorboard_logs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'train_loss'</span><span class="p">:</span> <span class="n">loss</span><span class="p">}</span>
+        <span class="k">return</span> <span class="p">{</span><span class="s1">'loss'</span><span class="p">:</span> <span class="n">loss</span><span class="p">,</span> <span class="s1">'log'</span><span class="p">:</span> <span class="n">tensorboard_logs</span><span class="p">}</span>
+
+    <span class="k">def</span> <span class="nf">configure_optimizers</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="n">torch</span><span class="o">.</span><span class="n">optim</span><span class="o">.</span><span class="n">Adam</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">parameters</span><span class="p">(),</span> <span class="n">lr</span><span class="o">=</span><span class="mf">0.02</span><span class="p">)</span>
+    
+    
+    
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+    </details>
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">train_loader</span> <span class="o">=</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">MNIST</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="n">train</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">transforms</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">()),</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">)</span>
+
+<span class="n">mnist_model</span> <span class="o">=</span> <span class="n">SimpleLightningModel</span><span class="p">()</span>
+<span class="n">trainer</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">Trainer</span><span class="p">(</span><span class="n">gpus</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">progress_bar_refresh_rate</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">max_epochs</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>    
+<span class="n">trainer</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">mnist_model</span><span class="p">,</span> <span class="n">train_loader</span><span class="p">)</span>  
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>GPU available: False, used: False
+TPU available: None, using: 0 TPU cores
+
+  | Name | Type   | Params
+--------------------------------
+0 | l1   | Linear | 7.9 K 
+--------------------------------
+7.9 K     Trainable params
+0         Non-trainable params
+7.9 K     Total params
+0.031     Total estimated model params size (MB)
+c:\programdata\miniconda3\lib\site-packages\pytorch_lightning\utilities\distributed.py:51: UserWarning: The {log:dict keyword} was deprecated in 0.9.1 and will be removed in 1.0.0
+Please use self.log(...) inside the lightningModule instead.
+# log on a step or aggregate epoch metric to the logger and/or progress bar (inside LightningModule)
+self.log('train_loss', loss, on_step=True, on_epoch=True, prog_bar=True)
+  warnings.warn(*args, **kwargs)
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>c:\programdata\miniconda3\lib\site-packages\pytorch_lightning\utilities\distributed.py:51: UserWarning: Detected KeyboardInterrupt, attempting graceful shutdown...
+  warnings.warn(*args, **kwargs)
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>1</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>If you def <code>train_dataloader</code>, <code>Trainer</code> will use it automatically.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">train_dataloader</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="c1"># REQUIRED</span>
+    <span class="k">return</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">MNIST</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="n">train</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">transforms</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">()),</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">SimpleLightningModel</span><span class="o">.</span><span class="n">train_dataloader</span>  <span class="o">=</span> <span class="n">train_dataloader</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">pl_model</span> <span class="o">=</span> <span class="n">SimpleLightningModel</span><span class="p">()</span>
+<span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span><span class="n">max_epochs</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">trainer</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">pl_model</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>GPU available: False, used: False
+TPU available: None, using: 0 TPU cores
+
+  | Name | Type   | Params
+--------------------------------
+0 | l1   | Linear | 7.9 K 
+--------------------------------
+7.9 K     Trainable params
+0         Non-trainable params
+7.9 K     Total params
+0.031     Total estimated model params size (MB)
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>1</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><code>training_step()</code>,  <code>train_dataloader()</code>,<code>configure_optimizers()</code> are essential for <code>LightningModule</code>.</p>
+<p>Lifecycle
+The methods in the LightningModule are called in this order:</p>
+<ul>
+<li><code>__init__</code></li>
+<li><code>prepare_data</code></li>
+<li><code>configure_optimizers</code></li>
+<li><code>train_dataloader</code></li>
+</ul>
+<p>If you define a validation loop then
+<code>val_dataloader</code></p>
+<p>And if you define a test loop:
+<code>test_dataloader</code></p>
+<p>You will find <code>Trainer.fit()</code> automatically do validation and testing for you.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">validation_step</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">batch</span><span class="p">,</span> <span class="n">batch_nb</span><span class="p">):</span>
+    <span class="c1"># OPTIONAL</span>
+    <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">batch</span>
+    <span class="n">y_hat</span> <span class="o">=</span> <span class="bp">self</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s1">'val_loss'</span><span class="p">:</span> <span class="n">F</span><span class="o">.</span><span class="n">cross_entropy</span><span class="p">(</span><span class="n">y_hat</span><span class="p">,</span> <span class="n">y</span><span class="p">)}</span>
+
+<span class="k">def</span> <span class="nf">validation_epoch_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">outputs</span><span class="p">):</span>
+    <span class="c1"># OPTIONAL</span>
+    <span class="n">avg_loss</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">stack</span><span class="p">([</span><span class="n">x</span><span class="p">[</span><span class="s1">'val_loss'</span><span class="p">]</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="n">outputs</span><span class="p">])</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+    <span class="n">tensorboard_logs</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'val_loss'</span><span class="p">:</span> <span class="n">avg_loss</span><span class="p">}</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"Validation Loss: "</span><span class="p">,</span> <span class="n">avg_loss</span><span class="p">)</span>
+    <span class="k">return</span> <span class="p">{</span><span class="s1">'val_loss'</span><span class="p">:</span> <span class="n">avg_loss</span><span class="p">,</span> <span class="s1">'log'</span><span class="p">:</span> <span class="n">tensorboard_logs</span><span class="p">}</span>
+
+<span class="k">def</span> <span class="nf">val_dataloader</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="c1"># OPTIONAL</span>
+    <span class="k">return</span> <span class="n">DataLoader</span><span class="p">(</span><span class="n">MNIST</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">(),</span> <span class="n">train</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">download</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">transform</span><span class="o">=</span><span class="n">transforms</span><span class="o">.</span><span class="n">ToTensor</span><span class="p">()),</span> <span class="n">batch_size</span><span class="o">=</span><span class="mi">32</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">SimpleLightningModel</span><span class="o">.</span><span class="n">validation_step</span> <span class="o">=</span> <span class="n">validation_step</span>
+<span class="n">SimpleLightningModel</span><span class="o">.</span><span class="n">validation_epoch_end</span> <span class="o">=</span> <span class="n">validation_epoch_end</span>
+<span class="n">SimpleLightningModel</span><span class="o">.</span><span class="n">val_dataloader</span> <span class="o">=</span> <span class="n">val_dataloader</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">pl_model</span> <span class="o">=</span> <span class="n">SimpleLightningModel</span><span class="p">()</span>
+<span class="n">trainer</span> <span class="o">=</span> <span class="n">Trainer</span><span class="p">(</span><span class="n">max_epochs</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="n">trainer</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">pl_model</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>GPU available: False, used: False
+TPU available: None, using: 0 TPU cores
+
+  | Name | Type   | Params
+--------------------------------
+0 | l1   | Linear | 7.9 K 
+--------------------------------
+7.9 K     Trainable params
+0         Non-trainable params
+7.9 K     Total params
+0.031     Total estimated model params size (MB)
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Validation Loss:  tensor(2.3084)
+Validation Loss:  tensor(1.1287)
+
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>c:\programdata\miniconda3\lib\site-packages\pytorch_lightning\utilities\distributed.py:51: UserWarning: Detected KeyboardInterrupt, attempting graceful shutdown...
+  warnings.warn(*args, **kwargs)
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>1</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p></p>
+<div class="flash">
+    <svg class="octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm6.5-.25A.75.75 0 017.25 7h1a.75.75 0 01.75.75v2.75h.25a.75.75 0 010 1.5h-2a.75.75 0 010-1.5h.25v-2h-.25a.75.75 0 01-.75-.75zM8 6a1 1 0 100-2 1 1 0 000 2z"></path></svg>
+    <strong>Note: </strong>If you are running the above cell, you will see validation progress bar in action.
+</div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>By using the trainer you automatically get:</p>
+<ul>
+<li>Tensorboard logging</li>
+<li>Model checkpointing</li>
+<li>Training and validation loop</li>
+<li>early-stopping</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Pytorch-nn.Module-versus-pl.LightningModule">
+<a class="anchor" href="#Pytorch-nn.Module-versus-pl.LightningModule" aria-hidden="true"><span class="octicon octicon-link"></span></a>Pytorch nn.Module versus pl.LightningModule<a class="anchor-link" href="#Pytorch-nn.Module-versus-pl.LightningModule"> </a>
+</h1>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">pytorch_lightning</span> <span class="k">as</span> <span class="nn">pl</span>
+<span class="kn">from</span> <span class="nn">torch</span> <span class="kn">import</span> <span class="n">nn</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">((</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
+<span class="n">x</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>tensor([[0.0745, 0.0237, 0.4719, 0.6037, 0.6015, 0.0921, 0.5982, 0.4860, 0.0959,
+         0.5204],
+        [0.2481, 0.2893, 0.5760, 0.3834, 0.6479, 0.0508, 0.5352, 0.5702, 0.4732,
+         0.3867],
+        [0.3467, 0.3321, 0.8570, 0.0983, 0.9210, 0.1848, 0.7397, 0.1350, 0.2646,
+         0.7202],
+        [0.6952, 0.8071, 0.1428, 0.3600, 0.1514, 0.2246, 0.8887, 0.9971, 0.0257,
+         0.5519],
+        [0.7547, 0.7165, 0.3677, 0.6642, 0.9991, 0.6585, 0.8673, 0.5005, 0.1843,
+         0.1360],
+        [0.1809, 0.0794, 0.5101, 0.6751, 0.2822, 0.6695, 0.8085, 0.2127, 0.7562,
+         0.9859],
+        [0.5914, 0.4481, 0.5107, 0.0032, 0.9766, 0.4627, 0.1520, 0.2915, 0.4323,
+         0.3833],
+        [0.6371, 0.7782, 0.7762, 0.4197, 0.2566, 0.7240, 0.0759, 0.9976, 0.6020,
+         0.9528],
+        [0.7674, 0.4044, 0.3497, 0.9784, 0.9318, 0.7313, 0.2962, 0.6555, 0.5570,
+         0.9998],
+        [0.1155, 0.8013, 0.7982, 0.5713, 0.2252, 0.4513, 0.8395, 0.7791, 0.1929,
+         0.7707]])</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">SimplePytorchModel</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="o">...</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">torch_model</span> <span class="o">=</span> <span class="n">SimplePytorchModel</span><span class="p">()</span>
+<span class="n">torch_model</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_text output_error">
+<pre>
+<span class="ansi-red-intense-fg ansi-bold">---------------------------------------------------------------------------</span>
+<span class="ansi-red-intense-fg ansi-bold">NotImplementedError</span>                       Traceback (most recent call last)
+<span class="ansi-green-intense-fg ansi-bold">&lt;ipython-input-29-4fe0686b1b72&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+<span class="ansi-green-fg">      1</span> torch_model <span class="ansi-yellow-intense-fg ansi-bold">=</span> SimplePytorchModel<span class="ansi-yellow-intense-fg ansi-bold">(</span><span class="ansi-yellow-intense-fg ansi-bold">)</span>
+<span class="ansi-green-intense-fg ansi-bold">----&gt; 2</span><span class="ansi-yellow-intense-fg ansi-bold"> </span>torch_model<span class="ansi-yellow-intense-fg ansi-bold">(</span>x<span class="ansi-yellow-intense-fg ansi-bold">)</span>
+
+<span class="ansi-green-intense-fg ansi-bold">c:\programdata\miniconda3\lib\site-packages\torch\nn\modules\module.py</span> in <span class="ansi-cyan-fg">_call_impl</span><span class="ansi-blue-intense-fg ansi-bold">(self, *input, **kwargs)</span>
+<span class="ansi-green-fg">    887</span>             result <span class="ansi-yellow-intense-fg ansi-bold">=</span> self<span class="ansi-yellow-intense-fg ansi-bold">.</span>_slow_forward<span class="ansi-yellow-intense-fg ansi-bold">(</span><span class="ansi-yellow-intense-fg ansi-bold">*</span>input<span class="ansi-yellow-intense-fg ansi-bold">,</span> <span class="ansi-yellow-intense-fg ansi-bold">**</span>kwargs<span class="ansi-yellow-intense-fg ansi-bold">)</span>
+<span class="ansi-green-fg">    888</span>         <span class="ansi-green-intense-fg ansi-bold">else</span><span class="ansi-yellow-intense-fg ansi-bold">:</span>
+<span class="ansi-green-intense-fg ansi-bold">--&gt; 889</span><span class="ansi-yellow-intense-fg ansi-bold">             </span>result <span class="ansi-yellow-intense-fg ansi-bold">=</span> self<span class="ansi-yellow-intense-fg ansi-bold">.</span>forward<span class="ansi-yellow-intense-fg ansi-bold">(</span><span class="ansi-yellow-intense-fg ansi-bold">*</span>input<span class="ansi-yellow-intense-fg ansi-bold">,</span> <span class="ansi-yellow-intense-fg ansi-bold">**</span>kwargs<span class="ansi-yellow-intense-fg ansi-bold">)</span>
+<span class="ansi-green-fg">    890</span>         for hook in itertools.chain(
+<span class="ansi-green-fg">    891</span>                 _global_forward_hooks<span class="ansi-yellow-intense-fg ansi-bold">.</span>values<span class="ansi-yellow-intense-fg ansi-bold">(</span><span class="ansi-yellow-intense-fg ansi-bold">)</span><span class="ansi-yellow-intense-fg ansi-bold">,</span>
+
+<span class="ansi-green-intense-fg ansi-bold">c:\programdata\miniconda3\lib\site-packages\torch\nn\modules\module.py</span> in <span class="ansi-cyan-fg">_forward_unimplemented</span><span class="ansi-blue-intense-fg ansi-bold">(self, *input)</span>
+<span class="ansi-green-fg">    199</span>         registered hooks <span class="ansi-green-intense-fg ansi-bold">while</span> the latter silently ignores them<span class="ansi-yellow-intense-fg ansi-bold">.</span>
+<span class="ansi-green-fg">    200</span>     """
+<span class="ansi-green-intense-fg ansi-bold">--&gt; 201</span><span class="ansi-yellow-intense-fg ansi-bold">     </span><span class="ansi-green-intense-fg ansi-bold">raise</span> NotImplementedError
+<span class="ansi-green-fg">    202</span> 
+<span class="ansi-green-fg">    203</span> 
+
+<span class="ansi-red-intense-fg ansi-bold">NotImplementedError</span>: </pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>In python, a <code>NotImplementedError</code> usually appears when you inherit an abstract class, it is a way to tell you that you should implement <code>forward</code> method.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">SimplePytorchModel</span><span class="p">(</span><span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">linear</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span>
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">x</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">linear</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+        
+<span class="n">torch_model</span> <span class="o">=</span> <span class="n">SimplePytorchModel</span><span class="p">()</span>
+<span class="n">torch_model</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>tensor([[-0.1243,  0.2997,  0.0861,  0.1849,  0.7241,  0.2632, -0.0680, -0.2111,
+         -0.2606,  0.0837],
+        [-0.0055,  0.1734,  0.2746,  0.1991,  0.6859,  0.2768,  0.0025, -0.2273,
+         -0.1930,  0.2122],
+        [-0.1407,  0.2008,  0.3773,  0.0956,  0.9796,  0.1915,  0.2936, -0.0837,
+         -0.3146,  0.0808],
+        [-0.0511,  0.1153,  0.2846,  0.2106,  0.7390,  0.0737, -0.1066, -0.3968,
+         -0.3212,  0.2819],
+        [-0.3408,  0.3093,  0.3826,  0.0783,  0.5542,  0.1298, -0.1768, -0.1407,
+         -0.4774,  0.1776],
+        [-0.1892,  0.2563,  0.1489, -0.0091,  0.4639,  0.1332, -0.0166, -0.3798,
+         -0.4021,  0.2960],
+        [-0.1463,  0.0375,  0.4741,  0.0881,  0.5674, -0.0446,  0.1802, -0.2256,
+         -0.3006,  0.0376],
+        [-0.1006, -0.1654,  0.3519,  0.3158,  0.5454, -0.0781,  0.0866, -0.4032,
+         -0.5419,  0.2580],
+        [-0.4006,  0.3089,  0.3450, -0.1411,  0.4353, -0.0416, -0.1630, -0.4652,
+         -0.7266,  0.1949],
+        [-0.1350,  0.0554,  0.1492,  0.4462,  0.8991,  0.2545,  0.1237, -0.1321,
+         -0.4591,  0.2725]], grad_fn=&lt;AddmmBackward&gt;)</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><code>pl.LightningModule</code> is a higher level class for nn.Module.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">SimpleLightningModel</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">LightningModule</span><span class="p">):</span>
+    <span class="o">...</span>
+    
+<span class="n">pl_model</span> <span class="o">=</span> <span class="n">SimpleLightningModel</span><span class="p">()</span>
+<span class="n">pl_model</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_text output_error">
+<pre>
+<span class="ansi-red-intense-fg ansi-bold">---------------------------------------------------------------------------</span>
+<span class="ansi-red-intense-fg ansi-bold">NotImplementedError</span>                       Traceback (most recent call last)
+<span class="ansi-green-intense-fg ansi-bold">&lt;ipython-input-31-defa0843dab4&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
+<span class="ansi-green-fg">      3</span> 
+<span class="ansi-green-fg">      4</span> pl_model <span class="ansi-yellow-intense-fg ansi-bold">=</span> SimpleLightningModel<span class="ansi-yellow-intense-fg ansi-bold">(</span><span class="ansi-yellow-intense-fg ansi-bold">)</span>
+<span class="ansi-green-intense-fg ansi-bold">----&gt; 5</span><span class="ansi-yellow-intense-fg ansi-bold"> </span>pl_model<span class="ansi-yellow-intense-fg ansi-bold">(</span>x<span class="ansi-yellow-intense-fg ansi-bold">)</span>
+
+<span class="ansi-green-intense-fg ansi-bold">c:\programdata\miniconda3\lib\site-packages\torch\nn\modules\module.py</span> in <span class="ansi-cyan-fg">_call_impl</span><span class="ansi-blue-intense-fg ansi-bold">(self, *input, **kwargs)</span>
+<span class="ansi-green-fg">    887</span>             result <span class="ansi-yellow-intense-fg ansi-bold">=</span> self<span class="ansi-yellow-intense-fg ansi-bold">.</span>_slow_forward<span class="ansi-yellow-intense-fg ansi-bold">(</span><span class="ansi-yellow-intense-fg ansi-bold">*</span>input<span class="ansi-yellow-intense-fg ansi-bold">,</span> <span class="ansi-yellow-intense-fg ansi-bold">**</span>kwargs<span class="ansi-yellow-intense-fg ansi-bold">)</span>
+<span class="ansi-green-fg">    888</span>         <span class="ansi-green-intense-fg ansi-bold">else</span><span class="ansi-yellow-intense-fg ansi-bold">:</span>
+<span class="ansi-green-intense-fg ansi-bold">--&gt; 889</span><span class="ansi-yellow-intense-fg ansi-bold">             </span>result <span class="ansi-yellow-intense-fg ansi-bold">=</span> self<span class="ansi-yellow-intense-fg ansi-bold">.</span>forward<span class="ansi-yellow-intense-fg ansi-bold">(</span><span class="ansi-yellow-intense-fg ansi-bold">*</span>input<span class="ansi-yellow-intense-fg ansi-bold">,</span> <span class="ansi-yellow-intense-fg ansi-bold">**</span>kwargs<span class="ansi-yellow-intense-fg ansi-bold">)</span>
+<span class="ansi-green-fg">    890</span>         for hook in itertools.chain(
+<span class="ansi-green-fg">    891</span>                 _global_forward_hooks<span class="ansi-yellow-intense-fg ansi-bold">.</span>values<span class="ansi-yellow-intense-fg ansi-bold">(</span><span class="ansi-yellow-intense-fg ansi-bold">)</span><span class="ansi-yellow-intense-fg ansi-bold">,</span>
+
+<span class="ansi-green-intense-fg ansi-bold">c:\programdata\miniconda3\lib\site-packages\pytorch_lightning\core\lightning.py</span> in <span class="ansi-cyan-fg">forward</span><span class="ansi-blue-intense-fg ansi-bold">(self, *args, **kwargs)</span>
+<span class="ansi-green-fg">    504</span> 
+<span class="ansi-green-fg">    505</span>         """
+<span class="ansi-green-intense-fg ansi-bold">--&gt; 506</span><span class="ansi-yellow-intense-fg ansi-bold">         </span><span class="ansi-green-intense-fg ansi-bold">return</span> super<span class="ansi-yellow-intense-fg ansi-bold">(</span><span class="ansi-yellow-intense-fg ansi-bold">)</span><span class="ansi-yellow-intense-fg ansi-bold">.</span>forward<span class="ansi-yellow-intense-fg ansi-bold">(</span><span class="ansi-yellow-intense-fg ansi-bold">*</span>args<span class="ansi-yellow-intense-fg ansi-bold">,</span> <span class="ansi-yellow-intense-fg ansi-bold">**</span>kwargs<span class="ansi-yellow-intense-fg ansi-bold">)</span>
+<span class="ansi-green-fg">    507</span> 
+<span class="ansi-green-fg">    508</span>     <span class="ansi-green-intense-fg ansi-bold">def</span> training_step<span class="ansi-yellow-intense-fg ansi-bold">(</span>self<span class="ansi-yellow-intense-fg ansi-bold">,</span> <span class="ansi-yellow-intense-fg ansi-bold">*</span>args<span class="ansi-yellow-intense-fg ansi-bold">,</span> <span class="ansi-yellow-intense-fg ansi-bold">**</span>kwargs<span class="ansi-yellow-intense-fg ansi-bold">)</span><span class="ansi-yellow-intense-fg ansi-bold">:</span>
+
+<span class="ansi-green-intense-fg ansi-bold">c:\programdata\miniconda3\lib\site-packages\torch\nn\modules\module.py</span> in <span class="ansi-cyan-fg">_forward_unimplemented</span><span class="ansi-blue-intense-fg ansi-bold">(self, *input)</span>
+<span class="ansi-green-fg">    199</span>         registered hooks <span class="ansi-green-intense-fg ansi-bold">while</span> the latter silently ignores them<span class="ansi-yellow-intense-fg ansi-bold">.</span>
+<span class="ansi-green-fg">    200</span>     """
+<span class="ansi-green-intense-fg ansi-bold">--&gt; 201</span><span class="ansi-yellow-intense-fg ansi-bold">     </span><span class="ansi-green-intense-fg ansi-bold">raise</span> NotImplementedError
+<span class="ansi-green-fg">    202</span> 
+<span class="ansi-green-fg">    203</span> 
+
+<span class="ansi-red-intense-fg ansi-bold">NotImplementedError</span>: </pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>It shouldn't surprise you the same error pop out again, after all, <code>pl.LightningModule</code> is a high level wrapper for <code>nn.Module</code>. So we need to implement what is the <code>forward</code> method too. We can confirm this with this line.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">issubclass</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">LightningModule</span><span class="p">,</span> <span class="n">nn</span><span class="o">.</span><span class="n">Module</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>True</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">SimpleLightningModel</span><span class="p">(</span><span class="n">pl</span><span class="o">.</span><span class="n">LightningModule</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">()</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">linear</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">)</span>
+        
+    <span class="k">def</span> <span class="nf">forward</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span><span class="n">x</span><span class="p">):</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">linear</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    
+<span class="n">pl_model</span> <span class="o">=</span> <span class="n">SimpleLightningModel</span><span class="p">()</span>
+<span class="n">pl_model</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>tensor([[-1.9430e-01, -3.2665e-01,  1.5439e-01, -9.5051e-02, -2.6667e-01,
+          7.0515e-01,  5.4318e-01,  4.8522e-02,  2.2087e-01,  4.6927e-02],
+        [-1.9757e-01, -4.1862e-01,  1.0334e-01, -1.7735e-01, -3.7793e-01,
+          7.6570e-01,  5.1128e-01, -5.9839e-04,  2.5192e-01,  9.6547e-02],
+        [-2.1917e-01, -3.4533e-01,  1.6259e-01, -3.4603e-02, -5.8233e-01,
+          7.6317e-01,  4.2289e-01, -5.8673e-02,  1.8833e-01,  9.4830e-02],
+        [ 1.8358e-01, -4.9185e-01,  3.7877e-01, -2.4924e-03,  8.9796e-02,
+          8.3502e-01,  6.2751e-01, -8.9419e-02,  5.8510e-01,  4.9892e-01],
+        [-4.1500e-01, -5.1444e-01,  3.3273e-01, -1.9838e-01, -2.7256e-01,
+          7.2250e-01,  3.3026e-01, -3.0803e-01,  4.8670e-01, -7.5673e-02],
+        [-3.1485e-01, -5.7277e-01,  1.1172e-01,  2.0040e-01, -1.3642e-01,
+          1.1535e+00,  4.7762e-01,  1.8485e-01, -1.2243e-01, -7.5894e-02],
+        [-4.0921e-01, -4.7966e-01,  6.6770e-02, -2.1177e-01, -6.4936e-01,
+          6.5091e-01,  1.9740e-01, -2.5598e-01,  6.5671e-02,  1.9597e-01],
+        [-9.3814e-02, -6.7715e-01,  1.8347e-01, -2.4216e-01, -2.0083e-01,
+          1.1088e+00,  4.1320e-01, -3.5082e-01,  1.6069e-01,  6.4193e-01],
+        [-4.7541e-01, -8.7359e-01,  2.3989e-01, -3.2175e-01, -2.7573e-01,
+          9.9955e-01,  3.8217e-01, -2.8564e-01,  1.1412e-02,  7.2301e-02],
+        [-1.6360e-03, -3.6030e-01,  2.6286e-01,  5.9354e-02,  7.0063e-02,
+          1.0381e+00,  5.0484e-01, -8.8854e-02,  3.9800e-01,  3.4168e-01]],
+       grad_fn=&lt;AddmmBackward&gt;)</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Pytorch-Dataloader-versus-pl.DataMoudle">
+<a class="anchor" href="#Pytorch-Dataloader-versus-pl.DataMoudle" aria-hidden="true"><span class="octicon octicon-link"></span></a>Pytorch Dataloader versus pl.DataMoudle<a class="anchor-link" href="#Pytorch-Dataloader-versus-pl.DataMoudle"> </a>
+</h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>A DataModule implements 5 key methods:</p>
+<ul>
+<li>prepare_data (things to do on 1 GPU/TPU not on every GPU/TPU in distributed mode, e.g. split data).</li>
+<li>setup (things to do on every accelerator in distributed mode, e.g. download data).</li>
+<li>train_dataloader the training dataloader.</li>
+<li>val_dataloader the val dataloader(s).</li>
+<li>test_dataloader the test dataloader(s).</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p></p>
+<div class="flash">
+    <svg class="octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm6.5-.25A.75.75 0 017.25 7h1a.75.75 0 01.75.75v2.75h.25a.75.75 0 010 1.5h-2a.75.75 0 010-1.5h.25v-2h-.25a.75.75 0 01-.75-.75zM8 6a1 1 0 100-2 1 1 0 000 2z"></path></svg>
+    <strong>Note: </strong>Why do we need to to <code>setup</code>? It’s more a design choice, the benefit of doing so is that the framework takes care how to do distributed training in most efficient way. On the other hand, if you only doing local training on 1 GPU, there is not much benefit of doing so.
+</div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Trainer.tune()">
+<a class="anchor" href="#Trainer.tune()" aria-hidden="true"><span class="octicon octicon-link"></span></a>Trainer.tune()<a class="anchor-link" href="#Trainer.tune()"> </a>
+</h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">tune</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">model</span><span class="p">,</span> <span class="n">train_dataloader</span><span class="p">,</span> <span class="n">val_dataloaders</span><span class="p">,</span> <span class="n">datamodule</span><span class="p">):</span>
+        <span class="c1"># Run auto batch size scaling</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">trainer</span><span class="o">.</span><span class="n">auto_scale_batch_size</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">trainer</span><span class="o">.</span><span class="n">auto_scale_batch_size</span><span class="p">,</span> <span class="nb">bool</span><span class="p">):</span>
+                <span class="bp">self</span><span class="o">.</span><span class="n">trainer</span><span class="o">.</span><span class="n">auto_scale_batch_size</span> <span class="o">=</span> <span class="s1">'power'</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">scale_batch_size</span><span class="p">(</span>
+                <span class="n">model</span><span class="p">,</span>
+                <span class="n">mode</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">trainer</span><span class="o">.</span><span class="n">auto_scale_batch_size</span><span class="p">,</span>
+                <span class="n">train_dataloader</span><span class="o">=</span><span class="n">train_dataloader</span><span class="p">,</span>
+                <span class="n">val_dataloaders</span><span class="o">=</span><span class="n">val_dataloaders</span><span class="p">,</span>
+                <span class="n">datamodule</span><span class="o">=</span><span class="n">datamodule</span><span class="p">,</span>
+            <span class="p">)</span>
+
+        <span class="c1"># Run learning rate finder:</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">trainer</span><span class="o">.</span><span class="n">auto_lr_find</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">lr_find</span><span class="p">(</span><span class="n">model</span><span class="p">,</span> <span class="n">update_attr</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The main usage of <code>Trainer.tune()</code> is to automatically find the best learning rate and batch size according to your model.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Now-Back-to-our-Lab1-(training/run_experiment.py)">
+<a class="anchor" href="#Now-Back-to-our-Lab1-(training/run_experiment.py)" aria-hidden="true"><span class="octicon octicon-link"></span></a>Now Back to our Lab1 (training/run_experiment.py)<a class="anchor-link" href="#Now-Back-to-our-Lab1-(training/run_experiment.py)"> </a>
+</h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>I slightly modified the script so it can be run inside a notebook instead of using <code>argparse</code>. We change these arguments to variable instead.</p>
+<p><code>python3 training/run_experiment.py --model_class=MLP --data_class=MNIST --max_epochs=5 --gpus=1 --fc1=4 --fc2=8</code></p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">os</span><span class="o">,</span> <span class="nn">sys</span>
+<span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">dirname</span><span class="p">(</span><span class="n">os</span><span class="o">.</span><span class="n">getcwd</span><span class="p">()),</span> <span class="s2">"text_recognizer"</span><span class="p">))</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">parser</span> <span class="o">=</span> <span class="n">_setup_parser</span><span class="p">()</span>
+<span class="n">args</span> <span class="o">=</span> <span class="n">parser</span><span class="o">.</span><span class="n">parse_args</span><span class="p">([</span>
+    <span class="s1">'--model_class'</span><span class="p">,</span>
+    <span class="s1">'MLP'</span><span class="p">,</span>
+    <span class="s1">'--data_class'</span><span class="p">,</span>
+    <span class="s1">'MNIST'</span><span class="p">,</span>
+    <span class="s1">'--max_epochs'</span><span class="p">,</span>
+    <span class="s1">'5'</span><span class="p">,</span>
+    <span class="s1">'--gpus'</span><span class="p">,</span>
+    <span class="s1">'0'</span><span class="p">,</span>
+    <span class="s1">'--fc1'</span><span class="p">,</span>
+    <span class="s1">'4'</span><span class="p">,</span>
+    <span class="s1">'--fc2'</span><span class="p">,</span>
+    <span class="s1">'8'</span><span class="p">,</span>
+    <span class="p">])</span>
+
+<span class="n">data_class</span> <span class="o">=</span> <span class="n">_import_class</span><span class="p">(</span><span class="sa">f</span><span class="s2">"text_recognizer.data.</span><span class="si">{</span><span class="n">args</span><span class="o">.</span><span class="n">data_class</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="n">model_class</span> <span class="o">=</span> <span class="n">_import_class</span><span class="p">(</span><span class="sa">f</span><span class="s2">"text_recognizer.models.</span><span class="si">{</span><span class="n">args</span><span class="o">.</span><span class="n">model_class</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+
+<span class="n">data</span> <span class="o">=</span> <span class="n">data_class</span><span class="p">(</span><span class="n">args</span><span class="p">)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">model_class</span><span class="p">(</span><span class="n">data_config</span><span class="o">=</span><span class="n">data</span><span class="o">.</span><span class="n">config</span><span class="p">(),</span> <span class="n">args</span><span class="o">=</span><span class="n">args</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">loss</span> <span class="ow">not</span> <span class="ow">in</span> <span class="p">(</span><span class="s1">'ctc'</span><span class="p">,</span> <span class="s1">'transformer'</span><span class="p">):</span>
+    <span class="n">lit_model_class</span> <span class="o">=</span> <span class="n">lit_models</span><span class="o">.</span><span class="n">BaseLitModel</span>
+
+<span class="k">if</span> <span class="n">args</span><span class="o">.</span><span class="n">load_checkpoint</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="n">lit_model</span> <span class="o">=</span> <span class="n">lit_model_class</span><span class="o">.</span><span class="n">load_from_checkpoint</span><span class="p">(</span><span class="n">args</span><span class="o">.</span><span class="n">load_checkpoint</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="n">args</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">)</span>
+<span class="k">else</span><span class="p">:</span>
+    <span class="n">lit_model</span> <span class="o">=</span> <span class="n">lit_model_class</span><span class="p">(</span><span class="n">args</span><span class="o">=</span><span class="n">args</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">)</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">loggers</span><span class="o">.</span><span class="n">TensorBoardLogger</span><span class="p">(</span><span class="s2">"training/logs"</span><span class="p">)</span>
+
+<span class="n">callbacks</span> <span class="o">=</span> <span class="p">[</span><span class="n">pl</span><span class="o">.</span><span class="n">callbacks</span><span class="o">.</span><span class="n">EarlyStopping</span><span class="p">(</span><span class="n">monitor</span><span class="o">=</span><span class="s2">"val_loss"</span><span class="p">,</span> <span class="n">mode</span><span class="o">=</span><span class="s2">"min"</span><span class="p">,</span> <span class="n">patience</span><span class="o">=</span><span class="mi">10</span><span class="p">)]</span>
+<span class="n">args</span><span class="o">.</span><span class="n">weights_summary</span> <span class="o">=</span> <span class="s2">"full"</span>  <span class="c1"># Print full summary of the model</span>
+
+<span class="n">trainer</span> <span class="o">=</span> <span class="n">pl</span><span class="o">.</span><span class="n">Trainer</span><span class="o">.</span><span class="n">from_argparse_args</span><span class="p">(</span><span class="n">args</span><span class="p">,</span> <span class="n">callbacks</span><span class="o">=</span><span class="n">callbacks</span><span class="p">,</span> <span class="n">logger</span><span class="o">=</span><span class="n">logger</span><span class="p">,</span> <span class="n">default_root_dir</span><span class="o">=</span><span class="s2">"training/logs"</span><span class="p">)</span>
+<span class="n">trainer</span><span class="o">.</span><span class="n">tune</span><span class="p">(</span><span class="n">lit_model</span><span class="p">,</span> <span class="n">datamodule</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>  <span class="c1"># If passing --auto_lr_find, this will set learning rate</span>
+<span class="n">trainer</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">lit_model</span><span class="p">,</span> <span class="n">datamodule</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
+<span class="n">trainer</span><span class="o">.</span><span class="n">test</span><span class="p">(</span><span class="n">lit_model</span><span class="p">,</span> <span class="n">datamodule</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="highlight"><pre><span></span><span class="n">trainer</span><span class="o">.</span><span class="n">tune</span><span class="p">(</span><span class="n">lit_model</span><span class="p">,</span> <span class="n">datamodule</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>  <span class="c1"># If passing --auto_lr_find, this will set learning rate</span>
+<span class="n">trainer</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">lit_model</span><span class="p">,</span> <span class="n">datamodule</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
+<span class="n">trainer</span><span class="o">.</span><span class="n">test</span><span class="p">(</span><span class="n">lit_model</span><span class="p">,</span> <span class="n">datamodule</span><span class="o">=</span><span class="n">data</span><span class="p">)</span>
+</pre></div>
+<ol>
+<li>First line try to find the optimal batch size</li>
+<li>Second line try to trains 5 epochs</li>
+<li>Run test defined in <code>DataModule</code>
+</li>
+</ol>
+
+</div>
+</div>
+</div>
+</div>
+
+
+
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="noklam/blog"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/python/fsdl/pytorch_lightning/2021/03/21/full-stack-deep-learning-lecture-01.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Explaining ideas one post at a time</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/noklam" title="noklam"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://twitter.com/NokknockNok" title="NokknockNok"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
