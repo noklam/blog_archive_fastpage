@@ -1,5 +1,5 @@
 ---
-layout: page
+layout: categories
 title: Full Stack Deep Learning
 permalink: /fsdl/
 search_exclude: true
@@ -17,7 +17,7 @@ Learning notes for Full Stack Deep Learning. https://fullstackdeeplearning.com/
   {% assign categories = categories | sort_natural %}
 
   <ul>
-  {% for category in categories %}
+  {% for category in categories|select("equalto", "fsdl")  %}
     <li><a href="#{{ category }}">{{ category }}</a></li>
   {% endfor %}
   </ul>
