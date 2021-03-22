@@ -14,7 +14,7 @@ Learning notes for Full Stack Deep Learning. https://fullstackdeeplearning.com/
   {% for c in site.categories %}
     {% assign categories = categories | push: c[0] %}
   {% endfor %}
-  {% assign categories = categories | sort_natural %}
+  {% assign categories = categories | sort_natural | select("equalto", "fsdl") %}
 
   <ul>
   {% for category in categories|select("equalto", "fsdl")  %}
