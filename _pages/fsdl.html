@@ -14,15 +14,15 @@ Learning notes for Full Stack Deep Learning. https://fullstackdeeplearning.com/
   {% for c in site.categories %}
     {% assign categories = categories | push: c[0] %}
   {% endfor %}
-  {% assign categories = categories | sort_natural | select("equalto", "fsdl") %}
+  {% assign categories = categories | sort_natural %}
 
   <ul>
-  {% for category in categories|select("equalto", "fsdl")  %}
+  {% for category in categories if category == "fsdl"  %}
     <li><a href="#{{ category }}">{{ category }}</a></li>
   {% endfor %}
   </ul>
 
-  {% for category in categories %}
+  {% for category in categories if category == " fsdl" %}
       <h3 id ="{{ category }}"><i class="fas fa-tags category-tags-icon"></i></i> {{ category }}</h3>
       <a name="{{ category | slugize }}"></a>
       {% for post in site.categories[category] %}
