@@ -49,10 +49,6 @@
 <lastmod>2020-11-10T00:00:00-06:00</lastmod>
 </url>
 <url>
-<loc>https://noklam.ml/r/rayshader/2020/11/14/Hong-Kong-Elevation-Map-with-rayshader.html</loc>
-<lastmod>2020-11-14T00:00:00-06:00</lastmod>
-</url>
-<url>
 <loc>https://noklam.ml/2020/12/04/kedro-pipeline.html</loc>
 <lastmod>2020-12-04T00:00:00-06:00</lastmod>
 </url>
@@ -75,10 +71,6 @@
 <url>
 <loc>https://noklam.ml/pyodbc/impala/2021/03/05/pyodbc-linux.html</loc>
 <lastmod>2021-03-05T00:00:00-06:00</lastmod>
-</url>
-<url>
-<loc>https://noklam.ml/python/pytest/great_expectations/2021/03/17/Pytest-truncated-long-assertion-error.html</loc>
-<lastmod>2021-03-17T00:00:00-05:00</lastmod>
 </url>
 <url>
 <loc>https://noklam.ml/python/pickle/deepcopy/2021/03/19/deepcopy-lightgbm-and-Pickles.html</loc>
@@ -104,8 +96,5 @@
 </url>
 <url>
 <loc>https://noklam.ml/categories/</loc>
-</url>
-<url>
-<loc>https://noklam.ml/page2/</loc>
 </url>
 </urlset>
