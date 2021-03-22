@@ -15,7 +15,7 @@ search_exclude: true
   {% assign categories = categories | sort_natural %}
 
   <ul>
-  {% for category in categories %}
+  {% for category in categories | select("equalto", "fsdl") %}
     <li><a href="#{{ category }}">{{ category }}</a></li>
   {% endfor %}
   </ul>
