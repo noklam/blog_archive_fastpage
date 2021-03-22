@@ -282,7 +282,7 @@
   
       ,"page3": {
           "title": "About Me",
-          "content": "This website is powered by fastpages 1. . a blogging platform that natively supports Jupyter notebooks in addition to other formats. &#8617; . |",
+          "content": "A Data Scientist in OOCL, solving global shipping problem with CSV. . Contact: mediumnok@gmail.com . This website is powered by fastpages 1. . a blogging platform that natively supports Jupyter notebooks in addition to other formats. &#8617; . |",
           "url": "https://noklam.ml/about/",
           "relUrl": "/about/",
           "date": ""
@@ -304,16 +304,10 @@
   
 
   
-  
-
-  
 
   
   
 
-  
-
-  
   
 
   
@@ -325,7 +319,15 @@
   
 
   
-      ,"page14": {
+  
+
+  
+
+  
+  
+
+  
+      ,"page15": {
           "title": "",
           "content": "Sitemap: {{ “sitemap.xml” | absolute_url }} | .",
           "url": "https://noklam.ml/robots.txt",
