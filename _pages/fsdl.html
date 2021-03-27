@@ -22,7 +22,7 @@ Learning notes for Full Stack Deep Learning. https://fullstackdeeplearning.com/
   {% endfor %}
   </ul>
 
-  {% for category in categories if category == " fsdl" %}
+  {% for category in categories if category == "fsdl" %}
       <h3 id ="{{ category }}"><i class="fas fa-tags category-tags-icon"></i></i> {{ category }}</h3>
       <a name="{{ category | slugize }}"></a>
       {% for post in site.categories[category] %}
