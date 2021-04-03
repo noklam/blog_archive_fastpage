@@ -102,20 +102,17 @@ window.onload = wrap_img;
     </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <p>Recently, I have started to thinking more about Data Catalog, Data Discovery. As a data scientist, we spent significant time to build data pipeline. We spend a large chunk of the time to understand the context of the data, and how to use it correctly. Most data catalog provides information about the <code class="language-plaintext highlighter-rouge">Schema</code> and <code class="language-plaintext highlighter-rouge">Column</code> or <code class="language-plaintext highlighter-rouge">Table</code> description. However, we deal with dirty data in reality, a table may not be perfectly design, business process could change but the table schema could not catch up. So you end up have to apply a lot of addition condition to filter out data, i.e. you may want to look at column A before  2019-Jan, but look at column B after 2019-Jan. The ultimate version of the query contains a lot of intergration efforts and it is a mental model of how certain persion views about the data. These information are usually communicate verbally and very hard to be re-used.</p>
+    <p>Recently, I have started to think more about Data Catalog, Data Discovery. As data scientists, we spent significant time building a data pipeline. We spend a large chunk of the time understanding the context of the data, and how to use it correctly. Most data catalog provides information about the Schema and Column or Table description. However, we deal with dirty data in reality, a table may not be perfectly design, the business process could change but the table schema could not catch up. So you end up having to apply a lot of additional conditions to filter out data, i.e. you may want to look at column A before 2019-Jan but look at column B after 2019-Jan. The ultimate version of the query contains a lot of integration efforts and it is a mental model of how a certain person views the data. This information is usually communicate verbally and very hard to be re-used.</p>
 
-<p>I have been thinking a lot how can we communicate these information, or so called domain knowledge more efficiently. I am thinking whether <em>Analyzing user actual query log</em> could add more insight about the data.</p>
+<p>I have been thinking a lot about how can we communicate this information, or so-called domain knowledge more efficiently. I am thinking whether <em>Analyzing user’s actual query log</em> could add more insight into the data.</p>
 
-<p>For example, I may answer these questions if I could analyze SQL query logs</p>
-<ul>
-  <li>How often is this table queried (and by who?)</li>
-  <li>How is this table related to other tables? How are they usually joined together?</li>
-  <li>What is the most common filtering condition added when people are querying this table?</li>
-</ul>
+<p>For example, I may answer these questions if I could analyze SQL query logs
+How often is this table queried (and by who?)
+How is this table related to other tables? How are they usually joined together?
+What is the most common filtering condition added when people are querying this table?</p>
 
-<p>So far, I only have rough ideas and need helps to get Open Dataset of user sql query logs. If you know such dataset exist, please email me @ mediumnok@gmail.com</p>
-
-<p>Thanks!</p>
+<p>So far, I only have rough ideas and need helps to get an Open Dataset of user SQL query logs. If you know such a dataset exists, please email me @ mediumnok@gmail.com
+Thanks!</p>
 
 <!--truncate-->
 
