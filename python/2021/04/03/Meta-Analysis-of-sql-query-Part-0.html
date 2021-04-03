@@ -4,20 +4,20 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>Full Stack Deep Learning Notes - Lecture 01 | noklam✊</title>
+<title>Meta-Analysis of SQL Query, Graph - Part 0 [Help needed, I am looking for open dataset of actual user SQL query log] | noklam✊</title>
 <meta name="generator" content="Jekyll v4.1.1" />
-<meta property="og:title" content="Full Stack Deep Learning Notes - Lecture 01" />
+<meta property="og:title" content="Meta-Analysis of SQL Query, Graph - Part 0 [Help needed, I am looking for open dataset of actual user SQL query log]" />
 <meta name="author" content="noklam" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="Lecture &amp; Lab notes" />
-<meta property="og:description" content="Lecture &amp; Lab notes" />
-<link rel="canonical" href="https://noklam.ml/fsdl/2021/03/27/template.html" />
-<meta property="og:url" content="https://noklam.ml/fsdl/2021/03/27/template.html" />
+<meta name="description" content="Notes" />
+<meta property="og:description" content="Notes" />
+<link rel="canonical" href="https://noklam.ml/python/2021/04/03/Meta-Analysis-of-sql-query-Part-0.html" />
+<meta property="og:url" content="https://noklam.ml/python/2021/04/03/Meta-Analysis-of-sql-query-Part-0.html" />
 <meta property="og:site_name" content="noklam✊" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2021-03-27T00:00:00-05:00" />
+<meta property="article:published_time" content="2021-04-03T00:00:00-05:00" />
 <script type="application/ld+json">
-{"url":"https://noklam.ml/fsdl/2021/03/27/template.html","@type":"BlogPosting","headline":"Full Stack Deep Learning Notes - Lecture 01","dateModified":"2021-03-27T00:00:00-05:00","datePublished":"2021-03-27T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://noklam.ml/fsdl/2021/03/27/template.html"},"author":{"@type":"Person","name":"noklam"},"description":"Lecture &amp; Lab notes","@context":"https://schema.org"}</script>
+{"url":"https://noklam.ml/python/2021/04/03/Meta-Analysis-of-sql-query-Part-0.html","@type":"BlogPosting","headline":"Meta-Analysis of SQL Query, Graph - Part 0 [Help needed, I am looking for open dataset of actual user SQL query log]","dateModified":"2021-04-03T00:00:00-05:00","datePublished":"2021-04-03T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://noklam.ml/python/2021/04/03/Meta-Analysis-of-sql-query-Part-0.html"},"author":{"@type":"Person","name":"noklam"},"description":"Notes","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://noklam.ml/feed.xml" title="noklam✊" /><!-- the google_analytics_id gets auto inserted from the config file -->
 
@@ -78,8 +78,8 @@ window.onload = wrap_img;
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">Full Stack Deep Learning Notes - Lecture 01</h1><p class="page-description">Lecture & Lab notes</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-03-27T00:00:00-05:00" itemprop="datePublished">
-        Mar 27, 2021
+    <h1 class="post-title p-name" itemprop="name headline">Meta-Analysis of SQL Query, Graph - Part 0 [Help needed, I am looking for open dataset of actual user SQL query log]</h1><p class="page-description">Notes</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-04-03T00:00:00-05:00" itemprop="datePublished">
+        Apr 3, 2021
       </time>• 
           <span itemprop="author" itemscope itemtype="http://schema.org/Person">
             <span class="p-author h-card" itemprop="name">noklam</span></span>
@@ -93,49 +93,31 @@ window.onload = wrap_img;
     
       <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
       
-        <a class="category-tags-link" href="/categories/#fsdl">fsdl</a>
+        <a class="category-tags-link" href="/categories/#python">python</a>
         
       
       </p>
     
 
-    
-      
-        <div class="pb-5 d-flex flex-wrap flex-justify-end">
-          <div class="px-2">
-
-    <a href="https://github.com/noklam/blog/tree/master/_notebooks/template.ipynb" role="button" target="_blank">
-<img class="notebook-badge-image" src="/assets/badges/github.svg" alt="View On GitHub">
-    </a>
-</div>
-
-          <div class="px-2">
-    <a href="https://mybinder.org/v2/gh/noklam/blog/master?filepath=_notebooks%2Ftemplate.ipynb" target="_blank">
-        <img class="notebook-badge-image" src="/assets/badges/binder.svg" alt="Open In Binder"/>
-    </a>
-</div>
-
-          <div class="px-2">
-    <a href="https://colab.research.google.com/github/noklam/blog/blob/master/_notebooks/template.ipynb" target="_blank">
-        <img class="notebook-badge-image" src="/assets/badges/colab.svg" alt="Open In Colab"/>
-    </a>
-</div>
-        </div>
-      </header>
+    </header>
 
   <div class="post-content e-content" itemprop="articleBody">
-    <ul class="section-nav">
-</ul><!--
-#################################################
-### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
-#################################################
-# file to edit: _notebooks/template.ipynb
--->
+    <p>Recently, I have started to thinking more about Data Catalog, Data Discovery. As a data scientist, we spent significant time to build data pipeline. We spend a large chunk of the time to understand the context of the data, and how to use it correctly. Most data catalog provides information about the <code class="language-plaintext highlighter-rouge">Schema</code> and <code class="language-plaintext highlighter-rouge">Column</code> or <code class="language-plaintext highlighter-rouge">Table</code> description. However, we deal with dirty data in reality, a table may not be perfectly design, business process could change but the table schema could not catch up. So you end up have to apply a lot of addition condition to filter out data, i.e. you may want to look at column A before  2019-Jan, but look at column B after 2019-Jan. The ultimate version of the query contains a lot of intergration efforts and it is a mental model of how certain persion views about the data. These information are usually communicate verbally and very hard to be re-used.</p>
 
-<div class="container" id="notebook-container">
-        
-</div>
+<p>I have been thinking a lot how can we communicate these information, or so called domain knowledge more efficiently. I am thinking whether <em>Analyzing user actual query log</em> could add more insight about the data.</p>
 
+<p>For example, I may answer these questions if I could analyze SQL query logs</p>
+<ul>
+  <li>How often is this table queried (and by who?)</li>
+  <li>How is this table related to other tables? How are they usually joined together?</li>
+  <li>What is the most common filtering condition added when people are querying this table?</li>
+</ul>
+
+<p>So far, I only have rough ideas and need helps to get Open Dataset of user sql query logs. If you know such dataset exist, please email me @ mediumnok@gmail.com</p>
+
+<p>Thanks!</p>
+
+<!--truncate-->
 
 
   </div><!-- from https://github.com/utterance/utterances -->
@@ -146,7 +128,7 @@ window.onload = wrap_img;
         theme="github-light"
         crossorigin="anonymous"
         async>
-</script><a class="u-url" href="/fsdl/2021/03/27/template.html" hidden></a>
+</script><a class="u-url" href="/python/2021/04/03/Meta-Analysis-of-sql-query-Part-0.html" hidden></a>
 </article>
       </div>
     </main><footer class="site-footer h-card">
