@@ -16,5 +16,5 @@
         "statusBarItem.hoverBackground": "#c98975"
     },
     "peacock.color": "#d7a89a",
-    "python.pythonPath": "C:\\ProgramData\\Anaconda3\\python.exe"
+    "python.pythonPath": "C:\\ProgramData\\Miniconda3\\envs\\blog\\python.exe"
 }
