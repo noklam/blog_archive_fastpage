@@ -4,28 +4,28 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>Hydra - Config Composition for Machine Learning Project | noklam✊</title>
+<title>Hydra - Config Composition for Machine Learning Project | mediumnok✊</title>
 <meta name="generator" content="Jekyll v4.1.1" />
 <meta property="og:title" content="Hydra - Config Composition for Machine Learning Project" />
 <meta name="author" content="noklam" />
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="GitHub: https://github.com/noklam/notadatascientist/tree/master/demo/hydra-example" />
 <meta property="og:description" content="GitHub: https://github.com/noklam/notadatascientist/tree/master/demo/hydra-example" />
-<link rel="canonical" href="https://noklam.ml/python/ml/2020/02/08/Config-Composition-with-Hydra-for-Machine-Learning-Experiments.html" />
-<meta property="og:url" content="https://noklam.ml/python/ml/2020/02/08/Config-Composition-with-Hydra-for-Machine-Learning-Experiments.html" />
-<meta property="og:site_name" content="noklam✊" />
+<link rel="canonical" href="https://noklam.github.io/blog/python/ml/2020/02/08/Config-Composition-with-Hydra-for-Machine-Learning-Experiments.html" />
+<meta property="og:url" content="https://noklam.github.io/blog/python/ml/2020/02/08/Config-Composition-with-Hydra-for-Machine-Learning-Experiments.html" />
+<meta property="og:site_name" content="mediumnok✊" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2020-02-08T00:00:00-06:00" />
 <script type="application/ld+json">
-{"url":"https://noklam.ml/python/ml/2020/02/08/Config-Composition-with-Hydra-for-Machine-Learning-Experiments.html","@type":"BlogPosting","headline":"Hydra - Config Composition for Machine Learning Project","dateModified":"2020-02-08T00:00:00-06:00","datePublished":"2020-02-08T00:00:00-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://noklam.ml/python/ml/2020/02/08/Config-Composition-with-Hydra-for-Machine-Learning-Experiments.html"},"author":{"@type":"Person","name":"noklam"},"description":"GitHub: https://github.com/noklam/notadatascientist/tree/master/demo/hydra-example","@context":"https://schema.org"}</script>
+{"url":"https://noklam.github.io/blog/python/ml/2020/02/08/Config-Composition-with-Hydra-for-Machine-Learning-Experiments.html","@type":"BlogPosting","headline":"Hydra - Config Composition for Machine Learning Project","dateModified":"2020-02-08T00:00:00-06:00","datePublished":"2020-02-08T00:00:00-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://noklam.github.io/blog/python/ml/2020/02/08/Config-Composition-with-Hydra-for-Machine-Learning-Experiments.html"},"author":{"@type":"Person","name":"noklam"},"description":"GitHub: https://github.com/noklam/notadatascientist/tree/master/demo/hydra-example","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
-<link rel="stylesheet" href="/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://noklam.ml/feed.xml" title="noklam✊" /><!-- the google_analytics_id gets auto inserted from the config file -->
+<link rel="stylesheet" href="/blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://noklam.github.io/blog/feed.xml" title="mediumnok✊" /><!-- the google_analytics_id gets auto inserted from the config file -->
 
 
 
 <script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-83544344-5','auto');ga('require','displayfeatures');ga('send','pageview');</script>
 
-<link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="shortcut icon" type="image/x-icon" href="/blog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
 
 <script>
@@ -60,7 +60,7 @@ window.onload = wrap_img;
 </head>
 <body><header class="site-header">
 
-  <div class="wrapper"><a class="site-title" rel="author" href="/">noklam✊</a><nav class="site-nav">
+  <div class="wrapper"><a class="site-title" rel="author" href="/blog/">mediumnok✊</a><nav class="site-nav">
         <input type="checkbox" id="nav-trigger" class="nav-trigger" />
         <label for="nav-trigger">
           <span class="menu-icon">
@@ -70,7 +70,7 @@ window.onload = wrap_img;
           </span>
         </label>
 
-        <div class="trigger"><a class="page-link" href="/about/">About Me</a><a class="page-link" href="/fsdl/">Full Stack Deep Learning</a><a class="page-link" href="/search/">Search</a><a class="page-link" href="/categories/">Tags</a></div>
+        <div class="trigger"><a class="page-link" href="/blog/about/">About Me</a><a class="page-link" href="/blog/fsdl/">Full Stack Deep Learning</a><a class="page-link" href="/blog/search/">Search</a><a class="page-link" href="/blog/categories/">Tags</a></div>
       </nav></div>
 </header>
 <main class="page-content" aria-label="Content">
@@ -93,10 +93,10 @@ window.onload = wrap_img;
     
       <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
       
-        <a class="category-tags-link" href="/categories/#python">python</a>
+        <a class="category-tags-link" href="blog/categories/#python">python</a>
         &nbsp;
       
-        <a class="category-tags-link" href="/categories/#ML">ML</a>
+        <a class="category-tags-link" href="blog/categories/#ML">ML</a>
         
       
       </p>
@@ -217,20 +217,20 @@ week: 8
         theme="github-light"
         crossorigin="anonymous"
         async>
-</script><a class="u-url" href="/python/ml/2020/02/08/Config-Composition-with-Hydra-for-Machine-Learning-Experiments.html" hidden></a>
+</script><a class="u-url" href="/blog/python/ml/2020/02/08/Config-Composition-with-Hydra-for-Machine-Learning-Experiments.html" hidden></a>
 </article>
       </div>
     </main><footer class="site-footer h-card">
-  <data class="u-url" href="/"></data>
+  <data class="u-url" href="/blog/"></data>
 
   <div class="wrapper">
 
     <div class="footer-col-wrapper">
       <div class="footer-col">
         <p class="feed-subscribe">
-          <a href="/feed.xml">
+          <a href="/blog/feed.xml">
             <svg class="svg-icon orange">
-              <use xlink:href="/assets/minima-social-icons.svg#rss"></use>
+              <use xlink:href="/blog/assets/minima-social-icons.svg#rss"></use>
             </svg><span>Subscribe</span>
           </a>
         </p>
@@ -240,7 +240,7 @@ week: 8
       </div>
     </div>
 
-    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/noklam" title="noklam"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://www.linkedin.com/in/noklamchan" title="noklamchan"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#linkedin"></use></svg></a></li><li><a rel="me" href="https://twitter.com/NokknockNok" title="NokknockNok"><svg class="svg-icon grey"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/noklam" title="noklam"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://www.linkedin.com/in/noklamchan" title="noklamchan"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#linkedin"></use></svg></a></li><li><a rel="me" href="https://twitter.com/mediumnok" title="mediumnok"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
 </div>
 
   </div>
