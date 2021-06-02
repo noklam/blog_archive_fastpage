@@ -2,22 +2,22 @@
   
     
         "post0": {
-            "title": "Python Internal Series - Global Interpreter Lock and Memory Management",
-            "content": "Is GIL a bad design? . Global Interpreter Lock a.k.a Mutex Lock . Why GIL is needed in the first place? . Python Memory Management - Reference Count . Lock &amp; Deadlock . Memroy Management .",
-            "url": "https://noklam.github.io/blog/python-internal/2021/05/29/Python-Internal-Series-Python-GIL-And-Memory.html",
-            "relUrl": "/python-internal/2021/05/29/Python-Internal-Series-Python-GIL-And-Memory.html",
-            "date": " • May 29, 2021"
+            "title": "Full Stack Deep Learning Notes - Lecture 01",
+            "content": "",
+            "url": "https://noklam.github.io/blog/fsdl/2021/06/01/template.html",
+            "relUrl": "/fsdl/2021/06/01/template.html",
+            "date": " • Jun 1, 2021"
         }
         
     
   
     
         ,"post1": {
-            "title": "Full Stack Deep Learning Notes - Lecture 01",
-            "content": "",
-            "url": "https://noklam.github.io/blog/fsdl/2021/05/28/template.html",
-            "relUrl": "/fsdl/2021/05/28/template.html",
-            "date": " • May 28, 2021"
+            "title": "Python Internal Series - Global Interpreter Lock and Memory Management",
+            "content": "Is GIL a bad design? . Global Interpreter Lock a.k.a Mutex Lock . Why GIL is needed in the first place? . Python Memory Management - Reference Count . Lock &amp; Deadlock . Memroy Management .",
+            "url": "https://noklam.github.io/blog/python-internal/2021/05/29/Python-Internal-Series-Python-GIL-And-Memory.html",
+            "relUrl": "/python-internal/2021/05/29/Python-Internal-Series-Python-GIL-And-Memory.html",
+            "date": " • May 29, 2021"
         }
         
     
