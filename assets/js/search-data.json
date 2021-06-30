@@ -2,6 +2,17 @@
   
     
         "post0": {
+            "title": "Full Stack Deep Learning Notes - Lecture 01",
+            "content": "",
+            "url": "https://noklam.github.io/blog/fsdl/2021/06/29/template.html",
+            "relUrl": "/fsdl/2021/06/29/template.html",
+            "date": " • Jun 29, 2021"
+        }
+        
+    
+  
+    
+        ,"post1": {
             "title": "A logging.config.dictConfig() issue in python",
             "content": "import logging from clearml import Task conf_logging = {&quot;version&quot;:1, &quot;formatters&quot;:{ &quot;simple&quot;:{ &quot;format&quot;:&quot;%(asctime)s - %(name)s - %(levelname)s - %(message)s&quot;} } } t = Task.init(project_name=&quot;test&quot;) logging.config.dictConfig(conf_logging) logging.info(&quot;INFO!&quot;) logging.debug(&quot;DEBUG!&quot;) logging.warning(&quot;WARN!&quot;) print(&quot;PRINT!&quot;) . With this code block, you will find no print() or logging is sent to ClearML logging Console. Turns out kedro use logging.config.dictConfig(conf_logging) as the default and causing this issue. . A quick fix is to add &quot;incremental&quot;: True in the config dict. In the standard documentation, the default is False, which means the configuration will replace existing one, thus removing the clearml handlers, and causing the issue I had. . conf_logging = {&quot;version&quot;:1, &quot;incremental&quot;: True &quot;formatters&quot;:{ &quot;simple&quot;:{ &quot;format&quot;:&quot;%(asctime)s - %(name)s - %(levelname)s - %(message)s&quot;} } } .",
             "url": "https://noklam.github.io/blog/python/2021/06/20/logging_config_dict_problem_in_kedro.html",
@@ -12,20 +23,9 @@
     
   
     
-        ,"post1": {
-            "title": "Full Stack Deep Learning Notes - Lecture 01",
-            "content": "",
-            "url": "https://noklam.github.io/blog/fsdl/2021/06/18/template.html",
-            "relUrl": "/fsdl/2021/06/18/template.html",
-            "date": " • Jun 18, 2021"
-        }
-        
-    
-  
-    
         ,"post2": {
-            "title": "Python Internal Series - Global Interpreter Lock and Memory Management",
-            "content": "Is GIL a bad design? . Global Interpreter Lock a.k.a Mutex Lock . Why GIL is needed in the first place? . Python Memory Management - Reference Count . Lock &amp; Deadlock . Memroy Management .",
+            "title": "Python Internal Series - Global Interpreter Lock (GIL) and Memory Management",
+            "content": "Is GIL a bad design? . Most people first learn about GIL because of how it slows down Python program and prevent multi-threading running efficiently, however, the GIL is one of the reason why Python survive 30 years and still growing healthyly. . GIL is nothing like the stereotype people think, legacy, slow. There are multiple benefits GIL provide: . It speed ups single thread program. | It is compatible with many C Program thanks to the C API of CPysthon. | . Global Interpreter Lock a.k.a Mutex Lock . To start with, GIL is a mu . Why GIL is needed in the first place? . Memory management. Python use something called &quot;reference counting&quot;, which make it different from many modern programming lanaguage. It is what allow Python programmer to lay back and let Python take care when to release memory. Precisely, it is actually the C program controlling the memory life cycle for Python (Cpython). Cpython is known as the default Python interpreter. It first compiles Python to intermediate bytecode (.pyc files). These bytecode then being interpreted by a virtual machine ane executed. It is worth to mention that other variants of Python exist, i.e. IronPython(C#), Jython(Java), Pypy(Python) and they have different memory management mechanisms. . Python Memory Management - Reference Count &amp; Garbage Collection (gc) . import sys . sys.getrefcount(a) . 3 . Reference counting is a simple idea. The intuition is that if a particular object is not referenced by anything, it can be recycled since it will not be used anymore. For example, the list `[1]` is now referenced by the variable `a`, so the reference count is incremented by 1. . import sys a = [1] sys.getrefcount(a) . 2 . Note that the reference count is 2 instead of 1. . The first reference is a = [1] | When the variable a is passed to sys.getrefcount(a) as an argument, it also increases the reference count. | del a . When del a is called, the list [1] have 0 reference count, and it is collected by Python automatically behind the scene. . Lock &amp; Deadlock . Memroy Management . Reference . https://www.youtube.com/watch?v=KVKufdTphKs&amp;t=731s | https://realpython.com/python-gil/ | https://devguide.python.org/garbage_collector/ | .",
             "url": "https://noklam.github.io/blog/python-internal/2021/05/29/Python-Internal-Series-Python-GIL-And-Memory.html",
             "relUrl": "/python-internal/2021/05/29/Python-Internal-Series-Python-GIL-And-Memory.html",
             "date": " • May 29, 2021"
