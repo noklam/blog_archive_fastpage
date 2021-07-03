@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>Advance Kedro Series - Digging into Dataset Memory Management and CacheDataSet | mediumnok✊</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="Advance Kedro Series - Digging into Dataset Memory Management and CacheDataSet" />
+<meta name="author" content="noklam" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Kedro pipeline offers some nice feature like automatically release data in memory that is no longer need. How is this possible? Let’s dive deep into the code." />
+<meta property="og:description" content="Kedro pipeline offers some nice feature like automatically release data in memory that is no longer need. How is this possible? Let’s dive deep into the code." />
+<link rel="canonical" href="https://noklam.github.io/blog/python/kedro/2021/07/02/kedro-datacatalog.html" />
+<meta property="og:url" content="https://noklam.github.io/blog/python/kedro/2021/07/02/kedro-datacatalog.html" />
+<meta property="og:site_name" content="mediumnok✊" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-07-02T00:00:00-05:00" />
+<script type="application/ld+json">
+{"url":"https://noklam.github.io/blog/python/kedro/2021/07/02/kedro-datacatalog.html","@type":"BlogPosting","headline":"Advance Kedro Series - Digging into Dataset Memory Management and CacheDataSet","dateModified":"2021-07-02T00:00:00-05:00","datePublished":"2021-07-02T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://noklam.github.io/blog/python/kedro/2021/07/02/kedro-datacatalog.html"},"author":{"@type":"Person","name":"noklam"},"description":"Kedro pipeline offers some nice feature like automatically release data in memory that is no longer need. How is this possible? Let’s dive deep into the code.","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://noklam.github.io/blog/feed.xml" title="mediumnok✊" /><!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-83544344-5','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+<link rel="shortcut icon" type="image/x-icon" href="/blog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/blog/">mediumnok✊</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/blog/about/">About Me</a><a class="page-link" href="/blog/fsdl/">Full Stack Deep Learning</a><a class="page-link" href="/blog/search/">Search</a><a class="page-link" href="/blog/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">Advance Kedro Series - Digging into Dataset Memory Management and CacheDataSet</h1><p class="page-description">Kedro pipeline offers some nice feature like automatically release data in memory that is no longer need. How is this possible? Let's dive deep into the code.</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-07-02T00:00:00-05:00" itemprop="datePublished">
+        Jul 2, 2021
+      </time>• 
+          <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+            <span class="p-author h-card" itemprop="name">noklam</span></span>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      7 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="blog/categories/#python">python</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="blog/categories/#kedro">kedro</a>
+        
+      
+      </p>
+    
+
+    
+      
+        <div class="pb-5 d-flex flex-wrap flex-justify-end">
+          <div class="px-2">
+
+    <a href="https://github.com/noklam/blog/tree/master/_notebooks/2021-07-02-kedro-datacatalog.ipynb" role="button" target="_blank">
+<img class="notebook-badge-image" src="/blog/assets/badges/github.svg" alt="View On GitHub">
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://mybinder.org/v2/gh/noklam/blog/master?filepath=_notebooks%2F2021-07-02-kedro-datacatalog.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/blog/assets/badges/binder.svg" alt="Open In Binder"/>
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://colab.research.google.com/github/noklam/blog/blob/master/_notebooks/2021-07-02-kedro-datacatalog.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/blog/assets/badges/colab.svg" alt="Open In Colab"/>
+    </a>
+</div>
+        </div>
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+<li class="toc-entry toc-h1"><a href="#CacheDataSet">CacheDataSet </a></li>
+</ul><!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/2021-07-02-kedro-datacatalog.ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Today I am gonna explain some <code>kedro</code> internals to understnad how kedor manage your dataset. If you always write imperative python code, you may find that writing <code>nodes</code> and <code>pipeline</code> is a little bti awkward. They may seems less intuitive, however, it also enable some interesting featrue.</p>
+<p>This article assumes you have basic understanding of <code>kedro</code>, I will focus on <code>CacheDataSet</code> and the auto-release dataset feature of kedro pipeline. It is useful to reduce your memory footprint without encountering the infamous <strong>Out of Memory (OOM)</strong> issue.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>To start with, we have the default iris dataset. Normally we would do it in a YAML file, but to make things easier in Notebook, I'll keep everything compact in a notebook.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">kedro.io</span> <span class="kn">import</span> <span class="n">DataCatalog</span><span class="p">,</span> <span class="n">MemoryDataSet</span><span class="p">,</span> <span class="n">CachedDataSet</span>
+<span class="kn">from</span> <span class="nn">kedro.extras.datasets.pandas</span> <span class="kn">import</span> <span class="n">CSVDataSet</span>
+<span class="kn">from</span> <span class="nn">kedro.pipeline</span> <span class="kn">import</span> <span class="n">node</span><span class="p">,</span> <span class="n">Pipeline</span>
+<span class="kn">from</span> <span class="nn">kedro.runner</span> <span class="kn">import</span> <span class="n">SequentialRunner</span>
+
+<span class="c1"># Prepare a data catalog</span>
+<span class="n">data_catalog</span> <span class="o">=</span> <span class="n">DataCatalog</span><span class="p">({</span><span class="s2">"iris"</span><span class="p">:</span> <span class="n">CSVDataSet</span><span class="p">(</span><span class="s1">'data/01_raw/iris.csv'</span><span class="p">)})</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Next, we have a pipeline follows this execution order: <strong>A -&gt; B -&gt; C</strong></p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">kedro.pipeline</span> <span class="kn">import</span> <span class="n">Pipeline</span><span class="p">,</span> <span class="n">node</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+
+<span class="k">def</span> <span class="nf">A</span><span class="p">(</span><span class="n">df</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">'Loading the Iris Dataset'</span><span class="p">)</span>
+    <span class="k">return</span> <span class="s1">'Step1'</span>
+
+
+<span class="k">def</span> <span class="nf">B</span><span class="p">(</span><span class="n">dummy</span><span class="p">):</span>
+    <span class="k">return</span> <span class="s1">'Step2'</span>
+
+
+<span class="k">def</span> <span class="nf">C</span><span class="p">(</span><span class="n">dummy</span><span class="p">):</span>
+    <span class="k">return</span> <span class="s1">'Step3'</span>
+
+
+<span class="n">pipeline</span> <span class="o">=</span> <span class="n">Pipeline</span><span class="p">([</span><span class="n">node</span><span class="p">(</span><span class="n">A</span><span class="p">,</span> <span class="s2">"iris"</span><span class="p">,</span> <span class="s2">"A"</span><span class="p">),</span>
+                     <span class="n">node</span><span class="p">(</span><span class="n">B</span><span class="p">,</span> <span class="s2">"A"</span><span class="p">,</span> <span class="s2">"B"</span><span class="p">),</span>
+                     <span class="n">node</span><span class="p">(</span><span class="n">C</span><span class="p">,</span> <span class="s2">"B"</span><span class="p">,</span> <span class="s2">"C"</span><span class="p">),</span>
+                    <span class="p">])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>c:\programdata\miniconda3\lib\site-packages\ipykernel\ipkernel.py:283: DeprecationWarning: `should_run_async` will not call `transform_cell` automatically in the future. Please pass the result to `transformed_cell` argument and any exception that happen during thetransform in `preprocessing_exc_tuple` in IPython 7.17 and above.
+  and should_run_async(code)
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>To zoom in to the pipeline, we can use <code>Hook</code> to print out the catalog after every node's run.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">kedro.framework.hooks</span> <span class="kn">import</span> <span class="n">hook_impl</span>
+<span class="kn">from</span> <span class="nn">kedro.framework.hooks</span> <span class="kn">import</span> <span class="n">get_hook_manager</span>
+<span class="kn">from</span> <span class="nn">pprint</span> <span class="kn">import</span> <span class="n">pprint</span>
+
+<span class="k">def</span> <span class="nf">apply_dict</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
+    <span class="n">new_dict</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">d</span><span class="o">.</span><span class="n">items</span><span class="p">():</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">CachedDataSet</span><span class="p">):</span>
+            <span class="k">if</span> <span class="n">v</span><span class="o">.</span><span class="n">_cache</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+                <span class="nb">print</span><span class="p">(</span><span class="n">v</span><span class="o">.</span><span class="n">_cache</span><span class="o">.</span><span class="n">_data</span><span class="p">)</span>
+                <span class="n">new_dict</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'In Memory'</span>
+            <span class="k">else</span><span class="p">:</span>
+                <span class="n">new_dict</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span><span class="s1">'Cache Deleted'</span>
+        <span class="k">elif</span> <span class="n">v</span><span class="o">.</span><span class="n">exists</span><span class="p">():</span>
+            <span class="n">new_dict</span><span class="p">[</span><span class="n">k</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'In Memory'</span>
+    <span class="k">return</span> <span class="n">new_dict</span>
+
+
+<span class="k">class</span> <span class="nc">DebugHook</span><span class="p">:</span>
+    <span class="sd">"""A hook class for creating a post mortem debugging with the PDB debugger</span>
+<span class="sd">    whenever an error is triggered within a pipeline. The local scope from when the</span>
+<span class="sd">    exception occured is available within this debugging session.</span>
+<span class="sd">    """</span>
+    <span class="nd">@hook_impl</span>
+    <span class="k">def</span> <span class="nf">after_node_run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">catalog</span><span class="p">):</span>
+        <span class="c1"># adding extra behaviour to a single node</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Finish node </span><span class="si">{</span><span class="n">node</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+        <span class="n">pprint</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Print Catalog </span><span class="si">{</span><span class="n">apply_dict</span><span class="p">(</span><span class="n">catalog</span><span class="o">.</span><span class="n">_data_sets</span><span class="p">)</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+<span class="c1">#         pprint(f"Print Catalog {apply_dict2(lambda x:x.exists(), catalog._data_sets)}")</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"*****************************"</span><span class="p">)</span>
+        
+<span class="n">hook_manager</span> <span class="o">=</span> <span class="n">get_hook_manager</span><span class="p">()</span>
+<span class="n">debug_hook</span> <span class="o">=</span> <span class="n">hook_manager</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">DebugHook</span><span class="p">());</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>This hook will print out dataset that exist in data catalog. It is a bit tricky because <code>kedro</code> did not delete the dataset, it marked the underlying data as <code>_EMPTY</code> object instead.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">runner</span> <span class="o">=</span> <span class="n">SequentialRunner</span><span class="p">()</span>
+
+<span class="c1"># Run the pipeline</span>
+<span class="n">runner</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">pipeline</span><span class="p">,</span> <span class="n">data_catalog</span><span class="p">);</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Loading the Iris Dataset
+Finish node A([iris]) -&gt; [A]
+"Print Catalog {'iris': 'In Memory'}"
+*****************************
+Finish node B([A]) -&gt; [B]
+"Print Catalog {'iris': 'In Memory', 'A': 'In Memory'}"
+*****************************
+Finish node C([B]) -&gt; [C]
+"Print Catalog {'iris': 'In Memory', 'B': 'In Memory'}"
+*****************************
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Let's have a look at what happened when a <code>SequentialRunner</code> runs a pipeline.</p>
+<p>It is interesting to note that <code>kedro</code> takes a similar approach to <code>Python</code>, it uses <code>reference counting</code> to control the dataset life cycle. If you are interested, I have another post to dive into <a href="https://noklam.github.io/blog/python-internal/2021/05/29/Python-Internal-Series-Python-GIL-And-Memory.html">Python Memory Management</a>.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="highlight"><pre><span></span><span class="c1"># decrement load counts and release any data sets we've finished with</span>
+            <span class="k">for</span> <span class="n">data_set</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">inputs</span><span class="p">:</span>
+                <span class="n">load_counts</span><span class="p">[</span><span class="n">data_set</span><span class="p">]</span> <span class="o">-=</span> <span class="mi">1</span>
+                <span class="k">if</span> <span class="n">load_counts</span><span class="p">[</span><span class="n">data_set</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">data_set</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">inputs</span><span class="p">():</span>
+                    <span class="n">catalog</span><span class="o">.</span><span class="n">release</span><span class="p">(</span><span class="n">data_set</span><span class="p">)</span>
+            <span class="k">for</span> <span class="n">data_set</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">outputs</span><span class="p">:</span>
+                <span class="k">if</span> <span class="n">load_counts</span><span class="p">[</span><span class="n">data_set</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">data_set</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">outputs</span><span class="p">():</span>
+                    <span class="n">catalog</span><span class="o">.</span><span class="n">release</span><span class="p">(</span><span class="n">data_set</span><span class="p">)</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="CacheDataSet">
+<a class="anchor" href="#CacheDataSet" aria-hidden="true"><span class="octicon octicon-link"></span></a>CacheDataSet<a class="anchor-link" href="#CacheDataSet"> </a>
+</h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>What does <code>release</code> do? It will remove the underlying data if this data is stored in memory.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="highlight"><pre><span></span><span class="c1"># In CSVDataSet</span>
+<span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">github</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">quantumblacklabs</span><span class="o">/</span><span class="n">kedro</span><span class="o">/</span><span class="n">blob</span><span class="o">/</span><span class="n">master</span><span class="o">/</span><span class="n">kedro</span><span class="o">/</span><span class="n">extras</span><span class="o">/</span><span class="n">datasets</span><span class="o">/</span><span class="n">pandas</span><span class="o">/</span><span class="n">csv_dataset</span><span class="o">.</span><span class="n">py</span><span class="c1">#L176-L178</span>
+<span class="err">```</span><span class="n">python</span>
+<span class="k">def</span> <span class="nf">_release</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="n">_release</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_invalidate_cache</span><span class="p">()</span>
+</pre></div>
+<div class="highlight"><pre><span></span><span class="c1"># In CacheDataSet</span>
+<span class="k">def</span> <span class="nf">_release</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_cache</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_dataset</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+</pre></div>
+<div class="highlight"><pre><span></span><span class="c1"># In MemoryDataSet</span>
+<span class="k">def</span> <span class="nf">_release</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">_data</span> <span class="o">=</span> <span class="n">_EMPTY</span>
+</pre></div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>First, we can test if it works as expected.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">d</span> <span class="o">=</span> <span class="n">CachedDataSet</span><span class="p">(</span><span class="n">CSVDataSet</span><span class="p">(</span><span class="s1">'data/01_raw/iris.csv'</span><span class="p">))</span>
+<span class="n">d</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+<span class="n">d</span><span class="o">.</span><span class="n">_cache</span><span class="o">.</span><span class="n">_data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>sepal_length</th>
+      <th>sepal_width</th>
+      <th>petal_length</th>
+      <th>petal_width</th>
+      <th>species</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>5.1</td>
+      <td>3.5</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>setosa</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>4.9</td>
+      <td>3.0</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>setosa</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>4.7</td>
+      <td>3.2</td>
+      <td>1.3</td>
+      <td>0.2</td>
+      <td>setosa</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>4.6</td>
+      <td>3.1</td>
+      <td>1.5</td>
+      <td>0.2</td>
+      <td>setosa</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>5.0</td>
+      <td>3.6</td>
+      <td>1.4</td>
+      <td>0.2</td>
+      <td>setosa</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">d</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>c:\programdata\miniconda3\lib\site-packages\ipykernel\ipkernel.py:283: DeprecationWarning: `should_run_async` will not call `transform_cell` automatically in the future. Please pass the result to `transformed_cell` argument and any exception that happen during thetransform in `preprocessing_exc_tuple` in IPython 7.17 and above.
+  and should_run_async(code)
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>True</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">d</span><span class="o">.</span><span class="n">release</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">d</span><span class="o">.</span><span class="n">_cache</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>False</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>This is the expected behavior, where the cache should be released. However, it seems not to be the case when I run the pipeline.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">data_catalog</span> <span class="o">=</span> <span class="n">DataCatalog</span><span class="p">({</span><span class="s2">"iris"</span><span class="p">:</span> <span class="n">CachedDataSet</span><span class="p">(</span><span class="n">CSVDataSet</span><span class="p">(</span><span class="s1">'data/01_raw/iris.csv'</span><span class="p">))})</span>
+<span class="n">runner</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">pipeline</span><span class="p">,</span> <span class="n">data_catalog</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Loading the Iris Dataset
+Finish node A([iris]) -&gt; [A]
+     sepal_length  sepal_width  petal_length  petal_width    species
+0             5.1          3.5           1.4          0.2     setosa
+1             4.9          3.0           1.4          0.2     setosa
+2             4.7          3.2           1.3          0.2     setosa
+3             4.6          3.1           1.5          0.2     setosa
+4             5.0          3.6           1.4          0.2     setosa
+..            ...          ...           ...          ...        ...
+145           6.7          3.0           5.2          2.3  virginica
+146           6.3          2.5           5.0          1.9  virginica
+147           6.5          3.0           5.2          2.0  virginica
+148           6.2          3.4           5.4          2.3  virginica
+149           5.9          3.0           5.1          1.8  virginica
+
+[150 rows x 5 columns]
+"Print Catalog {'iris': 'In Memory'}"
+*****************************
+Finish node B([A]) -&gt; [B]
+     sepal_length  sepal_width  petal_length  petal_width    species
+0             5.1          3.5           1.4          0.2     setosa
+1             4.9          3.0           1.4          0.2     setosa
+2             4.7          3.2           1.3          0.2     setosa
+3             4.6          3.1           1.5          0.2     setosa
+4             5.0          3.6           1.4          0.2     setosa
+..            ...          ...           ...          ...        ...
+145           6.7          3.0           5.2          2.3  virginica
+146           6.3          2.5           5.0          1.9  virginica
+147           6.5          3.0           5.2          2.0  virginica
+148           6.2          3.4           5.4          2.3  virginica
+149           5.9          3.0           5.1          1.8  virginica
+
+[150 rows x 5 columns]
+"Print Catalog {'iris': 'In Memory', 'A': 'In Memory'}"
+*****************************
+Finish node C([B]) -&gt; [C]
+     sepal_length  sepal_width  petal_length  petal_width    species
+0             5.1          3.5           1.4          0.2     setosa
+1             4.9          3.0           1.4          0.2     setosa
+2             4.7          3.2           1.3          0.2     setosa
+3             4.6          3.1           1.5          0.2     setosa
+4             5.0          3.6           1.4          0.2     setosa
+..            ...          ...           ...          ...        ...
+145           6.7          3.0           5.2          2.3  virginica
+146           6.3          2.5           5.0          1.9  virginica
+147           6.5          3.0           5.2          2.0  virginica
+148           6.2          3.4           5.4          2.3  virginica
+149           5.9          3.0           5.1          1.8  virginica
+
+[150 rows x 5 columns]
+"Print Catalog {'iris': 'In Memory', 'B': 'In Memory'}"
+*****************************
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>{'C': 'Step3'}</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The dataset is persisted throughout the entire pipeline, why? We can monkey patch the <code>SequentialRunner</code> to check why is this happening.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">Counter</span>
+<span class="kn">from</span> <span class="nn">itertools</span> <span class="kn">import</span> <span class="n">chain</span>
+<span class="kn">from</span> <span class="nn">kedro.runner.runner</span> <span class="kn">import</span> <span class="n">AbstractRunner</span><span class="p">,</span> <span class="n">run_node</span>
+
+<span class="k">def</span> <span class="nf">_run</span><span class="p">(</span>
+    <span class="bp">self</span><span class="p">,</span> <span class="n">pipeline</span><span class="p">,</span> <span class="n">catalog</span><span class="p">,</span> <span class="n">run_id</span> <span class="o">=</span> <span class="kc">None</span>
+<span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="sd">"""The method implementing sequential pipeline running.</span>
+
+<span class="sd">    Args:</span>
+<span class="sd">        pipeline: The ``Pipeline`` to run.</span>
+<span class="sd">        catalog: The ``DataCatalog`` from which to fetch data.</span>
+<span class="sd">        run_id: The id of the run.</span>
+
+<span class="sd">    Raises:</span>
+<span class="sd">        Exception: in case of any downstream node failure.</span>
+<span class="sd">    """</span>
+    <span class="n">nodes</span> <span class="o">=</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">nodes</span>
+    <span class="n">done_nodes</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+
+    <span class="n">load_counts</span> <span class="o">=</span> <span class="n">Counter</span><span class="p">(</span><span class="n">chain</span><span class="o">.</span><span class="n">from_iterable</span><span class="p">(</span><span class="n">n</span><span class="o">.</span><span class="n">inputs</span> <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="n">nodes</span><span class="p">))</span>
+
+    <span class="k">for</span> <span class="n">exec_index</span><span class="p">,</span> <span class="n">node</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">nodes</span><span class="p">):</span>
+        <span class="k">try</span><span class="p">:</span>
+            <span class="n">run_node</span><span class="p">(</span><span class="n">node</span><span class="p">,</span> <span class="n">catalog</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">_is_async</span><span class="p">,</span> <span class="n">run_id</span><span class="p">)</span>
+            <span class="n">done_nodes</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">node</span><span class="p">)</span>
+        <span class="k">except</span> <span class="ne">Exception</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">_suggest_resume_scenario</span><span class="p">(</span><span class="n">pipeline</span><span class="p">,</span> <span class="n">done_nodes</span><span class="p">)</span>
+            <span class="k">raise</span>
+            
+        <span class="c1"># print load counts for every node run</span>
+        <span class="n">pprint</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">load_counts</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"pipeline input: "</span><span class="p">,</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">inputs</span><span class="p">())</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"pipeline output: "</span><span class="p">,</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">outputs</span><span class="p">())</span>
+
+        <span class="c1"># decrement load counts and release any data sets we've finished with</span>
+        <span class="k">for</span> <span class="n">data_set</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">inputs</span><span class="p">:</span>
+            <span class="n">load_counts</span><span class="p">[</span><span class="n">data_set</span><span class="p">]</span> <span class="o">-=</span> <span class="mi">1</span>
+            <span class="k">if</span> <span class="n">load_counts</span><span class="p">[</span><span class="n">data_set</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">data_set</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">inputs</span><span class="p">():</span>
+                <span class="n">catalog</span><span class="o">.</span><span class="n">release</span><span class="p">(</span><span class="n">data_set</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">data_set</span> <span class="ow">in</span> <span class="n">node</span><span class="o">.</span><span class="n">outputs</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">load_counts</span><span class="p">[</span><span class="n">data_set</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">1</span> <span class="ow">and</span> <span class="n">data_set</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">pipeline</span><span class="o">.</span><span class="n">outputs</span><span class="p">():</span>
+                <span class="n">catalog</span><span class="o">.</span><span class="n">release</span><span class="p">(</span><span class="n">data_set</span><span class="p">)</span>
+
+        <span class="bp">self</span><span class="o">.</span><span class="n">_logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span>
+            <span class="s2">"Completed </span><span class="si">%d</span><span class="s2"> out of </span><span class="si">%d</span><span class="s2"> tasks"</span><span class="p">,</span> <span class="n">exec_index</span> <span class="o">+</span> <span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">nodes</span><span class="p">)</span>
+        <span class="p">)</span>
+        
+<span class="n">SequentialRunner</span><span class="o">.</span><span class="n">_run</span> <span class="o">=</span> <span class="n">_run</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>c:\programdata\miniconda3\lib\site-packages\ipykernel\ipkernel.py:283: DeprecationWarning: `should_run_async` will not call `transform_cell` automatically in the future. Please pass the result to `transformed_cell` argument and any exception that happen during thetransform in `preprocessing_exc_tuple` in IPython 7.17 and above.
+  and should_run_async(code)
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now we re-run the pipeline. Let's reset the hook to only print related information.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">PrintHook</span><span class="p">:</span>
+    <span class="nd">@hook_impl</span>
+    <span class="k">def</span> <span class="nf">after_node_run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">node</span><span class="p">,</span> <span class="n">catalog</span><span class="p">):</span>
+        <span class="c1"># adding extra behaviour to a single node</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Finish node </span><span class="si">{</span><span class="n">node</span><span class="o">.</span><span class="n">name</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="s2">"*****************************"</span><span class="p">)</span>
+        
+
+<span class="n">hook_manager</span><span class="o">.</span><span class="n">set_blocked</span><span class="p">(</span><span class="n">debug_hook</span><span class="p">);</span> <span class="c1"># I tried hook_manger.unregister(), but it is not working.</span>
+<span class="n">print_hook</span> <span class="o">=</span> <span class="n">hook_manager</span><span class="o">.</span><span class="n">register</span><span class="p">(</span><span class="n">PrintHook</span><span class="p">())</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">runner</span> <span class="o">=</span> <span class="n">SequentialRunner</span><span class="p">()</span>
+
+<span class="c1"># Run the pipeline</span>
+<span class="n">runner</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">pipeline</span><span class="p">,</span> <span class="n">data_catalog</span><span class="p">);</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Loading the Iris Dataset
+Finish node A([iris]) -&gt; [A]
+*****************************
+"Counter({'iris': 1, 'A': 1, 'B': 1})"
+pipeline input:  {'iris'}
+pipeline output:  {'C'}
+Finish node B([A]) -&gt; [B]
+*****************************
+"Counter({'A': 1, 'B': 1, 'iris': 0})"
+pipeline input:  {'iris'}
+pipeline output:  {'C'}
+Finish node C([B]) -&gt; [C]
+*****************************
+"Counter({'B': 1, 'iris': 0, 'A': 0})"
+pipeline input:  {'iris'}
+pipeline output:  {'C'}
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>So the reason why the iris data is kept becasue it is always in <code>pipeline.inputs()</code>, which I think is not what we wanted.</p>
+
+</div>
+</div>
+</div>
+</div>
+
+
+
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="noklam/blog"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/blog/python/kedro/2021/07/02/kedro-datacatalog.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/blog/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/blog/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Explaining ideas one post at a time. Data Science/Machine Learning/Software Engineering</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/noklam" title="noklam"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://www.linkedin.com/in/noklamchan" title="noklamchan"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#linkedin"></use></svg></a></li><li><a rel="me" href="https://twitter.com/mediumnok" title="mediumnok"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
