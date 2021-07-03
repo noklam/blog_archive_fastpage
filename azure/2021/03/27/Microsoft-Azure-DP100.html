@@ -9,15 +9,15 @@
 <meta property="og:title" content="Microsoft Azure - DP100" />
 <meta name="author" content="noklam" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="This note helps you to prepare the Azure Assoicate Data Scientist DP-100 exam. I took DP100 in Mar 2021 and includes some important notes for study. Particularly, syntax types questions are very common. You need to study the lab and make sure you understand and remember some syntax to pass this exam." />
-<meta property="og:description" content="This note helps you to prepare the Azure Assoicate Data Scientist DP-100 exam. I took DP100 in Mar 2021 and includes some important notes for study. Particularly, syntax types questions are very common. You need to study the lab and make sure you understand and remember some syntax to pass this exam." />
+<meta name="description" content="I am taking DP100 this Sat and trying to prepare myself for it." />
+<meta property="og:description" content="I am taking DP100 this Sat and trying to prepare myself for it." />
 <link rel="canonical" href="https://noklam.github.io/blog/azure/2021/03/27/Microsoft-Azure-DP100.html" />
 <meta property="og:url" content="https://noklam.github.io/blog/azure/2021/03/27/Microsoft-Azure-DP100.html" />
 <meta property="og:site_name" content="mediumnok✊" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2021-03-27T00:00:00-05:00" />
 <script type="application/ld+json">
-{"url":"https://noklam.github.io/blog/azure/2021/03/27/Microsoft-Azure-DP100.html","@type":"BlogPosting","headline":"Microsoft Azure - DP100","dateModified":"2021-03-27T00:00:00-05:00","datePublished":"2021-03-27T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://noklam.github.io/blog/azure/2021/03/27/Microsoft-Azure-DP100.html"},"author":{"@type":"Person","name":"noklam"},"description":"This note helps you to prepare the Azure Assoicate Data Scientist DP-100 exam. I took DP100 in Mar 2021 and includes some important notes for study. Particularly, syntax types questions are very common. You need to study the lab and make sure you understand and remember some syntax to pass this exam.","@context":"https://schema.org"}</script>
+{"url":"https://noklam.github.io/blog/azure/2021/03/27/Microsoft-Azure-DP100.html","@type":"BlogPosting","headline":"Microsoft Azure - DP100","dateModified":"2021-03-27T00:00:00-05:00","datePublished":"2021-03-27T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://noklam.github.io/blog/azure/2021/03/27/Microsoft-Azure-DP100.html"},"author":{"@type":"Person","name":"noklam"},"description":"I am taking DP100 this Sat and trying to prepare myself for it.","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://noklam.github.io/blog/feed.xml" title="mediumnok✊" /><!-- the google_analytics_id gets auto inserted from the config file -->
 
@@ -78,7 +78,7 @@ window.onload = wrap_img;
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">Microsoft Azure - DP100</h1><p class="page-description">This note helps you to prepare the Azure Assoicate Data Scientist DP-100 exam. I took DP100 in Mar 2021 and includes some important notes for study. Particularly, syntax types questions are very common. You need to study the lab and make sure you understand and remember some syntax to pass this exam.</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-03-27T00:00:00-05:00" itemprop="datePublished">
+    <h1 class="post-title p-name" itemprop="name headline">Microsoft Azure - DP100</h1><p class="page-description">I am taking DP100 this Sat and trying to prepare myself for it.</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-03-27T00:00:00-05:00" itemprop="datePublished">
         Mar 27, 2021
       </time>• 
           <span itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -86,7 +86,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      4 min read
+      2 min read
     
 </span></p>
 
@@ -125,15 +125,15 @@ window.onload = wrap_img;
 
   <div class="post-content e-content" itemprop="articleBody">
     <ul class="section-nav">
-<li class="toc-entry toc-h1"><a href="#Introduction">Introduction </a></li>
-<li class="toc-entry toc-h1"><a href="#How-to-prepare-for-the-exam">How to prepare for the exam </a>
+<li class="toc-entry toc-h1"><a href="#Passing-Criteria">Passing Criteria </a></li>
+<li class="toc-entry toc-h1"><a href="#Reference">Reference </a>
 <ul>
 <li class="toc-entry toc-h2"><a href="#Official-Suggested-Materials">Official Suggested Materials </a></li>
 </ul>
 </li>
-<li class="toc-entry toc-h1"><a href="#Key-Concepts">Key Concepts </a>
+<li class="toc-entry toc-h1"><a href="#Key-Concepts">Key Concepts </a></li>
+<li class="toc-entry toc-h1"><a href="#Compute-Target">Compute Target </a>
 <ul>
-<li class="toc-entry toc-h2"><a href="#Compute-Target">Compute Target </a></li>
 <li class="toc-entry toc-h2"><a href="#DataStore">DataStore </a></li>
 </ul>
 </li>
@@ -148,43 +148,21 @@ window.onload = wrap_img;
 
 <div class="container" id="notebook-container">
         
-<div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Last Updated: 2021-04-22</p>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
 
 </div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<blockquote>
-<p>Warning - On Azure website, it states that exam outline will be updated on May 20, 2021. Make sure you check out what's changed.</p>
-</blockquote>
+    
 
-</div>
-</div>
-</div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Introduction">
-<a class="anchor" href="#Introduction" aria-hidden="true"><span class="octicon octicon-link"></span></a>Introduction<a class="anchor-link" href="#Introduction"> </a>
+<h1 id="Passing-Criteria">
+<a class="anchor" href="#Passing-Criteria" aria-hidden="true"><span class="octicon octicon-link"></span></a>Passing Criteria<a class="anchor-link" href="#Passing-Criteria"> </a>
 </h1>
-<p>There are 49 questions, some questions have more scores. You need to pass with at least 700/1000 points. For my exam, there are around 10-15% questions that are quite hard, but as long as you score the easy one, you should be able to pass the exam.</p>
-<p>There are different type of questions.</p>
-<ul>
-<li>Cases Studies - Usually there are some scenarios provided, and you can not go back to previous questions once you answered. For other questions, you can review anytime you want.</li>
-<li>Matching - You need to pick a few choice and arrange them in order. i.e. How to create an envioronment tht fulfill the requirements provided.</li>
-<li>Multiple Choices<ul>
-<li>Typical MC - It may ask to to select  Azure Machine Learning Service/Azure Machine Learning Studio/Azure Databricks/Azure Kubernetes Service (AKS)</li>
-<li>Syntax type questions (there are quite a few of them)</li>
-<li>Diagram (Azure ML Designer)</li>
-</ul>
-</li>
-</ul>
-<p>I struggled with the first few questions and scratching my head for a while. Don't panic if you just can't remember the answer, take a guess, marked it as <code>review question</code> (You can do this with the UI). At the end, I scored 809/1000.</p>
+<p>There are 49 questions, some of the questions have multiple answers, and has its own score. You need to pass with at least 700/1000 points. There are around 10-15% questions that is quite hard, but you will be able to pass the exam as long as you get the easy one correct.</p>
+<p>I struggled witht the first few questions but passed the exam with 809/1000. You don't have to be panic as there are many easy questions, don't get scared by the hardcore questions.</p>
 
 </div>
 </div>
@@ -192,17 +170,9 @@ window.onload = wrap_img;
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="How-to-prepare-for-the-exam">
-<a class="anchor" href="#How-to-prepare-for-the-exam" aria-hidden="true"><span class="octicon octicon-link"></span></a>How to prepare for the exam<a class="anchor-link" href="#How-to-prepare-for-the-exam"> </a>
+<h1 id="Reference">
+<a class="anchor" href="#Reference" aria-hidden="true"><span class="octicon octicon-link"></span></a>Reference<a class="anchor-link" href="#Reference"> </a>
 </h1>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>I spent roughly 15 hours to prepare this exam. Half of the time I used on the lab, the other half for reading docs and historical exam questions. Prior to this exam, I have a little bit experience cloud and I work as a Data Scientist, so it gives me some edges for this exam. But you don't need to have a lot background knowledge, most of the data science concepts tested is very general and you can learnt from the labs.</p>
-
 </div>
 </div>
 </div>
@@ -213,11 +183,12 @@ window.onload = wrap_img;
 <a class="anchor" href="#Official-Suggested-Materials" aria-hidden="true"><span class="octicon octicon-link"></span></a>Official Suggested Materials<a class="anchor-link" href="#Official-Suggested-Materials"> </a>
 </h2>
 <ul>
-<li>❗ <a href="https://docs.microsoft.com/en-us/learn/paths/build-ai-solutions-with-azure-ml-service/">https://docs.microsoft.com/en-us/learn/paths/build-ai-solutions-with-azure-ml-service/</a> - This should be your main focus, try to finish the labs and read the tutorials. You need to understand the use case of different products and  familiar yourself with the syntax of Azure ML SDK etc.</li>
 <li>
-<a href="https://docs.microsoft.com/en-us/learn/paths/create-no-code-predictive-models-azure-machine-learning/">https://docs.microsoft.com/en-us/learn/paths/create-no-code-predictive-models-azure-machine-learning/</a> - You should at least finish 1 of the lab to get some sense of the UI. It would be included in the exam for sure (2-3 questions maybe)</li>
+<a href="https://docs.microsoft.com/en-us/learn/paths/build-ai-solutions-with-azure-ml-service/">https://docs.microsoft.com/en-us/learn/paths/build-ai-solutions-with-azure-ml-service/</a> - This should be your focus, try to do the labs and go through the tutorials. You need to understand the use case of different products and should be familiar with the code.</li>
 <li>
-<a href="https://docs.microsoft.com/en-us/learn/paths/create-machine-learn-models/">https://docs.microsoft.com/en-us/learn/paths/create-machine-learn-models/</a> - I didn't spend much time on it as most of them are baisc data science concepts. You would need to how to apply different types of models (Regression/Classification/Time Series) &amp; AutoML for given scenario.</li>
+<a href="https://docs.microsoft.com/en-us/learn/paths/create-no-code-predictive-models-azure-machine-learning/">https://docs.microsoft.com/en-us/learn/paths/create-no-code-predictive-models-azure-machine-learning/</a> - I suggest you to go through the lab to experience the drag and drop UI. You should read the tutorial too.</li>
+<li>
+<a href="https://docs.microsoft.com/en-us/learn/paths/create-machine-learn-models/">https://docs.microsoft.com/en-us/learn/paths/create-machine-learn-models/</a> - I skim through this tutorial real quick, if you have data science background, you should know these stuff fairly well.</li>
 </ul>
 
 </div>
@@ -229,7 +200,6 @@ window.onload = wrap_img;
 <h1 id="Key-Concepts">
 <a class="anchor" href="#Key-Concepts" aria-hidden="true"><span class="octicon octicon-link"></span></a>Key Concepts<a class="anchor-link" href="#Key-Concepts"> </a>
 </h1>
-<p>I am pretty sure these concepts will come up in every exam set, so be prepared.</p>
 <ul>
 <li>Workspace</li>
 <li>DataStore/Blobstore</li>
@@ -246,15 +216,16 @@ window.onload = wrap_img;
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Compute-Target">
+<h1 id="Compute-Target">
 <a class="anchor" href="#Compute-Target" aria-hidden="true"><span class="octicon octicon-link"></span></a>Compute Target<a class="anchor-link" href="#Compute-Target"> </a>
-</h2>
+</h1>
 <p>Machine Learning Studio - single/multi</p>
 <ul>
 <li>Development/Experiment - Local Machine/Cloud VM.</li>
 <li>Scale up to larger data/distributed - training compute target<ul>
 <li>Azure Machine Learning compute cluster</li>
 <li>Azure Machine Learning compute instance</li>
+<li>
 </ul>
 </li>
 <li>Deploy Compute Target (You need to able to judge the most appropiate option based on the context.)<ul>
@@ -291,10 +262,9 @@ window.onload = wrap_img;
 <h1 id="Syntax-Type-Questions">
 <a class="anchor" href="#Syntax-Type-Questions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Syntax Type Questions<a class="anchor-link" href="#Syntax-Type-Questions"> </a>
 </h1>
-<p>For me, this are the <em>hard</em> questions. There are at least 10 questions that requires you to remember some syntax. If you did not prepared for this, you will find all options seems to be correct. These are the questions that I encountered in my exam.</p>
-<p>Come back to here to check your knowledge after you finish the labs.</p>
+<p>There are at least 10 questions that requires you to remember some syntax. These are the questiosn that I remembered.</p>
 <ul>
-<li>Run vs mlflow (How to log a metric? What is the syntax with or without mlflow?)<ul>
+<li>Run vs mlflow (how to log a metric?)<ul>
 <li><code>run = Run.get_context()</code></li>
 <li><a href="https://github.com/MicrosoftLearning/DP100/blob/master/03A%20-%20Running%20Experiments.ipynb">mflow</a></li>
 </ul>
@@ -302,25 +272,13 @@ window.onload = wrap_img;
 <li>Workspace/Config (how to create a workspace? How to get a reference of a specific workspace? What are the required arguments?) <a href="https://docs.microsoft.com/en-us/learn/modules/intro-to-azure-machine-learning-service/3-azure-ml-tools?ns-enrollment-type=LearningPath&amp;ns-enrollment-id=learn.data-ai.build-ai-solutions-with-azure-ml-service">link</a>
 </li>
 <li>Training a model and register a model/deploy </li>
-<li>AutoML - Think about what you would do if you are using AutoML.<ul>
-<li>How to retrieve the best iteration model provided the experiment name or Run ID? </li>
-<li>What are the Early Stopping choices you can use? <a href="https://docs.microsoft.com/en-us/learn/modules/tune-hyperparameters-with-azure-machine-learning/4-early-termination?ns-enrollment-type=LearningPath&amp;ns-enrollment-id=learn.data-ai.build-ai-solutions-with-azure-ml-service">link</a>
+<li>AutoML - How to get the best iteration model provided the experiment name or Run ID? What are the available Early Stopping choices?<a href="https://docs.microsoft.com/en-us/learn/modules/tune-hyperparameters-with-azure-machine-learning/4-early-termination?ns-enrollment-type=LearningPath&amp;ns-enrollment-id=learn.data-ai.build-ai-solutions-with-azure-ml-service">link</a>
 </li>
-</ul>
+<li>Pipelines - I got quite a few questions related to this topic, so you need to make sure you know the syntax. (i.e. How to create/publish/schedule a pipeline, what are the syntax? Do you publish a pipeline or schedule the pipeline first? How to retrieve a pipeline?)<a href="https://docs.microsoft.com/en-us/learn/modules/create-pipelines-in-aml/7-scheduling-pipelines?ns-enrollment-type=LearningPath&amp;ns-enrollment-id=learn.data-ai.build-ai-solutions-with-azure-ml-service">link</a>, <a href="https://docs.microsoft.com/en-us/learn/modules/create-pipelines-in-aml/5-publishing-pipelines?ns-enrollment-type=LearningPath&amp;ns-enrollment-id=learn.data-ai.build-ai-solutions-with-azure-ml-service">link</a>
 </li>
-<li>Pipelines - I didn't prepare well for this part, there are a few questions related to this topic. Again, familiar yourself with the syntax.<ul>
-<li>How to create/publish/schedule a pipeline, what are the syntax? </li>
-<li>Do you publish a pipeline or schedule the pipeline first?  <a href="https://docs.microsoft.com/en-us/learn/modules/create-pipelines-in-aml/5-publishing-pipelines?ns-enrollment-type=LearningPath&amp;ns-enrollment-id=learn.data-ai.build-ai-solutions-with-azure-ml-service">link</a>
+<li>How to troubleshoot a service? Where are the log? <a href="https://docs.microsoft.com/en-us/learn/modules/register-and-deploy-model-with-amls/4-troubleshoot-deployment?ns-enrollment-type=LearningPath&amp;ns-enrollment-id=learn.data-ai.build-ai-solutions-with-azure-ml-service">link</a>
 </li>
-<li>How to retrieve a publihsed pipeline? <a href="https://docs.microsoft.com/en-us/learn/modules/create-pipelines-in-aml/7-scheduling-pipelines?ns-enrollment-type=LearningPath&amp;ns-enrollment-id=learn.data-ai.build-ai-solutions-with-azure-ml-service">link</a>
-</li>
-</ul>
-</li>
-<li>How to troubleshoot a service? Where can you find the log? <a href="https://docs.microsoft.com/en-us/learn/modules/register-and-deploy-model-with-amls/4-troubleshoot-deployment?ns-enrollment-type=LearningPath&amp;ns-enrollment-id=learn.data-ai.build-ai-solutions-with-azure-ml-service">link</a>
-</li>
-<li>Explainer (What are the different use cases for different explainer? What are their limitation?) <a href="https://docs.microsoft.com/en-us/learn/modules/explain-machine-learning-models-with-azure-machine-learning/2-feature-importance?ns-enrollment-type=LearningPath&amp;ns-enrollment-id=learn.data-ai.build-ai-solutions-with-azure-ml-service">link</a><ul>
-<li>How many Explainers are avaiable? (ans: 3!)</li>
-</ul>
+<li>Explainer (What are the different use cases for different explainer? What are their limitation?)<a href="https://docs.microsoft.com/en-us/learn/modules/explain-machine-learning-models-with-azure-machine-learning/2-feature-importance?ns-enrollment-type=LearningPath&amp;ns-enrollment-id=learn.data-ai.build-ai-solutions-with-azure-ml-service">link</a>
 </li>
 </ul>
 
@@ -333,22 +291,13 @@ window.onload = wrap_img;
 <h1 id="Example-Questiions">
 <a class="anchor" href="#Example-Questiions" aria-hidden="true"><span class="octicon octicon-link"></span></a>Example Questiions<a class="anchor-link" href="#Example-Questiions"> </a>
 </h1>
-<p>You can also leverage the exam simulator, the free demo version will give you access to 19 questions, if you are willing to pay, you can access all 120 questions. Out of the 19 questions, there are around 4~5 similar questions appear in my DP-100 exam. If your goal is to pass this exam</p>
+<p>You can also leverage the exam simulator, the free demo version allows you to view 19 questions, if you are willing to pay, you can access all 120 questions. Out of the 19 questiosn, there are around 4~5 similar questions appear in my DP-100 exam.</p>
 <ul>
-<li><a href="https://www.examtopics.com/exams/microsoft/dp-100/view/">Website for DP-100, they are updated frequently</a></li>
 <li>
-<a href="https://www.exam-labs.com/dumps/DP-100">Questions</a> - Look for the "Free VCE Files"</li>
+<a href="https://www.exam-labs.com/dumps/DP-100?utm_source=adwords&amp;utm_medium=search&amp;utm_campaign=exams_microsoft&amp;">Questions</a>gclid=Cj0KCQjwjPaCBhDkARIsAISZN7Q33Ze6kigbUXnc4LTabA_gpqAsVGYCwaRg82vi-WeHcGHXfd1YDSkaAgPqEALw_wcB#</li>
 <li>
 <a href="https://www.avanset.com/demo.html%20(software%20to%20open%20.vce%20file">Example Simulator</a>)</li>
 </ul>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Finanlly, good luck to your exam. Try compare and contrast the workflow when you are doing the tutorials. Overall, Azure is well aware with the MLOps trend, the platform makes it quite easy to handle machine learning pipeline and deploy a model. Once you can related it to your daily work, you would find most of the steps are reasonable and easier to remember.</p>
 
 </div>
 </div>

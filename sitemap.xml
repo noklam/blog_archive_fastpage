@@ -49,7 +49,7 @@
 <lastmod>2020-11-10T00:00:00-06:00</lastmod>
 </url>
 <url>
-<loc>https://noklam.github.io/blog/r/2020/11/14/Hong-Kong-Elevation-Map-with-rayshader.html</loc>
+<loc>https://noklam.github.io/blog/r/rayshader/2020/11/14/Hong-Kong-Elevation-Map-with-rayshader.html</loc>
 <lastmod>2020-11-14T00:00:00-06:00</lastmod>
 </url>
 <url>
@@ -69,11 +69,15 @@
 <lastmod>2021-02-06T00:00:00-06:00</lastmod>
 </url>
 <url>
+<loc>https://noklam.github.io/blog/python/web/wsgi/2021/03/02/python-web-server-wsgi.html</loc>
+<lastmod>2021-03-02T00:00:00-06:00</lastmod>
+</url>
+<url>
 <loc>https://noklam.github.io/blog/pyodbc/impala/2021/03/05/pyodbc-linux.html</loc>
 <lastmod>2021-03-05T00:00:00-06:00</lastmod>
 </url>
 <url>
-<loc>https://noklam.github.io/blog/python/2021/03/17/Pytest-truncated-long-assertion-error.html</loc>
+<loc>https://noklam.github.io/blog/python/pytest/great_expectations/2021/03/17/Pytest-truncated-long-assertion-error.html</loc>
 <lastmod>2021-03-17T00:00:00-05:00</lastmod>
 </url>
 <url>
@@ -82,6 +86,10 @@
 </url>
 <url>
 <loc>https://noklam.github.io/blog/fsdl/2021/03/21/full-stack-deep-learning-lecture-01.html</loc>
+<lastmod>2021-03-21T00:00:00-05:00</lastmod>
+</url>
+<url>
+<loc>https://noklam.github.io/blog/fsdl/2021/03/21/template.html</loc>
 <lastmod>2021-03-21T00:00:00-05:00</lastmod>
 </url>
 <url>
@@ -94,6 +102,10 @@
 </url>
 <url>
 <loc>https://noklam.github.io/blog/fsdl/2021/03/29/full-stack-deep-learning-lecture-02-CNN.html</loc>
+<lastmod>2021-03-29T00:00:00-05:00</lastmod>
+</url>
+<url>
+<loc>https://noklam.github.io/blog/fsdl/2021/03/29/full-stack-deep-learning-lecture-02.html</loc>
 <lastmod>2021-03-29T00:00:00-05:00</lastmod>
 </url>
 <url>
