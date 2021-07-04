@@ -8,15 +8,15 @@
 <meta name="generator" content="Jekyll v4.1.1" />
 <meta property="og:title" content="Recreating the BBC style graphic in Python - plotnine and altair" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="BBC R graphics cookbook? This is an attempt to reproduce https://bbc.github.io/rcookbook/ in python" />
-<meta property="og:description" content="BBC R graphics cookbook? This is an attempt to reproduce https://bbc.github.io/rcookbook/ in python" />
+<meta name="description" content="Do you know that you can have ggplot in BBC R graphics cookbook? This is an attempt to reproduce https://bbc.github.io/rcookbook/ in python" />
+<meta property="og:description" content="Do you know that you can have ggplot in BBC R graphics cookbook? This is an attempt to reproduce https://bbc.github.io/rcookbook/ in python" />
 <link rel="canonical" href="https://noklam.github.io/blog/python/2020/04/13/Recreating-the-BBC-graphs-in-Python-plotnine-altair.html" />
 <meta property="og:url" content="https://noklam.github.io/blog/python/2020/04/13/Recreating-the-BBC-graphs-in-Python-plotnine-altair.html" />
 <meta property="og:site_name" content="mediumnok✊" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2020-04-13T00:00:00-05:00" />
 <script type="application/ld+json">
-{"url":"https://noklam.github.io/blog/python/2020/04/13/Recreating-the-BBC-graphs-in-Python-plotnine-altair.html","@type":"BlogPosting","headline":"Recreating the BBC style graphic in Python - plotnine and altair","dateModified":"2020-04-13T00:00:00-05:00","datePublished":"2020-04-13T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://noklam.github.io/blog/python/2020/04/13/Recreating-the-BBC-graphs-in-Python-plotnine-altair.html"},"description":"BBC R graphics cookbook? This is an attempt to reproduce https://bbc.github.io/rcookbook/ in python","@context":"https://schema.org"}</script>
+{"url":"https://noklam.github.io/blog/python/2020/04/13/Recreating-the-BBC-graphs-in-Python-plotnine-altair.html","@type":"BlogPosting","headline":"Recreating the BBC style graphic in Python - plotnine and altair","dateModified":"2020-04-13T00:00:00-05:00","datePublished":"2020-04-13T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://noklam.github.io/blog/python/2020/04/13/Recreating-the-BBC-graphs-in-Python-plotnine-altair.html"},"description":"Do you know that you can have ggplot in BBC R graphics cookbook? This is an attempt to reproduce https://bbc.github.io/rcookbook/ in python","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://noklam.github.io/blog/feed.xml" title="mediumnok✊" /><!-- the google_analytics_id gets auto inserted from the config file -->
 
@@ -69,7 +69,7 @@ window.onload = wrap_img;
           </span>
         </label>
 
-        <div class="trigger"><a class="page-link" href="/blog/about/">About Me</a><a class="page-link" href="/blog/fsdl/">Full Stack Deep Learning</a><a class="page-link" href="/blog/search/">Search</a><a class="page-link" href="/blog/categories/">Tags</a></div>
+        <div class="trigger"><a class="page-link" href="/blog/about/">About Me</a><a class="page-link" href="/blog/search/">Search</a><a class="page-link" href="/blog/categories/">Tags</a></div>
       </nav></div>
 </header>
 <main class="page-content" aria-label="Content">
@@ -77,7 +77,7 @@ window.onload = wrap_img;
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">Recreating the BBC style graphic in Python - `plotnine` and `altair`</h1><p class="page-description">BBC R graphics cookbook? This is an attempt to reproduce https://bbc.github.io/rcookbook/ in python</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-04-13T00:00:00-05:00" itemprop="datePublished">
+    <h1 class="post-title p-name" itemprop="name headline">Recreating the BBC style graphic in Python - `plotnine` and `altair`</h1><p class="page-description">Do you know that you can have `ggplot` in BBC R graphics cookbook? This is an attempt to reproduce https://bbc.github.io/rcookbook/ in python</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2020-04-13T00:00:00-05:00" itemprop="datePublished">
         Apr 13, 2020
       </time>
        • <span class="read-time" title="Estimated read time">
@@ -90,7 +90,7 @@ window.onload = wrap_img;
     
       <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
       
-        <a class="category-tags-link" href="blog/categories/#python">python</a>
+        <a class="category-tags-link" href="/blog/categories/#python">python</a>
         
       
       </p>
@@ -219,13 +219,6 @@ window.onload = wrap_img;
 
 <div class="container" id="notebook-container">
         
-    
-    
-<div class="cell border-box-sizing code_cell rendered">
-
-</div>
-    
-
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -278,8 +271,7 @@ window.onload = wrap_img;
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># collapse-hide</span>
-<span class="c1"># !pip install plotnine[all]</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># !pip install plotnine[all]</span>
 <span class="c1"># !pip install altair</span>
 <span class="c1"># !pip install gapminder</span>
 
@@ -548,8 +540,7 @@ pandas version: 1.0.3
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## altair</span>
-<span class="n">line</span> <span class="o">=</span> <span class="p">(</span><span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">line_df</span><span class="p">)</span><span class="o">.</span><span class="n">mark_line</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">line</span> <span class="o">=</span> <span class="p">(</span><span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">line_df</span><span class="p">)</span><span class="o">.</span><span class="n">mark_line</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
 <span class="n">x</span><span class="o">=</span><span class="s1">'year'</span><span class="p">,</span>
 <span class="n">y</span><span class="o">=</span><span class="s1">'lifeExp'</span><span class="p">)</span>
 <span class="o">.</span><span class="n">properties</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="p">{</span><span class="s1">'text'</span><span class="p">:</span> <span class="s1">'Living Longer'</span><span class="p">,</span>
@@ -815,8 +806,7 @@ pandas version: 1.0.3
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## altair</span>
-<span class="n">line</span> <span class="o">=</span> <span class="p">(</span><span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">line_df</span><span class="p">)</span><span class="o">.</span><span class="n">mark_line</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">line</span> <span class="o">=</span> <span class="p">(</span><span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">line_df</span><span class="p">)</span><span class="o">.</span><span class="n">mark_line</span><span class="p">()</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span>
 <span class="n">x</span><span class="o">=</span><span class="s1">'year'</span><span class="p">,</span>
 <span class="n">y</span><span class="o">=</span><span class="s1">'lifeExp'</span><span class="p">)</span>
 <span class="o">.</span><span class="n">properties</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="p">{</span><span class="s1">'text'</span><span class="p">:</span> <span class="s1">'Living Longer'</span><span class="p">,</span>
@@ -949,8 +939,7 @@ pandas version: 1.0.3
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Make plot</span>
-<span class="n">multiline</span> <span class="o">=</span> <span class="p">(</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">multiline</span> <span class="o">=</span> <span class="p">(</span>
     <span class="n">ggplot</span><span class="p">(</span><span class="n">multiline_df</span><span class="p">,</span> <span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">'year'</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">'lifeExp'</span><span class="p">,</span> <span class="n">colour</span><span class="o">=</span><span class="s1">'country'</span><span class="p">))</span> <span class="o">+</span>
     <span class="n">geom_line</span><span class="p">(</span><span class="n">colour</span><span class="o">=</span><span class="s2">"#1380A1"</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span>
     <span class="n">geom_hline</span><span class="p">(</span><span class="n">yintercept</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"#333333"</span><span class="p">)</span> <span class="o">+</span>
@@ -1147,8 +1136,7 @@ findfont: Font family ['Helvetica'] not found. Falling back to DejaVu Sans.
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## hide</span>
-<span class="n">bar_df</span> <span class="o">=</span> <span class="n">gapminder</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">' year == 2007 &amp; continent == "Africa" '</span><span class="p">)</span><span class="o">.</span><span class="n">nlargest</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="s1">'lifeExp'</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">bar_df</span> <span class="o">=</span> <span class="n">gapminder</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">' year == 2007 &amp; continent == "Africa" '</span><span class="p">)</span><span class="o">.</span><span class="n">nlargest</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="s1">'lifeExp'</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -1343,8 +1331,7 @@ findfont: Font family ['Helvetica'] not found. Falling back to DejaVu Sans.
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## collapse-hide</span>
-<span class="n">stacked_bar_df</span> <span class="o">=</span> <span class="p">(</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">stacked_bar_df</span> <span class="o">=</span> <span class="p">(</span>
     <span class="n">gapminder</span><span class="o">.</span><span class="n">query</span><span class="p">(</span><span class="s1">' year == 2007'</span><span class="p">)</span>
     <span class="o">.</span><span class="n">assign</span><span class="p">(</span>
         <span class="n">lifeExpGrouped</span><span class="o">=</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">cut</span><span class="p">(</span>
@@ -1501,8 +1488,7 @@ findfont: Font family ['Helvetica'] not found. Falling back to DejaVu Sans.
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># create plot</span>
-<span class="n">stacked_bar_ggplot</span> <span class="o">=</span> <span class="p">(</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">stacked_bar_ggplot</span> <span class="o">=</span> <span class="p">(</span>
     <span class="n">ggplot</span><span class="p">(</span><span class="n">stacked_bar_df</span><span class="p">,</span>
            <span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">'continent'</span><span class="p">,</span>
                <span class="n">y</span><span class="o">=</span><span class="s1">'continentPop'</span><span class="p">,</span>
@@ -1573,8 +1559,7 @@ C:\Users\CHANNO.OOCLDM\AppData\Local\Continuum\anaconda3\lib\site-packages\plotn
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># create plot</span>
-<span class="n">stacked_bar_ggplot</span> <span class="o">=</span> <span class="p">(</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">stacked_bar_ggplot</span> <span class="o">=</span> <span class="p">(</span>
     <span class="n">ggplot</span><span class="p">(</span><span class="n">stacked_bar_df</span><span class="p">,</span>
            <span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">'continent'</span><span class="p">,</span>
                <span class="n">y</span><span class="o">=</span><span class="s1">'continentPop'</span><span class="p">,</span>
@@ -1805,8 +1790,7 @@ C:\Users\CHANNO.OOCLDM\AppData\Local\Continuum\anaconda3\lib\site-packages\plotn
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Make plot</span>
-<span class="n">grouped_bars_ggplot</span> <span class="o">=</span> <span class="p">(</span><span class="n">ggplot</span><span class="p">(</span><span class="n">grouped_bar_df</span><span class="p">,</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">grouped_bars_ggplot</span> <span class="o">=</span> <span class="p">(</span><span class="n">ggplot</span><span class="p">(</span><span class="n">grouped_bar_df</span><span class="p">,</span>
                        <span class="n">aes</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">'country'</span><span class="p">,</span>
                            <span class="n">y</span><span class="o">=</span><span class="s1">'lifeExp'</span><span class="p">,</span>
                            <span class="n">fill</span><span class="o">=</span><span class="s1">'year'</span><span class="p">))</span> <span class="o">+</span>
@@ -1971,7 +1955,7 @@ C:\Users\CHANNO.OOCLDM\AppData\Local\Continuum\anaconda3\lib\site-packages\plotn
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## hide</span>
+<div class=" highlight hl-ipython3"><pre><span></span> 
 </pre></div>
 
     </div>
@@ -1997,8 +1981,7 @@ C:\Users\CHANNO.OOCLDM\AppData\Local\Continuum\anaconda3\lib\site-packages\plotn
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Remove the Legend</span>
-<span class="n">multiline</span> <span class="o">+</span> <span class="n">guides</span><span class="p">(</span><span class="n">colour</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">multiline</span> <span class="o">+</span> <span class="n">guides</span><span class="p">(</span><span class="n">colour</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -2120,8 +2103,7 @@ C:\Users\CHANNO.OOCLDM\AppData\Local\Continuum\anaconda3\lib\site-packages\plotn
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1"># Change position of the legend</span>
-<span class="n">x</span><span class="o">=</span><span class="n">multiline</span> <span class="o">+</span> <span class="n">theme</span><span class="p">(</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">x</span><span class="o">=</span><span class="n">multiline</span> <span class="o">+</span> <span class="n">theme</span><span class="p">(</span>
   <span class="n">axis_ticks_major_x</span> <span class="o">=</span> <span class="n">element_line</span><span class="p">(</span><span class="n">color</span> <span class="o">=</span> <span class="s2">"#333333"</span><span class="p">),</span> 
   <span class="n">axis_ticks_length</span> <span class="o">=</span>  <span class="mf">0.26</span><span class="p">)</span>
 
@@ -2186,7 +2168,7 @@ C:\Users\CHANNO.OOCLDM\AppData\Local\Continuum\anaconda3\lib\site-packages\plotn
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## hide</span>
+<div class=" highlight hl-ipython3"><pre><span></span> 
 </pre></div>
 
     </div>
@@ -2242,7 +2224,7 @@ C:\Users\CHANNO.OOCLDM\AppData\Local\Continuum\anaconda3\lib\site-packages\plotn
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## hide</span>
+<div class=" highlight hl-ipython3"><pre><span></span> 
 </pre></div>
 
     </div>
@@ -2298,7 +2280,7 @@ C:\Users\CHANNO.OOCLDM\AppData\Local\Continuum\anaconda3\lib\site-packages\plotn
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## hide</span>
+<div class=" highlight hl-ipython3"><pre><span></span> 
 </pre></div>
 
     </div>
@@ -2354,7 +2336,7 @@ C:\Users\CHANNO.OOCLDM\AppData\Local\Continuum\anaconda3\lib\site-packages\plotn
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">## hide</span>
+<div class=" highlight hl-ipython3"><pre><span></span> 
 </pre></div>
 
     </div>

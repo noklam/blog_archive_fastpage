@@ -70,7 +70,7 @@ window.onload = wrap_img;
           </span>
         </label>
 
-        <div class="trigger"><a class="page-link" href="/blog/about/">About Me</a><a class="page-link" href="/blog/fsdl/">Full Stack Deep Learning</a><a class="page-link" href="/blog/search/">Search</a><a class="page-link" href="/blog/categories/">Tags</a></div>
+        <div class="trigger"><a class="page-link" href="/blog/about/">About Me</a><a class="page-link" href="/blog/search/">Search</a><a class="page-link" href="/blog/categories/">Tags</a></div>
       </nav></div>
 </header>
 <main class="page-content" aria-label="Content">
@@ -93,7 +93,7 @@ window.onload = wrap_img;
     
       <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
       
-        <a class="category-tags-link" href="blog/categories/#fsdl">fsdl</a>
+        <a class="category-tags-link" href="/blog/categories/#fsdl">fsdl</a>
         
       
       </p>
@@ -158,12 +158,12 @@ window.onload = wrap_img;
 </tr>
 </tbody>
 </table>
-<p><img src="blog/images/copied_from_nb/images/lstm_forget.png" alt="forget">
+<p><img src="/blog/images/copied_from_nb/images/lstm_forget.png" alt="forget">
 Forget Gate - Control the magnitude of cell state should be kept. Sigmoid range from (0 to 1). If 0, it means we should throw away the state cell, if 1 we keep everything.
-<img src="blog/images/copied_from_nb/images/lstm_input.png" alt="input"></p>
+<img src="/blog/images/copied_from_nb/images/lstm_input.png" alt="input"></p>
 <ul>
 <li>Input Gate - Control what relevant information can be added from the current step. It takes hidden step from last step and the current input into consideration.
-<img src="blog/images/copied_from_nb/images/lstm_output.png" alt="output">
+<img src="/blog/images/copied_from_nb/images/lstm_output.png" alt="output">
 </li>
 <li>Output Gate - finalize the next hidden state</li>
 </ul>
@@ -185,13 +185,13 @@ Forget Gate - Control the magnitude of cell state should be kept. Sigmoid range 
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>It more or less follow the attention mechanism described here.</p>
 <p><a href="https://blog.floydhub.com/attention-mechanism/#luong-att-step6">https://blog.floydhub.com/attention-mechanism/#luong-att-step6</a></p>
-<p><img src="blog/images/copied_from_nb/images/attention_gnmt.png" alt="attention_gnmt"></p>
+<p><img src="/blog/images/copied_from_nb/images/attention_gnmt.png" alt="attention_gnmt"></p>
 <p>1.If you take the dot product of 1 encoder vector (at t_i) and decoder, you get a scalar. (Alignment Score) (1,h) * (h,1)  -&gt; (1,1)</p>
 <ol>
 <li>If encoder have 5 time_step, repeat the above steps -&gt; You get a vector with length of 5 (A vector of Alignment Scores) (5,h) *(h,1) -&gt; (5,1)</li>
 <li>Take softmax of the alignments scores -&gt; (attention weights which sum to 1) (5,1)</li>
 <li>Take dot product of encoders state with attention weights (h, 5) * (5, 1) -&gt; (h, 1), where h stands for dimension of hidden state. The result is a "Context Vector"
-<img src="blog/images/copied_from_nb/images/context_vector.png" alt="context">
+<img src="/blog/images/copied_from_nb/images/context_vector.png" alt="context">
 </li>
 </ol>
 
