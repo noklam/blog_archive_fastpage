@@ -135,7 +135,7 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h2"><a href="#Notebook-as-an-extension-of-IDE">Notebook as an extension of IDE </a></li>
 <li class="toc-entry toc-h2"><a href="#Notebook-as-a-collaboration-tool">Notebook as a collaboration tool </a>
 <ul>
-<li class="toc-entry toc-h3"><a href="#Step-1---Review-PR-on-web">Step 1 - Review PR on web </a></li>
+<li class="toc-entry toc-h3"><a href="#Step-1---Review-PR-online">Step 1 - Review PR online </a></li>
 <li class="toc-entry toc-h3"><a href="#Step-2---Review-Changes">Step 2 - Review Changes </a></li>
 <li class="toc-entry toc-h3"><a href="#Step-3---Resolve-Discussion">Step 3 - Resolve Discussion </a></li>
 </ul>
@@ -257,7 +257,7 @@ select ProductId, Sum(Unit) from Sales group by ProductId;
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>If you have ever written SQL query to extract data from a database, chances are you probably familiar with a UI similar to the screenshot above. The IDE offers features like auto-completion, visualize the query output, display the table schema and the ER diagram. Whenever you need to write query, this is your go-to tool. However, I found that adding <code>Jupyter Notebook</code> into the toolkits can improve my productivity and it complements crucial features that IDE cannot help.</p>
+<p>If you have ever written SQL queries to extract data from a database, chances are you are familiar with an IDE like the screenshot above. The IDE offers features like auto-completion, visualize the query output, display the table schema and the ER diagram. Whenever you need to write a query, this is your go-to tool. However, you may want to add <code>Jupyter Notebook</code> into the toolkits. It improves my productivity by complementing some missing features in IDE.</p>
 
 </div>
 </div>
@@ -274,8 +274,8 @@ select ProductId, Sum(Unit) from Sales group by ProductId;
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>As a data scientist/data analyst, you writes SQL queries for ad-hoc analyses all the time. After getting the right data, you makes nice looking charts and put them in a PowerPoint and you are ready to present your findings. Unlike a well-define ETL job, you are exploring the data and testing your hypoethesis all the time. You make assumptions, which is often wrong but you only realized it after a few weeks. But all you got is a CSV that you cannot recalled how it was generated in the first place.</p>
-<p>Data is not stationary, why should your analysis be? I have seen many screenshots, fragemented scripts flying around in organization. People re-do similar analysis because they cannot reproduce the result after a while, they don't expect the adhoc analysis would become a regular report. It would be really nice to keep your findings, charts, data and code in the same place, so you can extend it or update it afterward.</p>
+<p>As a data scientist/data analyst, you write SQL queries for ad-hoc analyses all the time. After getting the right data, you make nice-looking charts and put them in a PowerPoint and you are ready to present your findings. Unlike a well-defined ETL job, you are exploring the data and testing your hypotheses all the time. You make assumptions, which is often wrong but you only realized it after a few weeks. But all you got is a CSV that you cannot recall how it was generated in the first place.</p>
+<p>Data is not stationary, why should your analysis be? I have seen many screenshots, fragmented scripts flying around in organizations. As a data scientist, I learned that you need to be cautious about what you heard. Don't trust peoples' words easily, verify the result!  To achieve that, we need to know exactly how the data was extracted, what kind of assumptions have been made? Unfortunately, this information usually is not available. As a result, people are redoing the same analysis over and over. You will be surprised that this is very common in organizations. In fact, numbers often do not align because every department has its own definition. It is not shared among the organization, and verbal communication is inaccurate and error-prone. It would be really nice that if I can do one click and get the same result, it adds a lot of credibility to the analysis. Notebook is the perfect tool that keeps your documentation,  data, and code in the same place.</p>
 
 </div>
 </div>
@@ -292,12 +292,12 @@ select ProductId, Sum(Unit) from Sales group by ProductId;
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>When you code in a SQL IDE, you are limited to SQL only. Writing SQL query in notebook give you extra flexiblity, you can write python code to extends your query.</p>
+<p>When you code in a SQL IDE, you are limited to SQL only. Writing SQL queries in a notebook gives you extra flexibility. You can write python code to extends your query.</p>
 <ul>
 <li>Complex logic that is not easy(impossible) to be done in SQL. </li>
 <li>Make informative charts right after your query without exporting CSV.</li>
 </ul>
-<p>For example, you can pipe your <code>SQL</code> query with <code>pandas</code> and then make a plot. It allows you to generate analysis with richer information query. If you find bugs in your code, you can simply modify the code and re-run the analysis. This allows you to extend your data without the need of exporting CSVs. This smoothen the process and make the analysis easier to be reproduced. In contrast, if you choose to export a CSV, it is almost certain that no one will be able to reproduce the data except the author.</p>
+<p>For example, you can pipe your <code>SQL</code> query with <code>pandas</code> and then make a plot. It allows you to generate analysis with richer information queries. If you find bugs in your code, you can modify the code and re-run the analysis. This allows you to extend your data without the need of exporting CSVs. This smoothens the process and makes the analysis easier to be reproduced. In contrast, if your analysis is reading data from an anonymous exported CSV, it is almost guaranteed that the definition of the data will be lost. No one will be able to reproduce the dataset.</p>
 
 </div>
 </div>
@@ -305,7 +305,7 @@ select ProductId, Sum(Unit) from Sales group by ProductId;
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>You can make use of the <code>ipython_sql</code> library to make query in a notebook. To do this, you need to use the <strong>magic</strong> function with the inline magic <code>%</code> or cell magic <code>%%</code>.</p>
+<p>You can make use of the <code>ipython_sql</code> library to make queries in a notebook. To do this, you need to use the <strong>magic</strong> function with the inline magic <code>%</code> or cell magic <code>%%</code>.</p>
 
 </div>
 </div>
@@ -421,7 +421,7 @@ SELECT * from sales LIMIT 3
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>To make it fancier, you can even paramterized your query easily with variable. Tools like <a href="https://www.bing.com/search?q=github+paramter+notebook&amp;cvid=5b17218ec803438fb1ca41212d53d90a&amp;FORM=ANAB01&amp;PC=U531">papermill</a> allows you to parameterized your notebook. If you execute the notebook regularly with a scheduler, you can get a updated dashboard. To reference the python variable, the <code>$</code> sign is used.</p>
+<p>To make it fancier, you can even parameterize your query with variables. Tools like <a href="https://www.bing.com/search?q=github+paramter+notebook&amp;cvid=5b17218ec803438fb1ca41212d53d90a&amp;FORM=ANAB01&amp;PC=U531">papermill</a> allows you to parameterize your notebook. If you execute the notebook regularly with a scheduler, you can get a updated dashboard. To reference the python variable, the <code>$</code> sign is used.</p>
 
 </div>
 </div>
@@ -436,62 +436,10 @@ SELECT * from sales LIMIT 3
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">table</span> <span class="o">=</span> <span class="s2">"sales"</span>
 <span class="n">query</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"SELECT * from </span><span class="si">{</span><span class="n">table</span><span class="si">}</span><span class="s2"> LIMIT 3"</span>
 <span class="n">sales</span> <span class="o">=</span> <span class="o">%</span><span class="k">sql</span> $query
+<span class="n">sales</span>
 </pre></div>
 
     </div>
-</div>
-</div>
-
-</div>
-    
-
-    
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">sales</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-<div class="output_html rendered_html output_subarea output_execute_result">
-<table>
-    <tr>
-        <th>ProductId</th>
-        <th>Unit</th>
-        <th>IsDeleted</th>
-    </tr>
-    <tr>
-        <td>1</td>
-        <td>10</td>
-        <td>1</td>
-    </tr>
-    <tr>
-        <td>1</td>
-        <td>10</td>
-        <td>1</td>
-    </tr>
-    <tr>
-        <td>2</td>
-        <td>10</td>
-        <td>0</td>
-    </tr>
-</table>
-</div>
-
-</div>
-
 </div>
 </div>
 
@@ -501,7 +449,7 @@ SELECT * from sales LIMIT 3
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>With a little bit of python code, you can make some nice plot to show your insight or even make an interactive plot if you want. This is a very power way to extend your analysis.</p>
+<p>With a little bit of python code, you can make a nice plot to summarize your finding. You can even make an interactive plot if you want. This is a very powerful way to extend your analysis.</p>
 
 </div>
 </div>
@@ -551,7 +499,7 @@ SELECT * from sales LIMIT 3
 <a class="anchor" href="#Notebook-as-a-collaboration-tool" aria-hidden="true"><span class="octicon octicon-link"></span></a>Notebook as a collaboration tool<a class="anchor-link" href="#Notebook-as-a-collaboration-tool"> </a>
 </h2>
 <p>Notebook is flexible and it fits extremely well with exploratory data analysis. To share to a non-coder, you can share the notebook or export it as an HTML file. They can read the report or any cached executed result. If they need to verify the data or add some extra plots, they can do it easily themselves.</p>
-<p>However, Notebooks have infamous reputations, it's not friendly to version control, it's hard to collaborate with notebook. Luckily, there are efforts that make collaboration in notebook a lot easier now.</p>
+<p>It is true that Notebooks have infamous reputations. It is not friendly to version control, it's hard to collaborate with notebooks. Luckily, there are efforts that make collaboration in notebook a lot easier now.</p>
 
 </div>
 </div>
@@ -559,7 +507,7 @@ SELECT * from sales LIMIT 3
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Here what I did not show you is that the table has a <code>is_deleted</code> column. Some of the records are invalid and we should exclude them. In reality, this happens frequently when you are dealing with hundreds of tables with a lot of dependencies. Often, these tables are made for application, transaction, they do not really think about analytic. Therefore, the one who consume the data need to be a domain expert about these tables, understand the pitfall. This could be the data analyst, SME or the developer of that particular application. It takes many iterations to get the correct data that can be used to produce useful insight.</p>
+<p>Here what I did not show you is that the table has an <code>isDeleted</code> column. Some of the records are invalid and we should exclude them. In reality, this happens frequently when you are dealing with hundreds of tables that you are not familiar with. These tables are made for applications, transactions, and they do not have analytic in mind. Data Analytic is usually an afterthought. Therefore, you need to consult the SME or the maintainer of that tables. It takes many iterations to get the correct data that can be used to produce useful insight.</p>
 
 </div>
 </div>
@@ -567,7 +515,7 @@ SELECT * from sales LIMIT 3
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>With ReviewNB, you can publish your result and invite some domain expert to review your analysis. This is where notebook shine, this kind of workflow is not possible with just the SQL script or a screenshot of your finding.</p>
+<p>With <a href="https://www.reviewnb.com/">ReviewNB</a>, you can publish your result and invite some domain expert to review your analysis. This is where notebook shine, this kind of workflow is not possible with just the SQL script or a screenshot of your finding. The notebook itself is a useful documentation and collaboration tool.</p>
 
 </div>
 </div>
@@ -575,8 +523,8 @@ SELECT * from sales LIMIT 3
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Step-1---Review-PR-on-web">
-<a class="anchor" href="#Step-1---Review-PR-on-web" aria-hidden="true"><span class="octicon octicon-link"></span></a>Step 1 - Review PR on web<a class="anchor-link" href="#Step-1---Review-PR-on-web"> </a>
+<h3 id="Step-1---Review-PR-online">
+<a class="anchor" href="#Step-1---Review-PR-online" aria-hidden="true"><span class="octicon octicon-link"></span></a>Step 1 - Review PR online<a class="anchor-link" href="#Step-1---Review-PR-online"> </a>
 </h3>
 </div>
 </div>
@@ -584,7 +532,7 @@ SELECT * from sales LIMIT 3
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p><img src="/blog/images/copied_from_nb/images/reviewnb/step_1.png" alt="Step1" title="Start a discussion on a cell block"></p>
+<p><img src="/blog/images/copied_from_nb/images/reviewnb/step_1.png" alt="Step1" title="Start a discussion on a cell block, the analyst suggest to add a filter to slice the correct data"></p>
 
 </div>
 </div>
@@ -592,7 +540,7 @@ SELECT * from sales LIMIT 3
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>With ReviewNB, you can view your notebook and add comments on a particular cell, just like code review. This lower the technical barrier as your analyst do not have to understand Git. You can review changes and make discussion on web without the need to pull code at all. As soon as your analyst make suggestion, you can make changes accordingly.</p>
+<p>You can view your notebook and add comments on a particular cell on <a href="https://www.reviewnb.com/">ReviewNB</a>. This lowers the technical barrier as your analysts do not have to understand Git. He can review changes and make comments on the web without the need to pull code at all. As soon as your analyst makes a suggestion, you can make changes.</p>
 
 </div>
 </div>
@@ -617,7 +565,7 @@ SELECT * from sales LIMIT 3
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Once you have made changes for the notebook, you can review it side by side on ReviewNB. This is very trivial to do it locally without ReviewNB. As Git tracks changes in line level, you can't really read the changes as it consists of a lot of noise. It would also be impossible to view changes about the chart with git.</p>
+<p>Once you have made changes to the notebook, you can review it side by side. This is very trivial to do it in your local machine. Without ReviewNB, you have to pull both notebooks separately. As Git tracks line-level changes, you can't really read the changes as it consists of a lot of confusing noise. It would also be impossible to view changes about the chart with git.</p>
 
 </div>
 </div>
@@ -642,7 +590,7 @@ SELECT * from sales LIMIT 3
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Once the changes are reviewed, you can resolve the discussion and share your insight with the team.</p>
+<p>Once the changes are reviewed, you can resolve the discussion and share your insight with the team. You can publish the notebook to internal sharing platform like <a href="https://github.com/airbnb/knowledge-repo">knowledge-repo</a> to organize the analysis.</p>
 
 </div>
 </div>
@@ -650,7 +598,7 @@ SELECT * from sales LIMIT 3
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>I hope this convince you that it is possible to collaborate with notebook with proper software in place. Regarless if you use notebook or not, you should consider to adopt similar workflow. Make your analysis reproducible today!</p>
+<p>I hope this convince you that Notebook is a good choice for adhoc analytics. It is possible to collaborate with notebook with proper software in place. Regarless if you use notebook or not, you should try your best to document the process. Let's make more reproducible analyses!</p>
 
 </div>
 </div>
