@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>3 Minutes Data Science Design Patterns I- Callback | mediumnok✊</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="3 Minutes Data Science Design Patterns I- Callback" />
+<meta name="author" content="noklam" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="A mini collections of design pattern for Data Science - Starting with callbacks." />
+<meta property="og:description" content="A mini collections of design pattern for Data Science - Starting with callbacks." />
+<link rel="canonical" href="https://noklam.github.io/blog/python/kedro/2021/07/10/3minutes-data-science-design-pattern-callback.html" />
+<meta property="og:url" content="https://noklam.github.io/blog/python/kedro/2021/07/10/3minutes-data-science-design-pattern-callback.html" />
+<meta property="og:site_name" content="mediumnok✊" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-07-10T00:00:00-05:00" />
+<script type="application/ld+json">
+{"url":"https://noklam.github.io/blog/python/kedro/2021/07/10/3minutes-data-science-design-pattern-callback.html","@type":"BlogPosting","headline":"3 Minutes Data Science Design Patterns I- Callback","dateModified":"2021-07-10T00:00:00-05:00","datePublished":"2021-07-10T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://noklam.github.io/blog/python/kedro/2021/07/10/3minutes-data-science-design-pattern-callback.html"},"author":{"@type":"Person","name":"noklam"},"description":"A mini collections of design pattern for Data Science - Starting with callbacks.","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://noklam.github.io/blog/feed.xml" title="mediumnok✊" /><!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-83544344-5','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+<link rel="shortcut icon" type="image/x-icon" href="/blog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/blog/">mediumnok✊</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/blog/about/">About Me</a><a class="page-link" href="/blog/search/">Search</a><a class="page-link" href="/blog/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">3 Minutes Data Science Design Patterns I- Callback</h1><p class="page-description">A mini collections of design pattern for Data Science - Starting with callbacks.</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-07-10T00:00:00-05:00" itemprop="datePublished">
+        Jul 10, 2021
+      </time>• 
+          <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+            <span class="p-author h-card" itemprop="name">noklam</span></span>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      5 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/blog/categories/#python">python</a>
+        &nbsp;
+      
+        <a class="category-tags-link" href="/blog/categories/#kedro">kedro</a>
+        
+      
+      </p>
+    
+
+    
+      
+        <div class="pb-5 d-flex flex-wrap flex-justify-end">
+          <div class="px-2">
+
+    <a href="https://github.com/noklam/blog/tree/master/_notebooks/2021-07-10-3minutes-data-science-design-pattern-callback.ipynb" role="button" target="_blank">
+<img class="notebook-badge-image" src="/blog/assets/badges/github.svg" alt="View On GitHub">
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://mybinder.org/v2/gh/noklam/blog/master?filepath=_notebooks%2F2021-07-10-3minutes-data-science-design-pattern-callback.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/blog/assets/badges/binder.svg" alt="Open In Binder"/>
+    </a>
+</div>
+
+          <div class="px-2">
+    <a href="https://colab.research.google.com/github/noklam/blog/blob/master/_notebooks/2021-07-10-3minutes-data-science-design-pattern-callback.ipynb" target="_blank">
+        <img class="notebook-badge-image" src="/blog/assets/badges/colab.svg" alt="Open In Colab"/>
+    </a>
+</div>
+        </div>
+      </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <ul class="section-nav">
+<li class="toc-entry toc-h2"><a href="#So,-What-is-Callback-afterall?">So, What is Callback afterall? </a></li>
+<li class="toc-entry toc-h2"><a href="#Why-do-I-need-to-use-Callback?">Why do I need to use Callback? </a>
+<ul>
+<li class="toc-entry toc-h3"><a href="#The-simple-approach">The simple approach </a></li>
+<li class="toc-entry toc-h3"><a href="#Callback-approach">Callback approach </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h2"><a href="#Reference">Reference </a></li>
+</ul><!--
+#################################################
+### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
+#################################################
+# file to edit: _notebooks/2021-07-10-3minutes-data-science-design-pattern-callback.ipynb
+-->
+
+<div class="container" id="notebook-container">
+        
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p></p>
+<div class="flash">
+    <svg class="octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm6.5-.25A.75.75 0 017.25 7h1a.75.75 0 01.75.75v2.75h.25a.75.75 0 010 1.5h-2a.75.75 0 010-1.5h.25v-2h-.25a.75.75 0 01-.75-.75zM8 6a1 1 0 100-2 1 1 0 000 2z"></path></svg>
+    <strong>Note: </strong>This series are written as quick introduction to software design for data scientist, something that is lightweight than the Design Pattern Bible - <a href="https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882">Clean Code</a> I wish exists when I first started to learn. Design patterns refers to reusable solution to some common problem, and some happens to be useful for data science. There is good chance that someone else has solved your problem before. When used wisely, it helps to reduce the complexity of your code.
+</div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="So,-What-is-Callback-afterall?">
+<a class="anchor" href="#So,-What-is-Callback-afterall?" aria-hidden="true"><span class="octicon octicon-link"></span></a>So, What is Callback afterall?<a class="anchor-link" href="#So,-What-is-Callback-afterall?"> </a>
+</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><code>Callback</code> function, or call <strong>after</strong>, simply means a function will be <strong>called after</strong> another function. It is a piece of executable code (function) that passed as an <strong>argument</strong> to another function. <a href="https://stackoverflow.com/questions/824234/what-is-a-callback-function">[1]</a></p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">foo</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">'foo!'</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">callback</span><span class="p">:</span>
+        <span class="n">callback</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+    <span class="k">return</span> <span class="kc">None</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">foo</span><span class="p">(</span><span class="s1">'123'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>foo!
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">foo</span><span class="p">(</span><span class="s1">'123'</span><span class="p">,</span> <span class="nb">print</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>foo!
+123
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Here I pass the function <code>print</code> as a callback, hence the string <code>123</code> get printed <strong>after</strong> <code>foo!</code>.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Why-do-I-need-to-use-Callback?">
+<a class="anchor" href="#Why-do-I-need-to-use-Callback?" aria-hidden="true"><span class="octicon octicon-link"></span></a>Why do I need to use Callback?<a class="anchor-link" href="#Why-do-I-need-to-use-Callback?"> </a>
+</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p><strong>Callback</strong> is very common in high level deep learning library, most likely you will find them in the training loop.</p>
+<ul>
+<li>
+<a href="https://docs.fast.ai/callback.core.html">fastai</a> - fastai provide high level API for PyTorch</li>
+<li>
+<a href="https://keras.io/api/callbacks/">Keras</a> - the high level API for Tensorflow</li>
+<li>
+<a href="https://github.com/pytorch/ignite">ignite</a> - they use event &amp; handler, which provides more flexiblity in their opinion</li>
+</ul>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># A boring training Loop</span>
+<span class="k">def</span> <span class="nf">train</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="n">n_epochs</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="n">n_batches</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">loss</span> <span class="o">=</span> <span class="mi">20</span>
+
+    <span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_epochs</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">batch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_batches</span><span class="p">):</span>
+            <span class="n">loss</span> <span class="o">=</span> <span class="n">loss</span> <span class="o">-</span> <span class="mi">1</span> <span class="c1"># Pretend we are training the model</span>
+    <span class="k">return</span> <span class="n">loss</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">train</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>14</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>So, let's say you now want to print the loss at the end of an epoch. You can just add 1 lines of code.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="The-simple-approach">
+<a class="anchor" href="#The-simple-approach" aria-hidden="true"><span class="octicon octicon-link"></span></a>The simple approach<a class="anchor-link" href="#The-simple-approach"> </a>
+</h3>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">train_with_print</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="n">n_epochs</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="n">n_batches</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">loss</span> <span class="o">=</span> <span class="mi">20</span>
+
+    <span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_epochs</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">batch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_batches</span><span class="p">):</span>
+            <span class="n">loss</span> <span class="o">=</span> <span class="n">loss</span> <span class="o">-</span> <span class="mi">1</span> <span class="c1"># Pretend we are training the model</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'End of Epoch. Epoch: </span><span class="si">{</span><span class="n">epoch</span><span class="si">}</span><span class="s1">, Loss: </span><span class="si">{</span><span class="n">loss</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">loss</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">train_with_print</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>End of Epoch. Epoch: 0, Loss: 18
+End of Epoch. Epoch: 1, Loss: 16
+End of Epoch. Epoch: 2, Loss: 14
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>14</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Callback-approach">
+<a class="anchor" href="#Callback-approach" aria-hidden="true"><span class="octicon octicon-link"></span></a>Callback approach<a class="anchor-link" href="#Callback-approach"> </a>
+</h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Or you call add a PrintCallback, which does the same thing but with a bit more code.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">Callback</span><span class="p">:</span>
+    <span class="k">def</span> <span class="nf">on_epoch_start</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">on_epoch_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">on_batch_start</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+    <span class="k">def</span> <span class="nf">on_batch_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="k">pass</span>
+
+
+<span class="k">class</span> <span class="nc">PrintCallback</span><span class="p">(</span><span class="n">Callback</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">on_epoch_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'End of Epoch. Epoch: </span><span class="si">{</span><span class="n">epoch</span><span class="si">}</span><span class="s1">, Loss: </span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">train_with_callback</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="n">n_epochs</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="n">n_batches</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">loss</span> <span class="o">=</span> <span class="mi">20</span>
+
+    <span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_epochs</span><span class="p">):</span>
+
+        <span class="n">callback</span><span class="o">.</span><span class="n">on_epoch_start</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">batch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_batches</span><span class="p">):</span>
+            <span class="n">callback</span><span class="o">.</span><span class="n">on_batch_start</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span>
+            <span class="n">loss</span> <span class="o">=</span> <span class="n">loss</span> <span class="o">-</span> <span class="mi">1</span>  <span class="c1"># Pretend we are training the model</span>
+            <span class="n">callback</span><span class="o">.</span><span class="n">on_batch_end</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span>
+
+        <span class="n">callback</span><span class="o">.</span><span class="n">on_epoch_end</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">loss</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">train_with_callback</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="n">PrintCallback</span><span class="p">())</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>End of Epoch. Epoch: 2, Loss: 18
+End of Epoch. Epoch: 2, Loss: 16
+End of Epoch. Epoch: 2, Loss: 14
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>14</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Usually, a callback with define a few particular event <code>on_xxx_xxx</code>, which indicate that the function will be executed according to the corresponding condition. So all callbacks will inherit the base class <code>Callback</code>, and override the desired function, here we only implemented the <code>on_epoch_end</code> method because we only want to show the loss at the end.</p>
+<p>It may seems awkward to write so many more code to do 1 simple thing, but there are good reasons. Consider now you need to add more features, how would you do it?</p>
+<ul>
+<li>ModelCheckpoint</li>
+<li>Early Stopping</li>
+<li>LearningRateScheduler</li>
+</ul>
+<p>You can just add code in the loop, but it will start growing into a really big function. It is impossbile to test this function because it does 10 things at the same time. In addition, the extra code may not even be related to the training logic, they are just there to save the model or plot a chart. So,i t is best to separate the logic, a function should only do 1 thing according to the <a href="https://en.wikipedia.org/wiki/SOLID">Single Responsibility Principle</a>. It helps you to reduce the complexity as you don't need to worry if you will accidentally break 10 things, it is much easier to just consider one thing at a time.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>When using the <strong>Callback</strong> Pattern, I can just implement a few more class and the training loop is barely touched. I do have to change the training function a bit as it should accepts more than 1 callback.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">Callbacks</span><span class="p">:</span>
+    <span class="sd">"""</span>
+<span class="sd">    It is the container for callback</span>
+<span class="sd">    """</span>
+
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">callbacks</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">callbacks</span> <span class="o">=</span> <span class="n">callbacks</span>
+
+    <span class="k">def</span> <span class="nf">on_epoch_start</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">callback</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">callbacks</span><span class="p">:</span>
+            <span class="n">callback</span><span class="o">.</span><span class="n">on_epoch_start</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">on_epoch_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">callback</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">callbacks</span><span class="p">:</span>
+            <span class="n">callback</span><span class="o">.</span><span class="n">on_epoch_end</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">on_batch_start</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">callback</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">callbacks</span><span class="p">:</span>
+            <span class="n">callback</span><span class="o">.</span><span class="n">on_batch_start</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">on_batch_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">callback</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">callbacks</span><span class="p">:</span>
+            <span class="n">callback</span><span class="o">.</span><span class="n">on_batch_end</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">PrintCallback</span><span class="p">(</span><span class="n">Callback</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">on_epoch_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'[</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s1">]: End of Epoch. Epoch: </span><span class="si">{</span><span class="n">epoch</span><span class="si">}</span><span class="s1">, Loss: </span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+        
+<span class="k">class</span> <span class="nc">ModelCheckPoint</span><span class="p">(</span><span class="n">Callback</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">on_epoch_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'[</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s1">]: Save Model'</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">EarlyStoppingCallback</span><span class="p">(</span><span class="n">Callback</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">on_epoch_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">loss</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
+            <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'[</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s1">]: Early Stopped'</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">LearningRateScheduler</span><span class="p">(</span><span class="n">Callback</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">on_batch_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'    [</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s1">]: Reduce learning rate'</span><span class="p">)</span>
+
+
+<span class="k">def</span> <span class="nf">train_with_callbacks</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">callbacks</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="n">n_epochs</span> <span class="o">=</span> <span class="mi">3</span>
+    <span class="n">n_batches</span> <span class="o">=</span> <span class="mi">6</span>
+    <span class="n">loss</span> <span class="o">=</span> <span class="mi">20</span>
+
+    <span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_epochs</span><span class="p">):</span>
+
+        <span class="n">callbacks</span><span class="o">.</span><span class="n">on_epoch_start</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span>                             <span class="c1"># on_epoch_start</span>
+        <span class="k">for</span> <span class="n">batch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_batches</span><span class="p">):</span>
+            <span class="n">callbacks</span><span class="o">.</span><span class="n">on_batch_start</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span>                         <span class="c1"># on_batch_start</span>
+            <span class="n">loss</span> <span class="o">=</span> <span class="n">loss</span> <span class="o">-</span> <span class="mi">1</span>  <span class="c1"># Pretend we are training the model</span>
+            <span class="n">callbacks</span><span class="o">.</span><span class="n">on_batch_end</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span>                           <span class="c1"># on_batch_end</span>
+        <span class="n">callbacks</span><span class="o">.</span><span class="n">on_epoch_end</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span>                               <span class="c1"># on_epoch_end</span>
+    <span class="k">return</span> <span class="n">loss</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">callbacks</span> <span class="o">=</span> <span class="n">Callbacks</span><span class="p">([</span><span class="n">PrintCallback</span><span class="p">(),</span> <span class="n">ModelCheckPoint</span><span class="p">(),</span>
+                      <span class="n">EarlyStoppingCallback</span><span class="p">(),</span> <span class="n">LearningRateScheduler</span><span class="p">()])</span>
+<span class="n">train_with_callbacks</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">callbacks</span><span class="o">=</span><span class="n">callbacks</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>    [LearningRateScheduler]: Reduce learning rate
+    [LearningRateScheduler]: Reduce learning rate
+    [LearningRateScheduler]: Reduce learning rate
+    [LearningRateScheduler]: Reduce learning rate
+    [LearningRateScheduler]: Reduce learning rate
+    [LearningRateScheduler]: Reduce learning rate
+[PrintCallback]: End of Epoch. Epoch: 2, Loss: 14
+[ModelCheckPoint]: Save Model
+    [LearningRateScheduler]: Reduce learning rate
+    [LearningRateScheduler]: Reduce learning rate
+    [LearningRateScheduler]: Reduce learning rate
+    [LearningRateScheduler]: Reduce learning rate
+    [LearningRateScheduler]: Reduce learning rate
+    [LearningRateScheduler]: Reduce learning rate
+[PrintCallback]: End of Epoch. Epoch: 2, Loss: 8
+[ModelCheckPoint]: Save Model
+    [LearningRateScheduler]: Reduce learning rate
+    [LearningRateScheduler]: Reduce learning rate
+    [LearningRateScheduler]: Reduce learning rate
+    [LearningRateScheduler]: Reduce learning rate
+    [LearningRateScheduler]: Reduce learning rate
+    [LearningRateScheduler]: Reduce learning rate
+[PrintCallback]: End of Epoch. Epoch: 2, Loss: 2
+[ModelCheckPoint]: Save Model
+</pre>
+</div>
+</div>
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>2</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Hopefully it convinces you <strong>Callback</strong> makes the code cleaner and easier to maintain. If you just use plain <code>if-else</code> statements, you may end up with a big chunk of <code>if-else</code> clauses.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<ul>
+<li>
+<a href="https://docs.fast.ai/callback.core.html">fastai</a> - fastai provide high level API for PyTorch</li>
+<li>
+<a href="https://keras.io/api/callbacks/">Keras</a> - the high level API for Tensorflow</li>
+<li>
+<a href="https://github.com/pytorch/ignite">ignite</a> - they use event &amp; handler, which provides more flexiblity in their opinion</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Reference">
+<a class="anchor" href="#Reference" aria-hidden="true"><span class="octicon octicon-link"></span></a>Reference<a class="anchor-link" href="#Reference"> </a>
+</h2>
+<ol>
+<li><a href="https://stackoverflow.com/questions/824234/what-is-a-callback-function">https://stackoverflow.com/questions/824234/what-is-a-callback-function</a></li>
+</ol>
+
+</div>
+</div>
+</div>
+</div>
+
+
+
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="noklam/blog"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/blog/python/kedro/2021/07/10/3minutes-data-science-design-pattern-callback.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/blog/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/blog/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Explaining ideas one post at a time. Data Science/Machine Learning/Software Engineering</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/noklam" title="noklam"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://www.linkedin.com/in/noklamchan" title="noklamchan"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#linkedin"></use></svg></a></li><li><a rel="me" href="https://twitter.com/mediumnok" title="mediumnok"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>
