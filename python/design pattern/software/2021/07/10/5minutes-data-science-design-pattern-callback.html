@@ -189,7 +189,6 @@ window.onload = wrap_img;
     <span class="nb">print</span><span class="p">(</span><span class="s1">'foo!'</span><span class="p">)</span>
     <span class="k">if</span> <span class="n">callback</span><span class="p">:</span>
         <span class="n">callback</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
-    <span class="k">return</span> <span class="kc">None</span>
 </pre></div>
 
     </div>
@@ -285,9 +284,9 @@ window.onload = wrap_img;
 <p><strong>Callback</strong> is very common in high-level deep learning libraries, most likely you will find them in the training loop.</p>
 <ul>
 <li>
-<a href="https://docs.fast.ai/callback.core.html">fastai</a> - fastai provide high level API for PyTorch</li>
+<a href="https://docs.fast.ai/callback.core.html">fastai</a> - fastai provide high-level API for PyTorch</li>
 <li>
-<a href="https://keras.io/api/callbacks/">Keras</a> - the high level API for Tensorflow</li>
+<a href="https://keras.io/api/callbacks/">Keras</a> - the high-level API for Tensorflow</li>
 <li>
 <a href="https://github.com/pytorch/ignite">ignite</a> - they use event &amp; handler, which provides more flexibility in their opinion</li>
 </ul>
@@ -312,8 +311,7 @@ window.onload = wrap_img;
 
     <span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_epochs</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">batch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_batches</span><span class="p">):</span>
-            <span class="n">loss</span> <span class="o">=</span> <span class="n">loss</span> <span class="o">-</span> <span class="mi">1</span> <span class="c1"># Pretend we are training the model</span>
-    <span class="k">return</span> <span class="n">loss</span>
+            <span class="n">loss</span> <span class="o">=</span> <span class="n">loss</span> <span class="o">-</span> <span class="mi">1</span>  <span class="c1"># Pretend we are training the model</span>
 </pre></div>
 
     </div>
@@ -457,7 +455,7 @@ End of Epoch. Epoch: 2, Loss: 14
 
 <span class="k">class</span> <span class="nc">PrintCallback</span><span class="p">(</span><span class="n">Callback</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">on_epoch_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'End of Epoch. Epoch: </span><span class="si">{</span><span class="n">epoch</span><span class="si">}</span><span class="s1">, Loss: </span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'End of Epoch. Loss: </span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
 
 
 <span class="k">def</span> <span class="nf">train_with_callback</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
@@ -475,7 +473,6 @@ End of Epoch. Epoch: 2, Loss: 14
             <span class="n">callback</span><span class="o">.</span><span class="n">on_batch_end</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span>
 
         <span class="n">callback</span><span class="o">.</span><span class="n">on_epoch_end</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">loss</span>
 </pre></div>
 
     </div>
@@ -505,9 +502,9 @@ End of Epoch. Epoch: 2, Loss: 14
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>End of Epoch. Epoch: 2, Loss: 18
-End of Epoch. Epoch: 2, Loss: 16
-End of Epoch. Epoch: 2, Loss: 14
+<pre>End of Epoch. Loss: 18
+End of Epoch. Loss: 16
+End of Epoch. Loss: 14
 </pre>
 </div>
 </div>
@@ -521,14 +518,14 @@ End of Epoch. Epoch: 2, Loss: 14
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Usually, a callback defines a few particular event <code>on_xxx_xxx</code>, which indicate that the function will be executed according to the corresponding condition. So all callbacks will inherit the base class <code>Callback</code>, and override the desired function, here we only implemented the <code>on_epoch_end</code> method because we only want to show the loss at the end.</p>
-<p>It may seems awkward to write so many more code to do 1 simple thing, but there are good reasons. Consider now you need to add more features, how would you do it?</p>
+<p>Usually, a callback defines a few particular events <code>on_xxx_xxx</code>, which indicate that the function will be executed according to the corresponding condition. So all callbacks will inherit the base class <code>Callback</code>, and override the desired function, here we only implemented the <code>on_epoch_end</code> method because we only want to show the loss at the end.</p>
+<p>It may seem awkward to write so many more code to do one simple thing, but there are good reasons. Consider now you need to add more features, how would you do it?</p>
 <ul>
 <li>ModelCheckpoint</li>
 <li>Early Stopping</li>
 <li>LearningRateScheduler</li>
 </ul>
-<p>You can just add code in the loop, but it will start growing into a really big function. It is impossbile to test this function because it does 10 things at the same time. In addition, the extra code may not even be related to the training logic, they are just there to save the model or plot a chart. So,i t is best to separate the logic, a function should only do 1 thing according to the <a href="https://en.wikipedia.org/wiki/SOLID">Single Responsibility Principle</a>. It helps you to reduce the complexity as you don't need to worry if you will accidentally break 10 things, it is much easier to just consider one thing at a time.</p>
+<p>You can just add code in the loop, but it will start growing into a really giant function. It is impossible to <strong>test</strong> this function because it does 10 things at the same time. In addition, the extra code may not even be related to the training logic, they are just there to save the model or plot a chart. So, it is best to separate the logic. A function should only do 1 thing according to the <a href="https://en.wikipedia.org/wiki/SOLID">Single Responsibility Principle</a>. It helps you to reduce the complexity as it provides a nice abstraction, you are only modifying code within the specific callback you are interested.</p>
 
 </div>
 </div>
@@ -545,7 +542,7 @@ End of Epoch. Epoch: 2, Loss: 14
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>When using the <strong>Callback</strong> Pattern, I can just implement a few more class and the training loop is barely touched. I do have to change the training function a bit as it should accepts more than 1 callback.</p>
+<p>When using the <strong>Callback</strong> Pattern, I can just implement a few more classes and the training loop is barely touched. Here we introduce a new class <code>Callbacks</code> because we need to execute more than 1 callback, it is used for holding all callbacks and executed them sequentially.</p>
 
 </div>
 </div>
@@ -580,11 +577,35 @@ End of Epoch. Epoch: 2, Loss: 14
     <span class="k">def</span> <span class="nf">on_batch_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
         <span class="k">for</span> <span class="n">callback</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">callbacks</span><span class="p">:</span>
             <span class="n">callback</span><span class="o">.</span><span class="n">on_batch_end</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+</pre></div>
 
-<span class="k">class</span> <span class="nc">PrintCallback</span><span class="p">(</span><span class="n">Callback</span><span class="p">):</span>
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Then we implement the new <strong>Callback</strong> one by one, here we only have the pseudocode, but you should get the gist. For example, we only need to save the model at the end of an epoch, thus we implement the method <code>on_epoch_end</code> with a <code>ModelCheckPoint</code> callback.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">class</span> <span class="nc">PrintCallback</span><span class="p">(</span><span class="n">Callback</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">on_epoch_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'[</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s1">]: End of Epoch. Epoch: </span><span class="si">{</span><span class="n">epoch</span><span class="si">}</span><span class="s1">, Loss: </span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
-        
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'[</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s1">]: End of Epoch. Loss: </span><span class="si">{</span><span class="n">x</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+
+
 <span class="k">class</span> <span class="nc">ModelCheckPoint</span><span class="p">(</span><span class="n">Callback</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">on_epoch_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'[</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s1">]: Save Model'</span><span class="p">)</span>
@@ -592,18 +613,40 @@ End of Epoch. Epoch: 2, Loss: 14
 
 <span class="k">class</span> <span class="nc">EarlyStoppingCallback</span><span class="p">(</span><span class="n">Callback</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">on_epoch_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
-        <span class="k">if</span> <span class="n">loss</span> <span class="o">&lt;</span> <span class="mi">3</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">16</span><span class="p">:</span>
             <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'[</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s1">]: Early Stopped'</span><span class="p">)</span>
 
 
 <span class="k">class</span> <span class="nc">LearningRateScheduler</span><span class="p">(</span><span class="n">Callback</span><span class="p">):</span>
     <span class="k">def</span> <span class="nf">on_batch_end</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="p">):</span>
         <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'    [</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s1">]: Reduce learning rate'</span><span class="p">)</span>
+</pre></div>
 
+    </div>
+</div>
+</div>
 
-<span class="k">def</span> <span class="nf">train_with_callbacks</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">callbacks</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
-    <span class="n">n_epochs</span> <span class="o">=</span> <span class="mi">3</span>
-    <span class="n">n_batches</span> <span class="o">=</span> <span class="mi">6</span>
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>And we also modify the training loop a bit, the argument now takes a <code>Callbacks</code> which contain zero to many callbacks.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">train_with_callbacks</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">callbacks</span><span class="o">=</span><span class="kc">None</span><span class="p">):</span>
+    <span class="n">n_epochs</span> <span class="o">=</span> <span class="mi">2</span>
+    <span class="n">n_batches</span> <span class="o">=</span> <span class="mi">3</span>
     <span class="n">loss</span> <span class="o">=</span> <span class="mi">20</span>
 
     <span class="k">for</span> <span class="n">epoch</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n_epochs</span><span class="p">):</span>
@@ -614,7 +657,6 @@ End of Epoch. Epoch: 2, Loss: 14
             <span class="n">loss</span> <span class="o">=</span> <span class="n">loss</span> <span class="o">-</span> <span class="mi">1</span>  <span class="c1"># Pretend we are training the model</span>
             <span class="n">callbacks</span><span class="o">.</span><span class="n">on_batch_end</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span>                           <span class="c1"># on_batch_end</span>
         <span class="n">callbacks</span><span class="o">.</span><span class="n">on_epoch_end</span><span class="p">(</span><span class="n">loss</span><span class="p">)</span>                               <span class="c1"># on_epoch_end</span>
-    <span class="k">return</span> <span class="n">loss</span>
 </pre></div>
 
     </div>
@@ -649,39 +691,16 @@ End of Epoch. Epoch: 2, Loss: 14
 <pre>    [LearningRateScheduler]: Reduce learning rate
     [LearningRateScheduler]: Reduce learning rate
     [LearningRateScheduler]: Reduce learning rate
-    [LearningRateScheduler]: Reduce learning rate
-    [LearningRateScheduler]: Reduce learning rate
-    [LearningRateScheduler]: Reduce learning rate
-[PrintCallback]: End of Epoch. Epoch: 2, Loss: 14
+[PrintCallback]: End of Epoch. Loss: 17
 [ModelCheckPoint]: Save Model
     [LearningRateScheduler]: Reduce learning rate
     [LearningRateScheduler]: Reduce learning rate
     [LearningRateScheduler]: Reduce learning rate
-    [LearningRateScheduler]: Reduce learning rate
-    [LearningRateScheduler]: Reduce learning rate
-    [LearningRateScheduler]: Reduce learning rate
-[PrintCallback]: End of Epoch. Epoch: 2, Loss: 8
+[PrintCallback]: End of Epoch. Loss: 14
 [ModelCheckPoint]: Save Model
-    [LearningRateScheduler]: Reduce learning rate
-    [LearningRateScheduler]: Reduce learning rate
-    [LearningRateScheduler]: Reduce learning rate
-    [LearningRateScheduler]: Reduce learning rate
-    [LearningRateScheduler]: Reduce learning rate
-    [LearningRateScheduler]: Reduce learning rate
-[PrintCallback]: End of Epoch. Epoch: 2, Loss: 2
-[ModelCheckPoint]: Save Model
+[EarlyStoppingCallback]: Early Stopped
 </pre>
 </div>
-</div>
-
-<div class="output_area">
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>2</pre>
-</div>
-
 </div>
 
 </div>
@@ -693,7 +712,7 @@ End of Epoch. Epoch: 2, Loss: 14
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Hopefully it convinces you <strong>Callback</strong> makes the code cleaner and easier to maintain. If you just use plain <code>if-else</code> statements, you may end up with a big chunk of <code>if-else</code> clauses.</p>
+<p>Hopefully, it convinces you <strong>Callback</strong> makes the code cleaner and easier to maintain. If you just use plain <code>if-else</code> statements, you may end up with a big chunk of <code>if-else</code> clauses.</p>
 
 </div>
 </div>
@@ -703,11 +722,11 @@ End of Epoch. Epoch: 2, Loss: 14
 <div class="text_cell_render border-box-sizing rendered_html">
 <ul>
 <li>
-<a href="https://docs.fast.ai/callback.core.html">fastai</a> - fastai provide high level API for PyTorch</li>
+<a href="https://docs.fast.ai/callback.core.html">fastai</a> - fastai provide high-level API for PyTorch</li>
 <li>
-<a href="https://keras.io/api/callbacks/">Keras</a> - the high level API for Tensorflow</li>
+<a href="https://keras.io/api/callbacks/">Keras</a> - the high-level API for Tensorflow</li>
 <li>
-<a href="https://github.com/pytorch/ignite">ignite</a> - they use event &amp; handler, which provides more flexiblity in their opinion</li>
+<a href="https://github.com/pytorch/ignite">ignite</a> - they use event &amp; handler, which provides more flexibility in their opinion</li>
 </ul>
 
 </div>
