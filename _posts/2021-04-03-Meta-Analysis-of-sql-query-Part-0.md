@@ -2,7 +2,7 @@
 title: Meta-Analysis of SQL Query, Graph - Part 0 [Help needed, I am looking for open dataset of actual user SQL query log]
 description: Notes
 comments: true
-hide: false
+hide: true
 layout: post
 toc: false
 author: noklam
