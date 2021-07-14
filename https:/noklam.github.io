@@ -4,20 +4,17 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>plyer - Desktop Notification with Python | mediumnok✊</title>
+<title>Old Blog | mediumnok✊</title>
 <meta name="generator" content="Jekyll v4.1.1" />
-<meta property="og:title" content="plyer - Desktop Notification with Python" />
-<meta name="author" content="noklam" />
+<meta property="og:title" content="Old Blog" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="Desktop notifiaction with Python" />
-<meta property="og:description" content="Desktop notifiaction with Python" />
-<link rel="canonical" href="https://noklam.github.io/blog/python/2019/10/19/Deskto-Notification.html" />
-<meta property="og:url" content="https://noklam.github.io/blog/python/2019/10/19/Deskto-Notification.html" />
+<meta name="description" content="Explaining ideas one post at a time. Make software engineering easy for data scientist." />
+<meta property="og:description" content="Explaining ideas one post at a time. Make software engineering easy for data scientist." />
+<link rel="canonical" href="https://noklam.github.io/blog/https:/noklam.github.io" />
+<meta property="og:url" content="https://noklam.github.io/blog/https:/noklam.github.io" />
 <meta property="og:site_name" content="mediumnok✊" />
-<meta property="og:type" content="article" />
-<meta property="article:published_time" content="2019-10-19T00:00:00-05:00" />
 <script type="application/ld+json">
-{"url":"https://noklam.github.io/blog/python/2019/10/19/Deskto-Notification.html","@type":"BlogPosting","headline":"plyer - Desktop Notification with Python","dateModified":"2019-10-19T00:00:00-05:00","datePublished":"2019-10-19T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://noklam.github.io/blog/python/2019/10/19/Deskto-Notification.html"},"author":{"@type":"Person","name":"noklam"},"description":"Desktop notifiaction with Python","@context":"https://schema.org"}</script>
+{"url":"https://noklam.github.io/blog/https:/noklam.github.io","@type":"WebPage","headline":"Old Blog","description":"Explaining ideas one post at a time. Make software engineering easy for data scientist.","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://noklam.github.io/blog/feed.xml" title="mediumnok✊" /><!-- the google_analytics_id gets auto inserted from the config file -->
 
@@ -75,66 +72,7 @@ window.onload = wrap_img;
 </header>
 <main class="page-content" aria-label="Content">
       <div class="wrapper">
-        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
-
-  <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">plyer - Desktop Notification with Python</h1><p class="page-description">Desktop notifiaction with Python</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2019-10-19T00:00:00-05:00" itemprop="datePublished">
-        Oct 19, 2019
-      </time>• 
-          <span itemprop="author" itemscope itemtype="http://schema.org/Person">
-            <span class="p-author h-card" itemprop="name">noklam</span></span>
-       • <span class="read-time" title="Estimated read time">
-    
-    
-      1 min read
-    
-</span></p>
-
-    
-      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
-      
-        <a class="category-tags-link" href="/blog/categories/#python">python</a>
         
-      
-      </p>
-    
-
-    </header>
-
-  <div class="post-content e-content" itemprop="articleBody">
-    <div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">plyer</span> <span class="kn">import</span> <span class="n">notification</span>
-<span class="kn">import</span> <span class="nn">random</span>
-
-<span class="k">class</span> <span class="nc">DesktopNotification</span><span class="p">:</span>
-    <span class="o">@</span><span class="nb">staticmethod</span>
-    <span class="k">def</span> <span class="nf">notify</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="s">'Hey~'</span><span class="p">,</span> <span class="n">message</span><span class="o">=</span><span class="s">'Done!'</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">10</span><span class="p">):</span>
-        <span class="n">ls</span> <span class="o">=</span> <span class="p">[</span><span class="s">'👍'</span><span class="p">,</span><span class="s">'✔'</span><span class="p">,</span><span class="s">'✌'</span><span class="p">,</span><span class="s">'👌'</span><span class="p">,</span><span class="s">'👍'</span><span class="p">,</span><span class="s">'😎'</span><span class="p">]</span>
-        <span class="n">notification</span><span class="p">.</span><span class="n">notify</span><span class="p">(</span>
-            <span class="n">title</span> <span class="o">=</span> <span class="n">title</span> <span class="p">,</span>
-            <span class="n">message</span> <span class="o">=</span> <span class="n">random</span><span class="p">.</span><span class="n">choice</span><span class="p">(</span><span class="n">ls</span><span class="p">)</span> <span class="o">*</span> <span class="mi">3</span> <span class="o">+</span> <span class="s">' '</span> <span class="o">+</span> <span class="n">message</span><span class="p">,</span>
-            <span class="n">timeout</span> <span class="o">=</span> <span class="n">timeout</span> <span class="c1"># seconds
-</span>        <span class="p">)</span>
-
-
-<span class="k">if</span> <span class="n">__name__</span> <span class="o">==</span> <span class="s">'__main__'</span><span class="p">:</span>
-    <span class="n">DesktopNotification</span><span class="p">.</span><span class="n">notify</span><span class="p">()</span>
-
-</code></pre></div></div>
-<p>You could add this simple code block to notify you when the program is done! A desktop notification will be prompt on the bottom right corner in Window.</p>
-
-<!--truncate-->
-
-
-  </div><!-- from https://github.com/utterance/utterances -->
-<script src="https://utteranc.es/client.js"
-        repo="noklam/blog"
-        issue-term="title"
-        label="blogpost-comment"
-        theme="github-light"
-        crossorigin="anonymous"
-        async>
-</script><a class="u-url" href="/blog/python/2019/10/19/Deskto-Notification.html" hidden></a>
-</article>
       </div>
     </main><footer class="site-footer h-card">
   <data class="u-url" href="/blog/"></data>
