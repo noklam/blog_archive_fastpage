@@ -2,22 +2,22 @@
   
     
         "post0": {
-            "title": "Python FileNotFoundError or You have a really long file path?",
-            "content": "FileNotFoundError? Not so quick . . To illustrate the issue, I perpared some fake file. The script is simple, it just read a file with plain text, except that the filename is really long. . . Unforuntately, even though the file exists, Python gives me a FileNotFoundError, how come? However long debugging, I found out that this is related to the filename that exist only on Windows. . This StackOverflow thread explain this issue. . Maximum Path Length Limitation In the Windows API (with some exceptions discussed in the following paragraphs), the maximum length for a path is MAX_PATH, which is defined as 260 characters. A local path is structured in the following order:drive letter, colon, backslash, name components separated by backslashes, and a terminating null character. For example, the maximum path on drive D is &quot;D:*some 256-character path string*&quot; where &quot;&quot; represents the invisible terminating null character for the current system codepage. (The characters &lt; &gt; are used here for visual clarity and cannot be part of a valid path string.)&lt;/p&gt; &lt;/blockquote&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; Solution - Registry . Updating your Registry can solve this problem. . . After applying the config, I can finally read the file. :) . Summary (TLDR version) . Window filesystem only allow 256 characters, beyond that you will have trouble to open the file. | Python will not be able to see this file and throw FileNotFoundError (I have no idea, anyone know why is that?) | You can update registry to enable long file path in Window to fix this issue. | . (Bonus: Window actually has weird behavior for long filepath, you can try to break it with different ways.) . &lt;/div&gt; .",
-            "url": "https://noklam.github.io/blog/python/2021/08/18/python-file-not-found-long-file-path-window.html",
-            "relUrl": "/python/2021/08/18/python-file-not-found-long-file-path-window.html",
-            "date": " • Aug 18, 2021"
+            "title": "Full Stack Deep Learning Notes - Lecture 01",
+            "content": "",
+            "url": "https://noklam.github.io/blog/fsdl/2021/10/22/template.html",
+            "relUrl": "/fsdl/2021/10/22/template.html",
+            "date": " • Oct 22, 2021"
         }
         
     
   
     
         ,"post1": {
-            "title": "Full Stack Deep Learning Notes - Lecture 01",
-            "content": "",
-            "url": "https://noklam.github.io/blog/fsdl/2021/08/17/template.html",
-            "relUrl": "/fsdl/2021/08/17/template.html",
-            "date": " • Aug 17, 2021"
+            "title": "Python FileNotFoundError or You have a really long file path?",
+            "content": "FileNotFoundError? Not so quick . . To illustrate the issue, I perpared some fake file. The script is simple, it just read a file with plain text, except that the filename is really long. . . Unforuntately, even though the file exists, Python gives me a FileNotFoundError, how come? However long debugging, I found out that this is related to the filename that exist only on Windows. . This StackOverflow thread explain this issue. . Maximum Path Length Limitation In the Windows API (with some exceptions discussed in the following paragraphs), the maximum length for a path is MAX_PATH, which is defined as 260 characters. A local path is structured in the following order:drive letter, colon, backslash, name components separated by backslashes, and a terminating null character. For example, the maximum path on drive D is &quot;D:*some 256-character path string*&quot; where &quot;&quot; represents the invisible terminating null character for the current system codepage. (The characters &lt; &gt; are used here for visual clarity and cannot be part of a valid path string.)&lt;/p&gt; &lt;/blockquote&gt; &lt;/div&gt; &lt;/div&gt; &lt;/div&gt; Solution - Registry . Updating your Registry can solve this problem. . . After applying the config, I can finally read the file. :) . Summary (TLDR version) . Window filesystem only allow 256 characters, beyond that you will have trouble to open the file. | Python will not be able to see this file and throw FileNotFoundError (I have no idea, anyone know why is that?) | You can update registry to enable long file path in Window to fix this issue. | . (Bonus: Window actually has weird behavior for long filepath, you can try to break it with different ways.) . &lt;/div&gt; .",
+            "url": "https://noklam.github.io/blog/python/2021/08/18/python-file-not-found-long-file-path-window.html",
+            "relUrl": "/python/2021/08/18/python-file-not-found-long-file-path-window.html",
+            "date": " • Aug 18, 2021"
         }
         
     
@@ -392,7 +392,7 @@
   
       ,"page3": {
           "title": "About Me",
-          "content": "Qualities are often lost by an accident, but are never accidentally acquired. A Data Scientist located in Hong Kong, solving data scinece problem with code. Keep grinding your code until you makes good software, then you can move on to machine learning. . What I thought I should be doing: Create fancy machine learning models What I am actually doing: Messing with Excel and CSV, occassionally work with model. . Contact: mediumnok@gmail.com . This website is powered by fastpages [^1]. [^1]:a blogging platform that natively supports Jupyter notebooks in addition to other formats. .",
+          "content": "Qualities are often lost by an accident, but are never accidentally acquired. A Data Scientist located in Hong Kong, solving data scinece problem with code. . What I thought I should be doing: Create fancy machine learning models What I am actually doing: Messing with Excel and CSV, occassionally work with model. . Contact: mediumnok@gmail.com .",
           "url": "https://noklam.github.io/blog/about/",
           "relUrl": "/about/",
           "date": ""
@@ -414,8 +414,6 @@
   
 
   
-
-  
   
 
   
@@ -437,7 +435,7 @@
   
 
   
-      ,"page15": {
+      ,"page14": {
           "title": "",
           "content": "Sitemap: {{ “sitemap.xml” | absolute_url }} | .",
           "url": "https://noklam.github.io/blog/robots.txt",
