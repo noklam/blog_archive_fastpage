@@ -14,3 +14,4 @@ __pycache__
 .Rproj.user
 # data folder
 data/*
+*mypy_cache*
