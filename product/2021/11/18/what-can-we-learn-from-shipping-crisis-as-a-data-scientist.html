@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
+<title>What can we learn from Shipping Crisis as a Data Scientist? | mediumnok✊</title>
+<meta name="generator" content="Jekyll v4.1.1" />
+<meta property="og:title" content="What can we learn from Shipping Crisis as a Data Scientist?" />
+<meta name="author" content="noklam" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="The Long Beach port congestion could teach us a lot about data science in real world." />
+<meta property="og:description" content="The Long Beach port congestion could teach us a lot about data science in real world." />
+<link rel="canonical" href="https://noklam.github.io/blog/product/2021/11/18/what-can-we-learn-from-shipping-crisis-as-a-data-scientist.html" />
+<meta property="og:url" content="https://noklam.github.io/blog/product/2021/11/18/what-can-we-learn-from-shipping-crisis-as-a-data-scientist.html" />
+<meta property="og:site_name" content="mediumnok✊" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-11-18T00:00:00-06:00" />
+<script type="application/ld+json">
+{"url":"https://noklam.github.io/blog/product/2021/11/18/what-can-we-learn-from-shipping-crisis-as-a-data-scientist.html","@type":"BlogPosting","headline":"What can we learn from Shipping Crisis as a Data Scientist?","dateModified":"2021-11-18T00:00:00-06:00","datePublished":"2021-11-18T00:00:00-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://noklam.github.io/blog/product/2021/11/18/what-can-we-learn-from-shipping-crisis-as-a-data-scientist.html"},"author":{"@type":"Person","name":"noklam"},"description":"The Long Beach port congestion could teach us a lot about data science in real world.","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+<link rel="stylesheet" href="/blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://noklam.github.io/blog/feed.xml" title="mediumnok✊" /><!-- the google_analytics_id gets auto inserted from the config file -->
+
+
+
+<script>(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','//www.google-analytics.com/analytics.js','ga');ga('create','UA-83544344-5','auto');ga('require','displayfeatures');ga('send','pageview');</script>
+
+<link rel="shortcut icon" type="image/x-icon" href="/blog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
+
+<script>
+function wrap_img(fn) {
+    if (document.attachEvent ? document.readyState === "complete" : document.readyState !== "loading") {
+        var elements = document.querySelectorAll(".post img");
+        Array.prototype.forEach.call(elements, function(el, i) {
+            if (el.getAttribute("title") && (el.className != "emoji")) {
+                const caption = document.createElement('figcaption');
+                var node = document.createTextNode(el.getAttribute("title"));
+                caption.appendChild(node);
+                const wrapper = document.createElement('figure');
+                wrapper.className = 'image';
+                el.parentNode.insertBefore(wrapper, el);
+                el.parentNode.removeChild(el);
+                wrapper.appendChild(el);
+                wrapper.appendChild(caption);
+            }
+        });
+    } else { document.addEventListener('DOMContentLoaded', fn); }
+}
+window.onload = wrap_img;
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function(){
+    // add link icon to anchor tags
+    var elem = document.querySelectorAll(".anchor-link")
+    elem.forEach(e => (e.innerHTML = '<i class="fas fa-link fa-xs"></i>'));
+    });
+</script>
+</head>
+<body><header class="site-header">
+
+  <div class="wrapper"><a class="site-title" rel="author" href="/blog/">mediumnok✊</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+        <label for="nav-trigger">
+          <span class="menu-icon">
+            <svg viewBox="0 0 18 15" width="18px" height="15px">
+              <path d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.032C17.335,0,18,0.665,18,1.484L18,1.484z M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.032C17.335,6.031,18,6.696,18,7.516L18,7.516z M18,13.516C18,14.335,17.335,15,16.516,15H1.484 C0.665,15,0,14.335,0,13.516l0,0c0-0.82,0.665-1.483,1.484-1.483h15.032C17.335,12.031,18,12.695,18,13.516L18,13.516z"/>
+            </svg>
+          </span>
+        </label>
+
+        <div class="trigger"><a class="page-link" href="/blog/about/">About Me</a><a class="page-link" href="/blog/search/">Search</a><a class="page-link" href="/blog/categories/">Tags</a></div>
+      </nav></div>
+</header>
+<main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+
+  <header class="post-header">
+    <h1 class="post-title p-name" itemprop="name headline">What can we learn from Shipping Crisis as a Data Scientist?</h1><p class="page-description">The Long Beach port congestion could teach us a lot about data science in real world.</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-11-18T00:00:00-06:00" itemprop="datePublished">
+        Nov 18, 2021
+      </time>• 
+          <span itemprop="author" itemscope itemtype="http://schema.org/Person">
+            <span class="p-author h-card" itemprop="name">noklam</span></span>
+       • <span class="read-time" title="Estimated read time">
+    
+    
+      5 min read
+    
+</span></p>
+
+    
+      <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
+      
+        <a class="category-tags-link" href="/blog/categories/#product">product</a>
+        
+      
+      </p>
+    
+
+    </header>
+
+  <div class="post-content e-content" itemprop="articleBody">
+    <p>Even if you are not working in shipping industry, you probably heard about shipping cost is skyrocking for the last year. COVID is clearly the initial disruption, but the story does not end there. Recently, <a href="https://www.wsj.com/video/series/on-the-news/what-america-supply-chain-backlog-looks-like-up-close/388D6F02-5BCD-43AD-A3EE-B945F7373983">Long Beach’s port congestion is at a historcial scale</a>, there are now more than 70+ ships waiting outside the port, the typical number is 1 or 2.</p>
+
+<p>You may think the terminal must be busy as hell, so did I, but it is actualy far from the truth. <a href="https://twitter.com/typesfast/status/1451543776992845834?s=20">In fact, the port is actually paralyzed</a>. The reason surprised me a lot, it is not because of lacking of driver or empty containers, but yard space. Container are being unloaded from ships, then they are being put at the container yard before they go into depot or being stuffed again.</p>
+
+<p>On a high level, it is caused by a negative feedback loop which COVID probably contributed a lot, as it caused a lot of disruption to the supply chain.</p>
+
+<ol>
+  <li>Port Congestion -&gt; Containers pilled up at container yard since it is waiting to be loaded on ship</li>
+  <li>Container yard space is taken up by cotnainers, less space is available</li>
+  <li>A container need to be put on a chassis before it is loaded, but as the container yard is full, empty containers stuck on the chassis and they need to be unloaded before you put a stuffed container.</li>
+  <li>Less Chassis is available to load stuff, so it further slow down the process</li>
+  <li>The loop complete and it starts from 1 again</li>
+</ol>
+
+<p><img src="images/2021-11-18-23-37-38.png" alt="Port Congestion Feedback Loop" /></p>
+
+<p>This is a simplified story, you can find more details from this <a href="https://twitter.com/typesfast/status/1451543776992845834?s=20">twitter thread from flexport’s CEO Ryan</a>. There are more constraints that making this load/unload process inefficient, so the whole process is jammed. Think about a restaurant with limited amount of trays, you need to get a tray if you want to get food. But because there are too many customers, it jammed the door .
+So there are many customers holding an empty tray while many food are waiting to be served.</p>
+
+<p>Ryan point out a very important lesson here, that is, <code class="language-plaintext highlighter-rouge">you need to choose your bottleneck, and it should really be the capital intensive assets.</code> Going back to our restaurant’s analogy, chef and space is probably the most expensive assets, so we should try to keep the utilization high. A simple solution is to buy more trays, so that it won’t be jammed. Ofcourse, you can also find a larger space, build a bigger door, but that will cost you more money too.</p>
+
+<p>For shipping, the terminal’s crane should be the most capital intensive, so we should try our best to keep it working 24/7 to digest the terminal queue.</p>
+
+<p>This is a simple idea yet it is powerful and it strikes me hard. As a data scientist, I work on optimization problem. To maximize the output of a system, we can use linear programming. When we are solving this problem, we are asking question like this.</p>
+
+<blockquote>
+  <p>Given x1 Terminals, x2 drivers, x3 containers, x4 ships, what is the maximize output of this system and <strong>how</strong> do you arrange them to achieve so?</p>
+</blockquote>
+
+<p>However, if you are a product/business analyst, a better question may be</p>
+<blockquote>
+  <p>What is the output of this system if I add more container yard space?</p>
+</blockquote>
+
+<p>By changing the input of the system, you may achieve much better result. But as a data scientist, we often stuck in a mode that how do we optimize x metrics with these features. So we may end up spending months and try to schedule ships and driver perfectly to load 10% more container, but you can actually increase loading efficiency by 50% simply by adding more yard space. It feels like cheating as a scientific question, since this is not we asked originally, but this happened a lot in a business context.</p>
+
+<p>We are not trying to find the best algorithm to solve a problem, the algorithm is just <strong>one way</strong> of doing it. We may get surprising result by just tweaking the asked question a little bit.</p>
+
+<p>I am curious about what is the limiting factor in our current supply chain system, and how sensitive it is to the environment. Is forecasting &amp; optimization the right way to do it? Do we actually need a precise forecast or we can have a bit of redundancy (like in this case, having extra yard space which could be a waste but improve the system robustness)? This is questions that we need to ask ourselves constantly, as the true question is often not asked, but explored after lots of iterations. We need to, and we have to ask the right question, and that is an art more elegant than an algorithm in my opinion.</p>
+
+<p>I do not know if Ryan’s word are 100% true, but it reminds me an important lesson. The right solution (question) may be simple, but it may not be obvious. Have we exploited all the simple solution before we went nuts with fancy algorithms?</p>
+
+<p>p.s. Apologised as I don’t have time to proofread but simply try to write down the snapshot of my current mind  [2021-11-18]</p>
+
+<h1 id="reference">Reference</h1>
+<div class="jekyll-twitter-plugin"><blockquote class="twitter-tweet"><p lang="en" dir="ltr">Yesterday I rented a boat and took the leader of one of Flexport&#39;s partners in Long Beach on a 3 hour of the port complex. Here&#39;s a thread about what I learned.</p>&mdash; Ryan Petersen (@typesfast) <a href="https://twitter.com/typesfast/status/1451543776992845834?ref_src=twsrc%5Etfw">October 22, 2021</a></blockquote>
+<script async="" src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+</div>
+<p>https://twitter.com/typesfast/status/1451543776992845834?s=20
+https://www.facebook.com/669645890/posts/10159859049175891/
+unroll version: https://threadreaderapp.com/thread/1451543776992845834.html</p>
+
+
+  </div><!-- from https://github.com/utterance/utterances -->
+<script src="https://utteranc.es/client.js"
+        repo="noklam/blog"
+        issue-term="title"
+        label="blogpost-comment"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+</script><a class="u-url" href="/blog/product/2021/11/18/what-can-we-learn-from-shipping-crisis-as-a-data-scientist.html" hidden></a>
+</article>
+      </div>
+    </main><footer class="site-footer h-card">
+  <data class="u-url" href="/blog/"></data>
+
+  <div class="wrapper">
+
+    <div class="footer-col-wrapper">
+      <div class="footer-col">
+        <p class="feed-subscribe">
+          <a href="/blog/feed.xml">
+            <svg class="svg-icon orange">
+              <use xlink:href="/blog/assets/minima-social-icons.svg#rss"></use>
+            </svg><span>Subscribe</span>
+          </a>
+        </p>
+      </div>
+      <div class="footer-col">
+        <p>Explaining ideas one post at a time. Make software engineering easy for data scientist.</p>
+      </div>
+    </div>
+
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/noklam" title="noklam"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://www.linkedin.com/in/noklamchan" title="noklamchan"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#linkedin"></use></svg></a></li><li><a rel="me" href="https://twitter.com/mediumnok" title="mediumnok"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+</div>
+
+  </div>
+
+</footer>
+</body>
+
+</html>

@@ -1,4 +1,54 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.1.1">Jekyll</generator><link href="https://noklam.github.io/blog/feed.xml" rel="self" type="application/atom+xml" /><link href="https://noklam.github.io/blog/" rel="alternate" type="text/html" /><updated>2021-10-23T10:12:33-05:00</updated><id>https://noklam.github.io/blog/feed.xml</id><title type="html">mediumnok✊</title><subtitle>Explaining ideas one post at a time. Make software engineering easy for data scientist.</subtitle><entry><title type="html">Full Stack Deep Learning Notes - Lecture 01</title><link href="https://noklam.github.io/blog/fsdl/2021/10/22/template.html" rel="alternate" type="text/html" title="Full Stack Deep Learning Notes - Lecture 01" /><published>2021-10-22T00:00:00-05:00</published><updated>2021-10-22T00:00:00-05:00</updated><id>https://noklam.github.io/blog/fsdl/2021/10/22/template</id><content type="html" xml:base="https://noklam.github.io/blog/fsdl/2021/10/22/template.html">&lt;!--
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.1.1">Jekyll</generator><link href="https://noklam.github.io/blog/feed.xml" rel="self" type="application/atom+xml" /><link href="https://noklam.github.io/blog/" rel="alternate" type="text/html" /><updated>2021-11-18T10:15:59-06:00</updated><id>https://noklam.github.io/blog/feed.xml</id><title type="html">mediumnok✊</title><subtitle>Explaining ideas one post at a time. Make software engineering easy for data scientist.</subtitle><entry><title type="html">What can we learn from Shipping Crisis as a Data Scientist?</title><link href="https://noklam.github.io/blog/product/2021/11/18/what-can-we-learn-from-shipping-crisis-as-a-data-scientist.html" rel="alternate" type="text/html" title="What can we learn from Shipping Crisis as a Data Scientist?" /><published>2021-11-18T00:00:00-06:00</published><updated>2021-11-18T00:00:00-06:00</updated><id>https://noklam.github.io/blog/product/2021/11/18/what-can-we-learn-from-shipping-crisis-as-a-data-scientist</id><content type="html" xml:base="https://noklam.github.io/blog/product/2021/11/18/what-can-we-learn-from-shipping-crisis-as-a-data-scientist.html">&lt;p&gt;Even if you are not working in shipping industry, you probably heard about shipping cost is skyrocking for the last year. COVID is clearly the initial disruption, but the story does not end there. Recently, &lt;a href=&quot;https://www.wsj.com/video/series/on-the-news/what-america-supply-chain-backlog-looks-like-up-close/388D6F02-5BCD-43AD-A3EE-B945F7373983&quot;&gt;Long Beach’s port congestion is at a historcial scale&lt;/a&gt;, there are now more than 70+ ships waiting outside the port, the typical number is 1 or 2.&lt;/p&gt;
+
+&lt;p&gt;You may think the terminal must be busy as hell, so did I, but it is actualy far from the truth. &lt;a href=&quot;https://twitter.com/typesfast/status/1451543776992845834?s=20&quot;&gt;In fact, the port is actually paralyzed&lt;/a&gt;. The reason surprised me a lot, it is not because of lacking of driver or empty containers, but yard space. Container are being unloaded from ships, then they are being put at the container yard before they go into depot or being stuffed again.&lt;/p&gt;
+
+&lt;p&gt;On a high level, it is caused by a negative feedback loop which COVID probably contributed a lot, as it caused a lot of disruption to the supply chain.&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Port Congestion -&amp;gt; Containers pilled up at container yard since it is waiting to be loaded on ship&lt;/li&gt;
+  &lt;li&gt;Container yard space is taken up by cotnainers, less space is available&lt;/li&gt;
+  &lt;li&gt;A container need to be put on a chassis before it is loaded, but as the container yard is full, empty containers stuck on the chassis and they need to be unloaded before you put a stuffed container.&lt;/li&gt;
+  &lt;li&gt;Less Chassis is available to load stuff, so it further slow down the process&lt;/li&gt;
+  &lt;li&gt;The loop complete and it starts from 1 again&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;img src=&quot;images/2021-11-18-23-37-38.png&quot; alt=&quot;Port Congestion Feedback Loop&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;This is a simplified story, you can find more details from this &lt;a href=&quot;https://twitter.com/typesfast/status/1451543776992845834?s=20&quot;&gt;twitter thread from flexport’s CEO Ryan&lt;/a&gt;. There are more constraints that making this load/unload process inefficient, so the whole process is jammed. Think about a restaurant with limited amount of trays, you need to get a tray if you want to get food. But because there are too many customers, it jammed the door .
+So there are many customers holding an empty tray while many food are waiting to be served.&lt;/p&gt;
+
+&lt;p&gt;Ryan point out a very important lesson here, that is, &lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;you need to choose your bottleneck, and it should really be the capital intensive assets.&lt;/code&gt; Going back to our restaurant’s analogy, chef and space is probably the most expensive assets, so we should try to keep the utilization high. A simple solution is to buy more trays, so that it won’t be jammed. Ofcourse, you can also find a larger space, build a bigger door, but that will cost you more money too.&lt;/p&gt;
+
+&lt;p&gt;For shipping, the terminal’s crane should be the most capital intensive, so we should try our best to keep it working 24/7 to digest the terminal queue.&lt;/p&gt;
+
+&lt;p&gt;This is a simple idea yet it is powerful and it strikes me hard. As a data scientist, I work on optimization problem. To maximize the output of a system, we can use linear programming. When we are solving this problem, we are asking question like this.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Given x1 Terminals, x2 drivers, x3 containers, x4 ships, what is the maximize output of this system and &lt;strong&gt;how&lt;/strong&gt; do you arrange them to achieve so?&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;However, if you are a product/business analyst, a better question may be&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;What is the output of this system if I add more container yard space?&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;By changing the input of the system, you may achieve much better result. But as a data scientist, we often stuck in a mode that how do we optimize x metrics with these features. So we may end up spending months and try to schedule ships and driver perfectly to load 10% more container, but you can actually increase loading efficiency by 50% simply by adding more yard space. It feels like cheating as a scientific question, since this is not we asked originally, but this happened a lot in a business context.&lt;/p&gt;
+
+&lt;p&gt;We are not trying to find the best algorithm to solve a problem, the algorithm is just &lt;strong&gt;one way&lt;/strong&gt; of doing it. We may get surprising result by just tweaking the asked question a little bit.&lt;/p&gt;
+
+&lt;p&gt;I am curious about what is the limiting factor in our current supply chain system, and how sensitive it is to the environment. Is forecasting &amp;amp; optimization the right way to do it? Do we actually need a precise forecast or we can have a bit of redundancy (like in this case, having extra yard space which could be a waste but improve the system robustness)? This is questions that we need to ask ourselves constantly, as the true question is often not asked, but explored after lots of iterations. We need to, and we have to ask the right question, and that is an art more elegant than an algorithm in my opinion.&lt;/p&gt;
+
+&lt;p&gt;I do not know if Ryan’s word are 100% true, but it reminds me an important lesson. The right solution (question) may be simple, but it may not be obvious. Have we exploited all the simple solution before we went nuts with fancy algorithms?&lt;/p&gt;
+
+&lt;p&gt;p.s. Apologised as I don’t have time to proofread but simply try to write down the snapshot of my current mind  [2021-11-18]&lt;/p&gt;
+
+&lt;h1 id=&quot;reference&quot;&gt;Reference&lt;/h1&gt;
+&lt;div class=&quot;jekyll-twitter-plugin&quot;&gt;&lt;blockquote class=&quot;twitter-tweet&quot;&gt;&lt;p lang=&quot;en&quot; dir=&quot;ltr&quot;&gt;Yesterday I rented a boat and took the leader of one of Flexport&amp;#39;s partners in Long Beach on a 3 hour of the port complex. Here&amp;#39;s a thread about what I learned.&lt;/p&gt;&amp;mdash; Ryan Petersen (@typesfast) &lt;a href=&quot;https://twitter.com/typesfast/status/1451543776992845834?ref_src=twsrc%5Etfw&quot;&gt;October 22, 2021&lt;/a&gt;&lt;/blockquote&gt;
+&lt;script async=&quot;&quot; src=&quot;https://platform.twitter.com/widgets.js&quot; charset=&quot;utf-8&quot;&gt;&lt;/script&gt;
+&lt;/div&gt;
+&lt;p&gt;https://twitter.com/typesfast/status/1451543776992845834?s=20
+https://www.facebook.com/669645890/posts/10159859049175891/
+unroll version: https://threadreaderapp.com/thread/1451543776992845834.html&lt;/p&gt;</content><author><name>noklam</name></author><category term="product" /><summary type="html">Even if you are not working in shipping industry, you probably heard about shipping cost is skyrocking for the last year. COVID is clearly the initial disruption, but the story does not end there. Recently, Long Beach’s port congestion is at a historcial scale, there are now more than 70+ ships waiting outside the port, the typical number is 1 or 2.</summary></entry><entry><title type="html">Full Stack Deep Learning Notes - Lecture 01</title><link href="https://noklam.github.io/blog/fsdl/2021/11/17/template.html" rel="alternate" type="text/html" title="Full Stack Deep Learning Notes - Lecture 01" /><published>2021-11-17T00:00:00-06:00</published><updated>2021-11-17T00:00:00-06:00</updated><id>https://noklam.github.io/blog/fsdl/2021/11/17/template</id><content type="html" xml:base="https://noklam.github.io/blog/fsdl/2021/11/17/template.html">&lt;!--
 #################################################
 ### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
 #################################################
@@ -2226,16 +2276,4 @@ Forget Gate - Control the magnitude of cell state should be kept. Sigmoid range 
 &lt;/div&gt;
 &lt;/div&gt;
 &lt;/div&gt;
-&lt;/div&gt;</content><author><name>noklam</name></author><category term="fsdl" /><summary type="html"></summary></entry><entry><title type="html">Meta-Analysis of SQL Query, Graph - Part 0 [Help needed, I am looking for open dataset of actual user SQL query log]</title><link href="https://noklam.github.io/blog/python/2021/04/03/Meta-Analysis-of-sql-query-Part-0.html" rel="alternate" type="text/html" title="Meta-Analysis of SQL Query, Graph - Part 0 [Help needed, I am looking for open dataset of actual user SQL query log]" /><published>2021-04-03T00:00:00-05:00</published><updated>2021-04-03T00:00:00-05:00</updated><id>https://noklam.github.io/blog/python/2021/04/03/Meta-Analysis-of-sql-query-Part-0</id><content type="html" xml:base="https://noklam.github.io/blog/python/2021/04/03/Meta-Analysis-of-sql-query-Part-0.html">&lt;p&gt;Recently, I have started to think more about Data Catalog, Data Discovery. As data scientists, we spent significant time building a data pipeline. We spend a large chunk of the time understanding the context of the data, and how to use it correctly. Most data catalog provides information about the Schema and Column or Table description. However, we deal with dirty data in reality, a table may not be perfectly design, the business process could change but the table schema could not catch up. So you end up having to apply a lot of additional conditions to filter out data, i.e. you may want to look at column A before 2019-Jan but look at column B after 2019-Jan. The ultimate version of the query contains a lot of integration efforts and it is a mental model of how a certain person views the data. This information is usually communicate verbally and very hard to be re-used.&lt;/p&gt;
-
-&lt;p&gt;I have been thinking a lot about how can we communicate this information, or so-called domain knowledge more efficiently. I am thinking whether &lt;em&gt;Analyzing user’s actual query log&lt;/em&gt; could add more insight into the data.&lt;/p&gt;
-
-&lt;p&gt;For example, I may answer these questions if I could analyze SQL query logs
-How often is this table queried (and by who?)
-How is this table related to other tables? How are they usually joined together?
-What is the most common filtering condition added when people are querying this table?&lt;/p&gt;
-
-&lt;p&gt;So far, I only have rough ideas and need helps to get an Open Dataset of user SQL query logs. If you know such a dataset exists, please email me @ mediumnok@gmail.com
-Thanks!&lt;/p&gt;
-
-&lt;!--truncate--&gt;</content><author><name>noklam</name></author><category term="python" /><summary type="html">Recently, I have started to think more about Data Catalog, Data Discovery. As data scientists, we spent significant time building a data pipeline. We spend a large chunk of the time understanding the context of the data, and how to use it correctly. Most data catalog provides information about the Schema and Column or Table description. However, we deal with dirty data in reality, a table may not be perfectly design, the business process could change but the table schema could not catch up. So you end up having to apply a lot of additional conditions to filter out data, i.e. you may want to look at column A before 2019-Jan but look at column B after 2019-Jan. The ultimate version of the query contains a lot of integration efforts and it is a mental model of how a certain person views the data. This information is usually communicate verbally and very hard to be re-used.</summary></entry></feed>
+&lt;/div&gt;</content><author><name>noklam</name></author><category term="fsdl" /><summary type="html"></summary></entry></feed>
