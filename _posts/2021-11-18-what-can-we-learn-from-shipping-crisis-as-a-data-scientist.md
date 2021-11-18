@@ -23,7 +23,7 @@ On a high level, it is caused by a negative feedback loop which COVID probably c
 5. The loop complete and it starts from 1 again
 
 
-![Port Congestion Feedback Loop](2021-11-18-23-37-38.png)
+![Port Congestion Feedback Loop](images/2021-11-18-23-37-38.png)
 
 This is a simplified story, you can find more details from this [twitter thread from flexport's CEO Ryan](https://twitter.com/typesfast/status/1451543776992845834?s=20). There are more constraints that making this load/unload process inefficient, so the whole process is jammed. Think about a restaurant with limited amount of trays, you need to get a tray if you want to get food. But because there are too many customers, it jammed the door .
 So there are many customers holding an empty tray while many food are waiting to be served.
@@ -52,6 +52,7 @@ p.s. Apologised as I don't have time to proofread but simply try to write down t
 
 
 # Reference
+{% twitter https://twitter.com/typesfast/status/1451543776992845834?s=20 %}
 https://twitter.com/typesfast/status/1451543776992845834?s=20
 https://www.facebook.com/669645890/posts/10159859049175891/
 unroll version: https://threadreaderapp.com/thread/1451543776992845834.html
