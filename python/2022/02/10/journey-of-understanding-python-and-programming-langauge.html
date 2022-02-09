@@ -4,20 +4,20 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>Full Stack Deep Learning Notes - Lecture 01 | mediumnok✊</title>
+<title>Journey of understanding Python and programming language | mediumnok✊</title>
 <meta name="generator" content="Jekyll v4.1.1" />
-<meta property="og:title" content="Full Stack Deep Learning Notes - Lecture 01" />
+<meta property="og:title" content="Journey of understanding Python and programming language" />
 <meta name="author" content="noklam" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="Lecture &amp; Lab notes" />
-<meta property="og:description" content="Lecture &amp; Lab notes" />
-<link rel="canonical" href="https://noklam.github.io/blog/fsdl/2021/11/17/template.html" />
-<meta property="og:url" content="https://noklam.github.io/blog/fsdl/2021/11/17/template.html" />
+<meta name="description" content="Some unfinished notes about Python lower level details." />
+<meta property="og:description" content="Some unfinished notes about Python lower level details." />
+<link rel="canonical" href="https://noklam.github.io/blog/python/2022/02/10/journey-of-understanding-python-and-programming-langauge.html" />
+<meta property="og:url" content="https://noklam.github.io/blog/python/2022/02/10/journey-of-understanding-python-and-programming-langauge.html" />
 <meta property="og:site_name" content="mediumnok✊" />
 <meta property="og:type" content="article" />
-<meta property="article:published_time" content="2021-11-17T00:00:00-06:00" />
+<meta property="article:published_time" content="2022-02-10T00:00:00-06:00" />
 <script type="application/ld+json">
-{"url":"https://noklam.github.io/blog/fsdl/2021/11/17/template.html","@type":"BlogPosting","headline":"Full Stack Deep Learning Notes - Lecture 01","dateModified":"2021-11-17T00:00:00-06:00","datePublished":"2021-11-17T00:00:00-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://noklam.github.io/blog/fsdl/2021/11/17/template.html"},"author":{"@type":"Person","name":"noklam"},"description":"Lecture &amp; Lab notes","@context":"https://schema.org"}</script>
+{"url":"https://noklam.github.io/blog/python/2022/02/10/journey-of-understanding-python-and-programming-langauge.html","@type":"BlogPosting","headline":"Journey of understanding Python and programming language","dateModified":"2022-02-10T00:00:00-06:00","datePublished":"2022-02-10T00:00:00-06:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://noklam.github.io/blog/python/2022/02/10/journey-of-understanding-python-and-programming-langauge.html"},"author":{"@type":"Person","name":"noklam"},"description":"Some unfinished notes about Python lower level details.","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://noklam.github.io/blog/feed.xml" title="mediumnok✊" /><!-- the google_analytics_id gets auto inserted from the config file -->
 
@@ -78,8 +78,8 @@ window.onload = wrap_img;
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">Full Stack Deep Learning Notes - Lecture 01</h1><p class="page-description">Lecture & Lab notes</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-11-17T00:00:00-06:00" itemprop="datePublished">
-        Nov 17, 2021
+    <h1 class="post-title p-name" itemprop="name headline">Journey of understanding Python and programming language</h1><p class="page-description">Some unfinished notes about Python lower level details.</p><p class="post-meta post-meta-title"><time class="dt-published" datetime="2022-02-10T00:00:00-06:00" itemprop="datePublished">
+        Feb 10, 2022
       </time>• 
           <span itemprop="author" itemscope itemtype="http://schema.org/Person">
             <span class="p-author h-card" itemprop="name">noklam</span></span>
@@ -93,50 +93,36 @@ window.onload = wrap_img;
     
       <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i></i> 
       
-        <a class="category-tags-link" href="/blog/categories/#fsdl">fsdl</a>
+        <a class="category-tags-link" href="/blog/categories/#python">python</a>
         
       
       </p>
     
 
-    
-      
-        <div class="pb-5 d-flex flex-wrap flex-justify-end">
-          <div class="px-2">
-
-    <a href="https://github.com/noklam/blog/tree/master/_notebooks/template.ipynb" role="button" target="_blank">
-<img class="notebook-badge-image" src="/blog/assets/badges/github.svg" alt="View On GitHub">
-    </a>
-</div>
-
-          <div class="px-2">
-    <a href="https://mybinder.org/v2/gh/noklam/blog/master?filepath=_notebooks%2Ftemplate.ipynb" target="_blank">
-        <img class="notebook-badge-image" src="/blog/assets/badges/binder.svg" alt="Open In Binder"/>
-    </a>
-</div>
-
-          <div class="px-2">
-    <a href="https://colab.research.google.com/github/noklam/blog/blob/master/_notebooks/template.ipynb" target="_blank">
-        <img class="notebook-badge-image" src="/blog/assets/badges/colab.svg" alt="Open In Colab"/>
-    </a>
-</div>
-        </div>
-      </header>
+    </header>
 
   <div class="post-content e-content" itemprop="articleBody">
     <ul class="section-nav">
-</ul><!--
-#################################################
-### THIS FILE WAS AUTOGENERATED! DO NOT EDIT! ###
-#################################################
-# file to edit: _notebooks/template.ipynb
--->
+<li class="toc-entry toc-h1"><a href="#what-is-python-interpreter">What is Python Interpreter?</a></li>
+<li class="toc-entry toc-h1"><a href="#what-is-bytecode">What is Bytecode?</a></li>
+<li class="toc-entry toc-h1"><a href="#python-virtual-machine">Python Virtual Machine</a></li>
+<li class="toc-entry toc-h1"><a href="#compiler">Compiler</a></li>
+<li class="toc-entry toc-h1"><a href="#ebnf-grammar">EBNF Grammar</a></li>
+</ul><p>To be written…</p>
+<h1 id="what-is-python-interpreter">
+<a class="anchor" href="#what-is-python-interpreter" aria-hidden="true"><span class="octicon octicon-link"></span></a>What is Python Interpreter?</h1>
 
-<div class="container" id="notebook-container">
-        
-</div>
+<h1 id="what-is-bytecode">
+<a class="anchor" href="#what-is-bytecode" aria-hidden="true"><span class="octicon octicon-link"></span></a>What is Bytecode?</h1>
 
+<h1 id="python-virtual-machine">
+<a class="anchor" href="#python-virtual-machine" aria-hidden="true"><span class="octicon octicon-link"></span></a>Python Virtual Machine</h1>
 
+<h1 id="compiler">
+<a class="anchor" href="#compiler" aria-hidden="true"><span class="octicon octicon-link"></span></a>Compiler</h1>
+
+<h1 id="ebnf-grammar">
+<a class="anchor" href="#ebnf-grammar" aria-hidden="true"><span class="octicon octicon-link"></span></a>EBNF Grammar</h1>
 
   </div><!-- from https://github.com/utterance/utterances -->
 <script src="https://utteranc.es/client.js"
@@ -146,7 +132,7 @@ window.onload = wrap_img;
         theme="github-light"
         crossorigin="anonymous"
         async>
-</script><a class="u-url" href="/blog/fsdl/2021/11/17/template.html" hidden></a>
+</script><a class="u-url" href="/blog/python/2022/02/10/journey-of-understanding-python-and-programming-langauge.html" hidden></a>
 </article>
       </div>
     </main><footer class="site-footer h-card">
@@ -169,7 +155,7 @@ window.onload = wrap_img;
       </div>
     </div>
 
-    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/noklam" title="noklam"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://www.linkedin.com/in/noklamchan" title="noklamchan"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#linkedin"></use></svg></a></li><li><a rel="me" href="https://twitter.com/mediumnok" title="mediumnok"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
+    <div class="social-links"><ul class="social-media-list"><li><a rel="me" href="https://github.com/noklam" target="_blank" title="noklam"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#github"></use></svg></a></li><li><a rel="me" href="https://www.linkedin.com/in/noklamchan" target="_blank" title="noklamchan"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#linkedin"></use></svg></a></li><li><a rel="me" href="https://twitter.com/mediumnok" target="_blank" title="mediumnok"><svg class="svg-icon grey"><use xlink:href="/blog/assets/minima-social-icons.svg#twitter"></use></svg></a></li></ul>
 </div>
 
   </div>
