@@ -84,7 +84,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      1 min read
+      3 min read
     
 </span></p>
 
@@ -225,7 +225,38 @@ For example, you can generate  integers with <code>hypotesis.strategies.integers
 <h1 id="Python-objects-Under-the-hood">
 <a class="anchor" href="#Python-objects-Under-the-hood" aria-hidden="true"><span class="octicon octicon-link"></span></a>Python objects Under the hood<a class="anchor-link" href="#Python-objects-Under-the-hood"> </a>
 </h1>
-<p>TBD</p>
+<p>Covers a lot about Python's magic method</p>
+<ul>
+<li>
+<code>__init__</code> add  <code>__new__</code>
+</li>
+<li>
+<code>__add__</code> and <code>__radd__</code>
+</li>
+<li><code>super()</code></li>
+<li>
+<code>__str__</code> and <code>__repr__</code>
+</li>
+<li>
+<code>__next__</code> and <code>__iter__</code>
+</li>
+<li>
+<p>Why <code>__new__</code> is needed?</p>
+<ul>
+<li>We need to create immutable object</li>
+<li>Object creation start with <code>__new__</code> which create an instance -&gt; <code>__init__</code> to customize the attributes</li>
+<li>We need <code>__new__</code> to create a new immutable object </li>
+<li>But how's python actually achieve immutable tuple? Unanswered</li>
+</ul>
+<p><a href="https://mail.python.org/pipermail/tutor/2008-April/061426.html">[Tutor] When to use <strong>new</strong> vs. <strong>init</strong> ?</a></p>
+<blockquote>
+<p><strong>new</strong> is the first step of instance creation.  It's called first,
+and is responsible for returning a new instance of your class.  In
+contrast, <strong>init</strong> doesn't return anything; it's only responsible for
+initializing the instance after it's been created.</p>
+</blockquote>
+</li>
+</ul>
 
 </div>
 </div>
@@ -242,7 +273,100 @@ For example, you can generate  integers with <code>hypotesis.strategies.integers
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>TBD</p>
+<p>This is an interesting exercise to implement an <code>Lisp</code> interpreter in <code>Python</code>. I am not from CS background so this is brand new to me, and uncover some of the details that how programming language actually works. It involves parsing text into <code>tokens</code> and evaluate them with some grammar which can be represented as AST.</p>
+<p>This is the AST for the example <code>(define double (lambda (n) (* n 2)))</code> drawn as a tree <a href="https://github.com/fluentpython/lispy/tree/main/workshops/europython2022">reference</a>:</p>
+
+<pre><code>                              '*'  'n'   2  
+                        'n'    └────┼────┘  
+                         │          │  
+           'lambda'     [ ]        [ ]  
+               └─────────┼──────────┘  
+                         │  
+'define'   'double'     [ ]  
+    └─────────┼──────────┘  
+              │  
+             [ ]</code></pre>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The speaker also introduce <code>ChainMap</code>, which I am not aware of before.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">collections</span> <span class="kn">import</span> <span class="n">ChainMap</span>
+<span class="n">a</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'a'</span><span class="p">:</span><span class="mi">1</span><span class="p">}</span>
+<span class="n">b</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'b'</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span>
+<span class="n">c</span> <span class="o">=</span> <span class="p">{</span><span class="s1">'b'</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span> <span class="s1">'c'</span><span class="p">:</span><span class="mi">4</span>
+
+<span class="p">}</span>
+
+<span class="n">chainmap</span> <span class="o">=</span> <span class="n">ChainMap</span><span class="p">(</span><span class="n">a</span><span class="p">,</span><span class="n">b</span><span class="p">,</span><span class="n">c</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>A <code>ChainMap</code> stores multiple dictionaries, instead of merging them they are all stored in the object. Take a guess which `chainmap['a'], chainmap['b'] are?</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">chainmap</span><span class="p">[</span><span class="s1">'a'</span><span class="p">],</span> <span class="n">chainmap</span><span class="p">[</span><span class="s1">'b'</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>(1, 2)</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>It pretty much behaves like a normal Python dictionary, except that when the same key exists in more than one of the dictionary, the one that is in the front of the argument list has higher priority.</p>
 
 </div>
 </div>
